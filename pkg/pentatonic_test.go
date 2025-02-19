@@ -1,6 +1,7 @@
 package scales_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -162,7 +163,19 @@ func Test_NewMajorPentatonicScale(t *testing.T) {
 	}
 }
 
-//nolint:dupl
+// NewMajorPentatonicScale demonstrates the use of NewMajorPentatonicScale function.
+func ExampleNewMajorPentatonicScale() {
+	scale, err := scales.NewMajorPentatonicScale("A")
+	if err != nil {
+		fmt.Println(err.Error())
+
+		return
+	}
+
+	fmt.Println(scale.GetNotes())
+	// Output: [{A} {B} {C#} {E} {F#}]
+}
+
 func Test_NewMinorPentatonicScale(t *testing.T) {
 	t.Parallel()
 
@@ -314,4 +327,17 @@ func Test_NewMinorPentatonicScale(t *testing.T) {
 			require.Equal(t, tt.want, scale.GetNotes())
 		})
 	}
+}
+
+// NewMinorPentatonicScale demonstrates the use of NewMinorPentatonicScale function.
+func ExampleNewMinorPentatonicScale() {
+	scale, err := scales.NewMinorPentatonicScale("A")
+	if err != nil {
+		fmt.Println(err.Error())
+
+		return
+	}
+
+	fmt.Println(scale.GetNotes())
+	// Output: [{A} {C} {D} {E} {G}]
 }

@@ -1,6 +1,7 @@
 package scales_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -184,4 +185,17 @@ func Test_NewMajorScale(t *testing.T) {
 			require.Equal(t, tt.want, scale.GetNotes())
 		})
 	}
+}
+
+// NewMajorScale demonstrates the use of NewMajorScale function.
+func ExampleNewMajorScale() {
+	scale, err := scales.NewMajorScale("C")
+	if err != nil {
+		fmt.Println(err.Error())
+
+		return
+	}
+
+	fmt.Println(scale.GetNotes())
+	// Output: [{C} {D} {E} {F} {G} {A} {B}]
 }

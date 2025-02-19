@@ -1,6 +1,7 @@
 package scales_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -186,6 +187,19 @@ func Test_NewNaturalMinorScale(t *testing.T) {
 	}
 }
 
+// NewNaturalMinorScale demonstrates the use of NewNaturalMinorScale function.
+func ExampleNewNaturalMinorScale() {
+	scale, err := scales.NewNaturalMinorScale("A")
+	if err != nil {
+		fmt.Println(err.Error())
+
+		return
+	}
+
+	fmt.Println(scale.GetNotes())
+	// Output: [{A} {B} {C} {D} {E} {F} {G}]
+}
+
 func Test_NewHarmonicMinorScale(t *testing.T) {
 	t.Parallel()
 
@@ -363,6 +377,19 @@ func Test_NewHarmonicMinorScale(t *testing.T) {
 	}
 }
 
+// NewHarmonicMinorScale demonstrates the use of NewHarmonicMinorScale function.
+func ExampleNewHarmonicMinorScale() {
+	scale, err := scales.NewHarmonicMinorScale("A")
+	if err != nil {
+		fmt.Println(err.Error())
+
+		return
+	}
+
+	fmt.Println(scale.GetNotes())
+	// Output: [{A} {B} {C} {D} {E} {F} {G#}]
+}
+
 func Test_NewMelodicMinorScale(t *testing.T) {
 	t.Parallel()
 
@@ -525,4 +552,17 @@ func Test_NewMelodicMinorScale(t *testing.T) {
 			require.Equal(t, tt.want, scale.GetNotes())
 		})
 	}
+}
+
+// NewMelodicMinorScale demonstrates the use of NewMelodicMinorScale function.
+func ExampleNewMelodicMinorScale() {
+	scale, err := scales.NewMelodicMinorScale("A")
+	if err != nil {
+		fmt.Println(err.Error())
+
+		return
+	}
+
+	fmt.Println(scale.GetNotes())
+	// Output: [{A} {B} {C} {D} {E} {F#} {G#}]
 }
