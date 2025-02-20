@@ -14,9 +14,7 @@ type Guitar struct {
 }
 
 func (g *Guitar) drawOrNot(n Note, scale []Note) (bool, Note, int) {
-	index := slices.IndexFunc(scale, func(note Note) bool {
-		return note.Equal(n)
-	})
+	index := slices.IndexFunc(scale, n.Equal)
 
 	if index == -1 {
 		return false, Note{}, -1
