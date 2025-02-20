@@ -13,7 +13,7 @@ import (
 // Supported scales and instruments
 var (
 	validScales      = []string{"major", "minor", "pentatonic"}
-	validInstruments = []string{"bass", "guitar"}
+	validInstruments = []string{"bass", "guitar", "ukulele"}
 	minorScales      = []string{"natural", "harmonic", "melodic"}
 	pentatonicScales = []string{"major", "minor"}
 )
@@ -105,6 +105,9 @@ func main() {
 	case "bass":
 		guitar := scales.NewBassWithStandardTuning()
 		err = guitar.Draw(scale.GetNotes(), os.Stdout)
+	case "ukulele":
+		ukulele := scales.NewUkuleleWithStandardTuning()
+		err = ukulele.Draw(scale.GetNotes(), os.Stdout)
 	}
 
 	if err != nil {
