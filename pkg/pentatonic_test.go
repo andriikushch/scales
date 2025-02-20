@@ -2,8 +2,9 @@ package scales_test
 
 import (
 	"fmt"
-	"github.com/andriikushch/scales/pkg/internal"
 	"testing"
+
+	"github.com/andriikushch/scales/pkg/internal"
 
 	"github.com/stretchr/testify/require"
 

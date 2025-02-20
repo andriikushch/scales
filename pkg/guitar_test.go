@@ -1,9 +1,11 @@
 package scales_test
 
 import (
+	"io"
+	"testing"
+
 	scales "github.com/andriikushch/scales/pkg"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func TestGuitar_Draw(t *testing.T) {
@@ -33,7 +35,7 @@ func TestGuitar_Draw(t *testing.T) {
 			t.Parallel()
 			g := scales.NewGuitarWithStandardTuning()
 
-			require.NoError(t, g.Draw(tt.notesToDraw))
+			require.NoError(t, g.Draw(tt.notesToDraw, io.Discard))
 		})
 	}
 }

@@ -2,9 +2,11 @@ package scales
 
 import (
 	"fmt"
+	"io"
+	"slices"
+
 	"github.com/andriikushch/scales/pkg/internal"
 	"github.com/andriikushch/scales/pkg/internal/colors"
-	"slices"
 )
 
 type Guitar struct {
@@ -23,9 +25,9 @@ func (g *Guitar) drawOrNot(n Note, scale []Note) (bool, Note, int) {
 	return true, scale[index], index
 }
 
-func (g *Guitar) Draw(notesToDraw []Note) error {
+func (g *Guitar) Draw(notesToDraw []Note, w io.Writer) error {
 	var structure []int
-	for _ = range 25 {
+	for range 25 {
 		structure = append(structure, internal.HalfStep)
 	}
 
@@ -38,39 +40,38 @@ func (g *Guitar) Draw(notesToDraw []Note) error {
 		if i == 0 {
 			for i := range scale.GetNotes() {
 				if i == 0 {
-					fmt.Printf("%s%s_____", colors.Black, colors.BGYellow)
+					_, _ = fmt.Fprintf(w, "%s%s_____", colors.Black, colors.BGYellow)
 					continue
 				}
-				fmt.Printf("_____")
+				_, _ = fmt.Fprintf(w, "_____")
 			}
-			fmt.Println(colors.End)
+			_, _ = fmt.Fprintln(w, colors.End)
 		}
 
 		for i, note := range scale.GetNotes() {
 			if i == 0 {
 				if draw, noteFromTheScale, colorIndex := g.drawOrNot(note, notesToDraw); draw {
-					fmt.Printf("%s%-3s%s||", colors.GetColor(colorIndex), noteFromTheScale.Name, colors.End)
+					_, _ = fmt.Fprintf(w, "%s%-3s%s||", colors.GetColor(colorIndex), noteFromTheScale.Name, colors.End)
 				} else {
-					fmt.Printf("%s%-3s%s||", colors.GetColor(colorIndex), "", colors.End)
+					_, _ = fmt.Fprintf(w, "%s%-3s%s||", colors.GetColor(colorIndex), "", colors.End)
 				}
 
 				continue
 			}
 			if draw, noteFromTheScale, colorIndex := g.drawOrNot(note, notesToDraw); draw {
-				fmt.Printf("%s %-3s%s|", colors.GetColor(colorIndex), noteFromTheScale.Name, colors.End)
+				_, _ = fmt.Fprintf(w, "%s %-3s%s|", colors.GetColor(colorIndex), noteFromTheScale.Name, colors.End)
 			} else {
-				fmt.Printf("%s %-3s%s|", colors.GetColor(colorIndex), "", colors.End)
+				_, _ = fmt.Fprintf(w, "%s %-3s%s|", colors.GetColor(colorIndex), "", colors.End)
 			}
 
 		}
-		fmt.Println()
+		_, _ = fmt.Fprintln(w)
 
 		if i == len(g.tuning)-1 {
 			for i := range scale.GetNotes() {
-
-				fmt.Printf("%s%s_%02d__", colors.BGYellow, colors.Black, i)
+				_, _ = fmt.Fprintf(w, "%s%s_%02d__", colors.BGYellow, colors.Black, i)
 			}
-			fmt.Println(colors.End)
+			_, _ = fmt.Fprintf(w, colors.End)
 		}
 	}
 

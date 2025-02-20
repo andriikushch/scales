@@ -1,23 +1,28 @@
 package colors
 
-const Black = "\033[30m"
-const Red = "\033[31m"
-const Green = "\033[32m"
-const Yellow = "\033[33m"
-const Blue = "\033[34m"
-const Magenta = "\033[35m"
-const Cyan = "\033[36m"
-const White = "\033[37m"
+const (
+	Black   = "\033[30m"
+	Red     = "\033[31m"
+	Green   = "\033[32m"
+	Yellow  = "\033[33m"
+	Blue    = "\033[34m"
+	Magenta = "\033[35m"
+	Cyan    = "\033[36m"
+	White   = "\033[37m"
+)
 
-const BGBlack = "\033[40m"
-const BGRed = "\033[41m"
-const BGGreen = "\033[42m"
-const BGYellow = "\033[43m"
-const BGBlue = "\033[44m"
-const BGMagenta = "\033[45m"
-const BGCyan = "\033[46m"
-const BGWhite = "\033[47m"
-const End = "\033[0m"
+const (
+	BGBlack   = "\033[40m"
+	BGGrey    = "\033[100m"
+	BGRed     = "\033[41m"
+	BGGreen   = "\033[42m"
+	BGYellow  = "\033[43m"
+	BGBlue    = "\033[44m"
+	BGMagenta = "\033[45m"
+	BGCyan    = "\033[46m"
+	BGWhite   = "\033[47m"
+	End       = "\033[0m"
+)
 
 var bgColors = []string{
 	"\033[1;41m",  // Bright Red
@@ -36,7 +41,7 @@ var bgColors = []string{
 
 func GetColor(i int) string {
 	if i < 0 {
-		return BGBlack
+		return BGGrey
 	}
 	i = i % 12
 

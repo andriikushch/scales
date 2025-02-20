@@ -1,9 +1,10 @@
 package scales
 
 import (
-	"github.com/andriikushch/scales/pkg/internal"
 	"slices"
 	"strings"
+
+	"github.com/andriikushch/scales/pkg/internal"
 )
 
 type chromaticScale [][]Note
