@@ -87,7 +87,7 @@ func NewGuitarWithStandardTuning() *Guitar {
 	}
 }
 
-func NewBassGuitarWithStandardTuning() *Guitar {
+func NewBassWithStandardTuning() *Guitar {
 	return &Guitar{
 		tuning: []Note{
 			NewNote(internal.G),

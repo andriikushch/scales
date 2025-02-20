@@ -103,7 +103,7 @@ func main() {
 		guitar := scales.NewGuitarWithStandardTuning()
 		err = guitar.Draw(scale.GetNotes(), os.Stdout)
 	case "bass":
-		guitar := scales.NewBassGuitarWithStandardTuning()
+		guitar := scales.NewBassWithStandardTuning()
 		err = guitar.Draw(scale.GetNotes(), os.Stdout)
 	}
 
