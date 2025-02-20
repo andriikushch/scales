@@ -16,6 +16,8 @@ Example:
 go run main.go -scale pentatonic -pentatonicType minor -key A -instrument guitar
 ```
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/andriikushch/scales.svg)](https://pkg.go.dev/github.com/andriikushch/scales)
+
 ⚠️ Disclaimer
 This project is a work in progress and may contain bugs or panics. While the generated data aims to be accurate, it’s recommended to validate it additionally before using it. Future updates may introduce changes to the API, focusing on enhancing functionality, improving stability, and addressing any identified issues.
 
