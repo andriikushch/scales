@@ -7,7 +7,7 @@ Scales is a hobby project created out of passion for both music theory and codin
 ✨ What It Does
 
 - Generates basic musical scales
-- Visualizes scales on a guitar fretboard
+- Visualizes scales on a guitar, bass or ukulele fretboard
 - Supports Major, Minor, and Pentatonic scales
 
 Example:
