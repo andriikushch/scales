@@ -40,16 +40,17 @@ func (g *Guitar) Draw(notesToDraw []Note, w io.Writer) error {
 		}
 
 		for i, note := range scale.GetNotes() {
+			draw, noteFromTheScale, colorIndex := g.drawOrNot(note, notesToDraw)
+
 			if i == 0 {
-				if draw, noteFromTheScale, colorIndex := g.drawOrNot(note, notesToDraw); draw {
+				if draw {
 					_, _ = fmt.Fprintf(w, "%s%-3s%s||", colors.GetColor(colorIndex), noteFromTheScale.Name, colors.End)
 				} else {
 					_, _ = fmt.Fprintf(w, "%s%-3s%s||", colors.GetColor(colorIndex), "", colors.End)
 				}
-
 				continue
 			}
-			if draw, noteFromTheScale, colorIndex := g.drawOrNot(note, notesToDraw); draw {
+			if draw {
 				_, _ = fmt.Fprintf(w, "%s %-3s%s|", colors.GetColor(colorIndex), noteFromTheScale.Name, colors.End)
 			} else {
 				_, _ = fmt.Fprintf(w, "%s %-3s%s|", colors.GetColor(colorIndex), "", colors.End)
@@ -78,6 +79,17 @@ func NewGuitarWithStandardTuning() *Guitar {
 		tuning: []Note{
 			NewNote(internal.E),
 			NewNote(internal.B),
+			NewNote(internal.G),
+			NewNote(internal.D),
+			NewNote(internal.A),
+			NewNote(internal.E),
+		},
+	}
+}
+
+func NewBassGuitarWithStandardTuning() *Guitar {
+	return &Guitar{
+		tuning: []Note{
 			NewNote(internal.G),
 			NewNote(internal.D),
 			NewNote(internal.A),
