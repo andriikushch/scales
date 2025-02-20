@@ -13,7 +13,7 @@ import (
 // Supported scales and instruments
 var (
 	validScales      = []string{"major", "minor", "pentatonic"}
-	validInstruments = []string{"guitar"}
+	validInstruments = []string{"bass", "guitar"}
 	minorScales      = []string{"natural", "harmonic", "melodic"}
 	pentatonicScales = []string{"major", "minor"}
 )
@@ -98,8 +98,15 @@ func main() {
 	fmt.Printf("✔️ Scale: %s : %s\n", *scaleFlag, scale.String())
 	fmt.Printf("✔️ Instrument: %s\n", *instrumentFlag)
 
-	guitar := scales.NewGuitarWithStandardTuning()
-	err = guitar.Draw(scale.GetNotes(), os.Stdout)
+	switch *instrumentFlag {
+	case "guitar":
+		guitar := scales.NewGuitarWithStandardTuning()
+		err = guitar.Draw(scale.GetNotes(), os.Stdout)
+	case "bass":
+		guitar := scales.NewBassGuitarWithStandardTuning()
+		err = guitar.Draw(scale.GetNotes(), os.Stdout)
+	}
+
 	if err != nil {
 		log.Fatal(err)
 	}
