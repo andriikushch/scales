@@ -1,4 +1,4 @@
-package chromatic
+package internal
 
 const (
 	C            = "C"

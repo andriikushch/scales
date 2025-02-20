@@ -1,16 +1,18 @@
 package scales
 
-import "github.com/andriikushch/scales/pkg/internal/chromatic"
+import (
+	"github.com/andriikushch/scales/pkg/internal"
+)
 
 func NewNaturalMinorScale(key string) (*Scale, error) {
 	naturalMinorScaleStructure := []int{
-		chromatic.Step,
-		chromatic.HalfStep,
-		chromatic.Step,
-		chromatic.Step,
-		chromatic.HalfStep,
-		chromatic.Step,
-		chromatic.Step,
+		internal.Step,
+		internal.HalfStep,
+		internal.Step,
+		internal.Step,
+		internal.HalfStep,
+		internal.Step,
+		internal.Step,
 	}
 
 	return newScale(key, naturalMinorScaleStructure)
@@ -18,13 +20,13 @@ func NewNaturalMinorScale(key string) (*Scale, error) {
 
 func NewHarmonicMinorScale(key string) (*Scale, error) {
 	harmonicMinorScaleStructure := []int{
-		chromatic.Step,
-		chromatic.HalfStep,
-		chromatic.Step,
-		chromatic.Step,
-		chromatic.HalfStep,
-		chromatic.Step + chromatic.HalfStep,
-		chromatic.HalfStep,
+		internal.Step,
+		internal.HalfStep,
+		internal.Step,
+		internal.Step,
+		internal.HalfStep,
+		internal.Step + internal.HalfStep,
+		internal.HalfStep,
 	}
 
 	return newScale(key, harmonicMinorScaleStructure)
@@ -32,13 +34,13 @@ func NewHarmonicMinorScale(key string) (*Scale, error) {
 
 func NewMelodicMinorScale(key string) (*Scale, error) {
 	melodicMinorScaleStructure := []int{
-		chromatic.Step,
-		chromatic.HalfStep,
-		chromatic.Step,
-		chromatic.Step,
-		chromatic.Step,
-		chromatic.Step,
-		chromatic.HalfStep,
+		internal.Step,
+		internal.HalfStep,
+		internal.Step,
+		internal.Step,
+		internal.Step,
+		internal.Step,
+		internal.HalfStep,
 	}
 
 	return newScale(key, melodicMinorScaleStructure)

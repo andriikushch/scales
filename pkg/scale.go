@@ -7,20 +7,20 @@ import (
 )
 
 type Scale struct {
-	Notes []Note
+	notes []Note
 }
 
 func (s Scale) GetNotes() []Note {
-	return s.Notes
+	return s.notes
 }
 
 func (s Scale) String() string {
 	buf := new(strings.Builder)
 
-	for i, note := range s.Notes {
+	for i, note := range s.notes {
 		buf.WriteString(note.Name)
 
-		if i != len(s.Notes)-1 {
+		if i != len(s.notes)-1 {
 			buf.WriteString(", ")
 		}
 	}
@@ -34,7 +34,7 @@ func newScale(key string, scaleStructure []int) (*Scale, error) {
 	chromaticScale := defaultChromaticScale
 	currentNote := NewNote(key)
 
-	scale.Notes = append(scale.Notes, currentNote)
+	scale.notes = append(scale.notes, currentNote)
 
 	// to track letters that are already used
 	var usedPrefixes []string
@@ -64,7 +64,7 @@ func newScale(key string, scaleStructure []int) (*Scale, error) {
 			return scale, fmt.Errorf("error while building scale %s, %v, note after : %s", key, scaleStructure, currentNote.Name)
 		}
 
-		scale.Notes = append(scale.Notes, nextNote)
+		scale.notes = append(scale.notes, nextNote)
 
 		currentNote = nextNote
 	}
