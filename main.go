@@ -114,7 +114,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println()
+	fmt.Printf("✔️ Chords: %s\n", scale.GetChords())
+
 	return
 }
 
