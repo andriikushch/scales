@@ -7,11 +7,16 @@ import (
 )
 
 type Scale struct {
-	notes []Note
+	notes  []Note
+	chords []string
 }
 
 func (s Scale) GetNotes() []Note {
 	return s.notes
+}
+
+func (s Scale) GetChords() []string {
+	return s.chords
 }
 
 func (s Scale) String() string {
@@ -28,7 +33,7 @@ func (s Scale) String() string {
 	return buf.String()
 }
 
-func newScale(key string, scaleStructure []int) (*Scale, error) {
+func newScale(key string, scaleStructure []int, chords []string) (*Scale, error) {
 	scale := &Scale{}
 
 	chromaticScale := defaultChromaticScale
@@ -67,6 +72,12 @@ func newScale(key string, scaleStructure []int) (*Scale, error) {
 		scale.notes = append(scale.notes, nextNote)
 
 		currentNote = nextNote
+	}
+
+	if len(chords) > 0 {
+		for i, note := range scale.notes {
+			scale.chords = append(scale.chords, note.Name+chords[i])
+		}
 	}
 
 	return scale, nil

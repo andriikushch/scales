@@ -555,6 +555,33 @@ func Test_NewMelodicMinorScale(t *testing.T) {
 	}
 }
 
+func Test_MinorScaleGetChords(t *testing.T) {
+	t.Parallel()
+
+	scale, err := scales.NewNaturalMinorScale("A")
+	require.NoError(t, err)
+
+	require.Equal(t, scale.GetChords(), []string{"Am", "Bdim", "Cmaj", "Dm", "Em", "Fmaj", "Gmaj"})
+}
+
+func Test_MelodicMinorScale(t *testing.T) {
+	t.Parallel()
+
+	scale, err := scales.NewMelodicMinorScale("A")
+	require.NoError(t, err)
+
+	require.Equal(t, scale.GetChords(), []string{"Am", "Bmin", "Caug", "Dmaj", "Emaj", "F#dim", "G#dim"})
+}
+
+func Test_HarmonicMinorScale(t *testing.T) {
+	t.Parallel()
+
+	scale, err := scales.NewHarmonicMinorScale("A")
+	require.NoError(t, err)
+
+	require.Equal(t, scale.GetChords(), []string{"Am", "Bdim", "Caug", "Dm", "Emaj", "Fmaj", "G#dim"})
+}
+
 // NewMelodicMinorScale demonstrates the use of NewMelodicMinorScale function.
 func ExampleNewMelodicMinorScale() {
 	scale, err := scales.NewMelodicMinorScale("A")

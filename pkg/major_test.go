@@ -188,6 +188,15 @@ func Test_NewMajorScale(t *testing.T) {
 	}
 }
 
+func Test_MajorScaleGetChords(t *testing.T) {
+	t.Parallel()
+
+	scale, err := scales.NewMajorScale("C")
+	require.NoError(t, err)
+
+	require.Equal(t, scale.GetChords(), []string{"Cmaj", "Dm", "Em", "Fmaj", "Gmaj", "Amin", "Bdim"})
+}
+
 // NewMajorScale demonstrates the use of NewMajorScale function.
 func ExampleNewMajorScale() {
 	scale, err := scales.NewMajorScale("C")

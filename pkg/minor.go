@@ -15,7 +15,17 @@ func NewNaturalMinorScale(key string) (*Scale, error) {
 		internal.Step,
 	}
 
-	return newScale(key, naturalMinorScaleStructure)
+	chords := []string{
+		"m",
+		"dim",
+		"maj",
+		"m",
+		"m",
+		"maj",
+		"maj",
+	}
+
+	return newScale(key, naturalMinorScaleStructure, chords)
 }
 
 func NewHarmonicMinorScale(key string) (*Scale, error) {
@@ -29,10 +39,30 @@ func NewHarmonicMinorScale(key string) (*Scale, error) {
 		internal.HalfStep,
 	}
 
-	return newScale(key, harmonicMinorScaleStructure)
+	chords := []string{
+		"m",
+		"dim",
+		"aug",
+		"m",
+		"maj",
+		"maj",
+		"dim",
+	}
+
+	return newScale(key, harmonicMinorScaleStructure, chords)
 }
 
 func NewMelodicMinorScale(key string) (*Scale, error) {
+	chords := []string{
+		"m",
+		"min",
+		"aug",
+		"maj",
+		"maj",
+		"dim",
+		"dim",
+	}
+
 	melodicMinorScaleStructure := []int{
 		internal.Step,
 		internal.HalfStep,
@@ -43,5 +73,5 @@ func NewMelodicMinorScale(key string) (*Scale, error) {
 		internal.HalfStep,
 	}
 
-	return newScale(key, melodicMinorScaleStructure)
+	return newScale(key, melodicMinorScaleStructure, chords)
 }

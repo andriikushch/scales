@@ -30,7 +30,7 @@ func (g *Guitar) Draw(notesToDraw []Note, w io.Writer) error {
 	}
 
 	for i, note := range g.tuning {
-		scale, err := newScale(note.Name, structure)
+		scale, err := newScale(note.Name, structure, []string{})
 		if err != nil {
 			return err
 		}
