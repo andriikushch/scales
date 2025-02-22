@@ -114,7 +114,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("✔️ Chords: %s\n", scale.GetChords())
+	if *scaleFlag != "pentatonic" {
+		fmt.Printf("✔️ Chords: %s\n", scale.GetChords())
+	}
 
 	return
 }
