@@ -18,6 +18,11 @@ var (
 	pentatonicScales = []string{"major", "minor"}
 )
 
+type scale interface {
+	GetNotes() []scales.Note
+	String() string
+}
+
 func main() {
 	// Define command-line flags
 	scaleFlag := flag.String("scale", "major", "Specify the scale (major, minor, pentatonic)")
@@ -60,27 +65,27 @@ func main() {
 		fmt.Printf("✔️ Pentatonic Scale Type: %s\n", *pentatonicTypeFlag)
 	}
 
-	var scale *scales.Scale
+	var s scale
 	var err error
 
 	switch *scaleFlag {
 	case "major":
-		scale, err = scales.NewMajorScale(*keyFlag)
+		s, err = scales.NewMajorScale(*keyFlag)
 	case "minor":
 		switch *minorTypeFlag {
 		case "natural":
-			scale, err = scales.NewNaturalMinorScale(*keyFlag)
+			s, err = scales.NewNaturalMinorScale(*keyFlag)
 		case "harmonic":
-			scale, err = scales.NewHarmonicMinorScale(*keyFlag)
+			s, err = scales.NewHarmonicMinorScale(*keyFlag)
 		case "melodic":
-			scale, err = scales.NewMelodicMinorScale(*keyFlag)
+			s, err = scales.NewMelodicMinorScale(*keyFlag)
 		}
 	case "pentatonic":
 		switch *pentatonicTypeFlag {
 		case "major":
-			scale, err = scales.NewMajorPentatonicScale(*keyFlag)
+			s, err = scales.NewMajorPentatonicScale(*keyFlag)
 		case "minor":
-			scale, err = scales.NewMinorPentatonicScale(*keyFlag)
+			s, err = scales.NewMinorPentatonicScale(*keyFlag)
 		}
 	}
 
@@ -88,34 +93,34 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if scale == nil {
+	if s == nil {
 		log.Fatal("something went wrong")
 	}
 
 	// Display user selection
 	fmt.Println("🎵 Scale Generator 🎵")
 	fmt.Printf("✔️ Key: %s\n", *keyFlag)
-	fmt.Printf("✔️ Scale: %s : %s\n", *scaleFlag, scale.String())
+	fmt.Printf("✔️ Scale: %s : %s\n", *scaleFlag, s.String())
 	fmt.Printf("✔️ Instrument: %s\n", *instrumentFlag)
 
 	switch *instrumentFlag {
 	case "guitar":
 		guitar := scales.NewGuitarWithStandardTuning()
-		err = guitar.Draw(scale.GetNotes(), os.Stdout)
+		err = guitar.Draw(s.GetNotes(), os.Stdout)
 	case "bass":
 		guitar := scales.NewBassWithStandardTuning()
-		err = guitar.Draw(scale.GetNotes(), os.Stdout)
+		err = guitar.Draw(s.GetNotes(), os.Stdout)
 	case "ukulele":
 		ukulele := scales.NewUkuleleWithStandardTuning()
-		err = ukulele.Draw(scale.GetNotes(), os.Stdout)
+		err = ukulele.Draw(s.GetNotes(), os.Stdout)
 	}
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	if *scaleFlag != "pentatonic" {
-		fmt.Printf("✔️ Chords: %s\n", scale.GetChords())
+	if sc, ok := s.(*scales.Scale); ok {
+		fmt.Printf("✔️ Chords: %s\n", sc.GetChords())
 	}
 
 	return
