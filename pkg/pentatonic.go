@@ -9,11 +9,11 @@ type Pentatonic struct {
 	notes []Note
 }
 
-func (p Pentatonic) GetNotes() []Note {
+func (p *Pentatonic) GetNotes() []Note {
 	return p.notes
 }
 
-func (p Pentatonic) String() string {
+func (p *Pentatonic) String() string {
 	buf := new(strings.Builder)
 
 	for i, note := range p.notes {

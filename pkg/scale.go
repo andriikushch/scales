@@ -11,15 +11,15 @@ type Scale struct {
 	chords []string
 }
 
-func (s Scale) GetNotes() []Note {
+func (s *Scale) GetNotes() []Note {
 	return s.notes
 }
 
-func (s Scale) GetChords() []string {
+func (s *Scale) GetChords() []string {
 	return s.chords
 }
 
-func (s Scale) String() string {
+func (s *Scale) String() string {
 	buf := new(strings.Builder)
 
 	for i, note := range s.notes {
