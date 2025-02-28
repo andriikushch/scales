@@ -10,10 +10,18 @@ import (
 )
 
 type Guitar struct {
+	*stringInstrumentWithFrets
+}
+
+type BassGuitar struct {
+	*stringInstrumentWithFrets
+}
+
+type stringInstrumentWithFrets struct {
 	tuning []Note
 }
 
-func (g *Guitar) drawOrNot(n Note, scale []Note) (bool, Note, int) {
+func (g *stringInstrumentWithFrets) drawOrNot(n Note, scale []Note) (bool, Note, int) {
 	index := slices.IndexFunc(scale, n.Equal)
 
 	if index == -1 {
@@ -23,7 +31,7 @@ func (g *Guitar) drawOrNot(n Note, scale []Note) (bool, Note, int) {
 	return true, scale[index], index
 }
 
-func (g *Guitar) Draw(notesToDraw []Note, w io.Writer) error {
+func (g *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) error {
 	var structure []int
 	for range 25 {
 		structure = append(structure, internal.HalfStep)
@@ -67,7 +75,7 @@ func (g *Guitar) Draw(notesToDraw []Note, w io.Writer) error {
 	return nil
 }
 
-func (g *Guitar) printFretMarkers(scale *Scale, w io.Writer) {
+func (g *stringInstrumentWithFrets) printFretMarkers(scale *Scale, w io.Writer) {
 	for i := range scale.GetNotes() {
 		_, _ = fmt.Fprintf(w, "%s%s_%02d__", colors.BGYellow, colors.Black, i)
 	}
@@ -75,7 +83,7 @@ func (g *Guitar) printFretMarkers(scale *Scale, w io.Writer) {
 }
 
 func NewGuitarWithStandardTuning() *Guitar {
-	return &Guitar{
+	return &Guitar{&stringInstrumentWithFrets{
 		tuning: []Note{
 			NewNote(internal.E),
 			NewNote(internal.B),
@@ -83,17 +91,17 @@ func NewGuitarWithStandardTuning() *Guitar {
 			NewNote(internal.D),
 			NewNote(internal.A),
 			NewNote(internal.E),
-		},
+		}},
 	}
 }
 
-func NewBassWithStandardTuning() *Guitar {
-	return &Guitar{
+func NewBassGuitarWithStandardTuning() *BassGuitar {
+	return &BassGuitar{&stringInstrumentWithFrets{
 		tuning: []Note{
 			NewNote(internal.G),
 			NewNote(internal.D),
 			NewNote(internal.A),
 			NewNote(internal.E),
 		},
-	}
+	}}
 }
