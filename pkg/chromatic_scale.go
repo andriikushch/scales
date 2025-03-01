@@ -51,6 +51,27 @@ func (s chromaticScale) normalize(noteToNormalize Note) Note {
 	return defaultChromaticScale.next(noteToNormalize, stepsForward+stepsBackward)[0]
 }
 
+func (s chromaticScale) findDistance(n1 Note, n2 Note) int {
+	positionN1 := 0
+	positionN2 := 0
+
+	for pos, v := range s {
+		if slices.Index(v, n1) != -1 {
+			positionN1 = pos
+		}
+
+		if slices.Index(v, n2) != -1 {
+			positionN2 = pos
+		}
+	}
+
+	if positionN1 > positionN2 {
+		return positionN2 - positionN1 + len(s)
+	}
+
+	return positionN2 - positionN1
+}
+
 var defaultChromaticScale = chromaticScale{
 	{NewNote(internal.BSharp), NewNote(internal.C)},
 	{NewNote(internal.CSharp), NewNote(internal.DFlat)},
