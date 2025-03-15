@@ -15,14 +15,14 @@ func TestTokenize(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want []token
+		want []Token
 	}{
 		{
 			name: "Am",
 			args: args{
 				chord: "Am",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "A",
@@ -37,7 +37,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "C6/9",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -57,7 +57,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "C6add9",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -77,7 +77,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "C6(add9)",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -97,7 +97,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "A#m",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "A",
@@ -116,7 +116,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "A#m#5",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "A",
@@ -139,7 +139,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Am7",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "A",
@@ -155,7 +155,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "C",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -167,7 +167,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Csus2",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -183,7 +183,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "C#",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -199,7 +199,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Cb",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -215,7 +215,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Cmaj7",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -231,7 +231,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "C7",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -247,7 +247,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Cm7",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -263,7 +263,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Cm7b5",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -283,7 +283,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Cdim7",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -299,7 +299,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Cdim7add13",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -319,7 +319,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Caug7",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -335,7 +335,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "C7b5",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -355,7 +355,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Cm(maj7)",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -374,7 +374,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Cmaj9",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -390,7 +390,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Cmaj13",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -406,7 +406,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "F##dim7",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "F",
@@ -428,7 +428,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "C7/Bb",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -448,7 +448,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Cm7/B#",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -468,7 +468,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "C7/G",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -488,7 +488,7 @@ func TestTokenize(t *testing.T) {
 			args: args{
 				chord: "Csus2",
 			},
-			want: []token{
+			want: []Token{
 				{
 					Type:  ROOT,
 					Value: "C",
@@ -504,7 +504,7 @@ func TestTokenize(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
-			l := lexer{}
+			l := Lexer{}
 
 			got, err := l.Tokenize(tt.args.chord)
 			if err != nil {

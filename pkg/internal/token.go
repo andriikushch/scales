@@ -18,7 +18,7 @@ const (
 	IGNORED tokenType = "IGNORED"
 )
 
-type token struct {
+type Token struct {
 	Type  tokenType
 	Value string
 }
