@@ -33,20 +33,20 @@ var roots = []string{
 
 var re = regexp.MustCompile(`[^0-9]`)
 
-type lexer struct {
+type Lexer struct {
 	input      string
 	currentPos int
 	lookupPos  int
 }
 
-func (l *lexer) Tokenize(input string) ([]token, error) {
+func (l *Lexer) Tokenize(input string) ([]Token, error) {
 	if len(input) == 0 {
 		return nil, nil
 	}
 
 	l.input = input
 
-	var result []token
+	var result []Token
 
 	for {
 		token, err := l.NextToken()
@@ -68,32 +68,32 @@ func (l *lexer) Tokenize(input string) ([]token, error) {
 	return result, nil
 }
 
-func (l *lexer) NextToken() (token, error) {
+func (l *Lexer) NextToken() (Token, error) {
 	tokenType, rawValue, err := l.readChars()
 	if err != nil {
-		return token{}, err
+		return Token{}, err
 	}
 
 	if rawValue == "" {
-		return token{Type: END}, nil
+		return Token{Type: END}, nil
 	}
 
-	var t token
+	var t Token
 
-	// first token should be root
+	// first Token should be root
 	switch tokenType {
 	case ROOT, NUMBER:
-		t = token{
+		t = Token{
 			Type:  tokenType,
 			Value: rawValue,
 		}
 	case SHARP, FLAT, MAJ, DIM, AUG, IGNORED, MINOR, ADD, SUS:
-		t = token{
+		t = Token{
 			Type:  tokenType,
 			Value: l.removeNonNumbers(rawValue),
 		}
 	case BASS:
-		t = token{
+		t = Token{
 			Type:  BASS,
 			Value: strings.ReplaceAll(rawValue, slash, ""),
 		}
@@ -105,9 +105,9 @@ func (l *lexer) NextToken() (token, error) {
 	return t, nil
 }
 
-var ErrNoRootToken = errors.New("no ROOT token found")
+var ErrNoRootToken = errors.New("no ROOT Token found")
 
-func (l *lexer) readChars() (tokenType, string, error) {
+func (l *Lexer) readChars() (tokenType, string, error) {
 	// try to read root
 	if l.currentPos == 0 {
 		index := slices.Index(roots, string(l.input[0]))
@@ -129,7 +129,7 @@ func (l *lexer) readChars() (tokenType, string, error) {
 	return END, "", nil
 }
 
-func (l *lexer) getToken(ch string) (tokenType, string, error) {
+func (l *Lexer) getToken(ch string) (tokenType, string, error) {
 	switch ch {
 	case m:
 		// check if it is "m" or "maj"
@@ -207,7 +207,7 @@ func (l *lexer) getToken(ch string) (tokenType, string, error) {
 	}
 }
 
-func (l *lexer) takeFollowingNumbers() {
+func (l *Lexer) takeFollowingNumbers() {
 	if l.lookupPos > len(l.input) {
 		l.lookupPos--
 
@@ -223,7 +223,7 @@ func (l *lexer) takeFollowingNumbers() {
 	}
 }
 
-func (l *lexer) removeNonNumbers(s string) string {
+func (l *Lexer) removeNonNumbers(s string) string {
 	// Matches everything except digits
 	return re.ReplaceAllString(s, "")
 }
