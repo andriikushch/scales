@@ -16,14 +16,14 @@ func TestParseChord(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want chord
+		want Chord
 	}{
 		{
 			name: "Am",
 			args: args{
 				description: "Am",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Am",
 				chordBasicType: internal.Minor,
 				root:           NewNote("A"),
@@ -41,7 +41,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Am/C",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Am/C",
 				chordBasicType: internal.Minor,
 				bassNote:       NewNote("C"),
@@ -60,7 +60,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Am7",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Am7",
 				chordBasicType: internal.Minor,
 				root:           NewNote("A"),
@@ -79,7 +79,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C",
 				chordBasicType: internal.Major,
 				root:           NewNote(internal.C),
@@ -97,7 +97,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cmaj",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cmaj",
 				chordBasicType: internal.Major,
 				root:           NewNote(internal.C),
@@ -115,7 +115,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cmaj7",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cmaj7",
 				chordBasicType: internal.Major,
 				root:           NewNote(internal.C),
@@ -134,7 +134,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -153,7 +153,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cm7",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cm7",
 				chordBasicType: internal.Minor,
 				root:           NewNote("C"),
@@ -172,7 +172,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cm7b5",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cm7b5",
 				chordBasicType: internal.Minor,
 				root:           NewNote("C"),
@@ -191,7 +191,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cdim7",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cdim7",
 				chordBasicType: internal.Diminished,
 				root:           NewNote("C"),
@@ -210,7 +210,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Caug7",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Caug7",
 				chordBasicType: internal.Augmented,
 				root:           NewNote("C"),
@@ -229,7 +229,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Caug9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Caug9",
 				chordBasicType: internal.Augmented,
 				root:           NewNote("C"),
@@ -249,7 +249,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Caug11",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Caug11",
 				chordBasicType: internal.Augmented,
 				root:           NewNote("C"),
@@ -270,7 +270,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Caug6",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Caug6",
 				chordBasicType: internal.Augmented,
 				root:           NewNote("C"),
@@ -289,7 +289,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7b5",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7b5",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -308,7 +308,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cm(maj7)",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cm(maj7)",
 				chordBasicType: internal.Minor,
 				root:           NewNote("C"),
@@ -327,7 +327,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cmaj9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cmaj9",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -347,7 +347,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C9",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -367,7 +367,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cm9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cm9",
 				chordBasicType: internal.Minor,
 				root:           NewNote("C"),
@@ -387,7 +387,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C11",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C11",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -408,7 +408,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cm11",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cm11",
 				chordBasicType: internal.Minor,
 				root:           NewNote("C"),
@@ -429,7 +429,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cmaj13",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cmaj13",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -451,7 +451,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C13",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C13",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -473,7 +473,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cm13",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cm13",
 				chordBasicType: internal.Minor,
 				root:           NewNote("C"),
@@ -495,7 +495,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7b5",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7b5",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -514,7 +514,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7b9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7b9",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -534,7 +534,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7#9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7#9",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -554,7 +554,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7b5b9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7b5b9",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -574,7 +574,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7b5(b9)",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7b5(b9)",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -594,7 +594,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7#5#9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7#5#9",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -614,7 +614,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7#5(#9)",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7#5(#9)",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -634,7 +634,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7b5#9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7b5#9",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -654,7 +654,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7b5(#9)",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7b5(#9)",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -674,7 +674,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7#5(b9)",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7#5(b9)",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -694,7 +694,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7#11",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7#11",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -714,7 +714,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C9b5",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C9b5",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -734,7 +734,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C9#5",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C9#5",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -754,7 +754,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C9#11",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C9#11",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -775,7 +775,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C13b9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C13b9",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -797,7 +797,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C13#9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C13#9",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -819,7 +819,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C13#11",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C13#11",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -841,7 +841,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cm7b5",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cm7b5",
 				chordBasicType: internal.Minor,
 				root:           NewNote("C"),
@@ -860,7 +860,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cm7#5",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cm7#5",
 				chordBasicType: internal.Minor,
 				root:           NewNote("C"),
@@ -879,7 +879,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cmaj7b5",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cmaj7b5",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -898,7 +898,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cmaj7#5",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cmaj7#5",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -917,7 +917,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cmaj7#11",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cmaj7#11",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -937,7 +937,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cmaj9#11",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cmaj9#11",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -958,7 +958,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C6",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C6",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -977,7 +977,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C6/9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C6/9",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -997,7 +997,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C6add9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C6add9",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -1017,7 +1017,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C6(add9)",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C6(add9)",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -1037,7 +1037,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C/G",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C/G",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -1056,7 +1056,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C/G#",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C/G#",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -1076,7 +1076,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Csus2",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Csus2",
 				chordBasicType: internal.Suspended,
 				root:           NewNote("C"),
@@ -1094,7 +1094,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Csus4",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Csus4",
 				chordBasicType: internal.Suspended,
 				root:           NewNote("C"),
@@ -1112,7 +1112,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Csus",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Csus",
 				chordBasicType: internal.Suspended,
 				root:           NewNote("C"),
@@ -1130,7 +1130,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7sus4",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7sus4",
 				chordBasicType: internal.Suspended,
 				root:           NewNote("C"),
@@ -1149,7 +1149,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C7sus",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C7sus",
 				chordBasicType: internal.Suspended,
 				root:           NewNote("C"),
@@ -1168,7 +1168,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cadd9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cadd9",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -1187,7 +1187,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "C(add9)",
 			},
-			want: chord{
+			want: Chord{
 				name:           "C(add9)",
 				chordBasicType: internal.Major,
 				root:           NewNote("C"),
@@ -1206,7 +1206,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cm(add9)",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cm(add9)",
 				chordBasicType: internal.Minor,
 				root:           NewNote("C"),
@@ -1225,7 +1225,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cdim6",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cdim6",
 				chordBasicType: internal.Diminished,
 				root:           NewNote("C"),
@@ -1244,7 +1244,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cdim9",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cdim9",
 				chordBasicType: internal.Diminished,
 				root:           NewNote("C"),
@@ -1265,7 +1265,7 @@ func TestParseChord(t *testing.T) {
 			args: args{
 				description: "Cdim11",
 			},
-			want: chord{
+			want: Chord{
 				name:           "Cdim11",
 				chordBasicType: internal.Diminished,
 				root:           NewNote("C"),

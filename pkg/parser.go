@@ -17,13 +17,13 @@ var (
 	errUnexpectedInterval   = errors.New("unexpected interval")
 )
 
-func (p parser) parse(input string) (*chord, error) {
+func (p parser) parse(input string) (*Chord, error) {
 	tokens, err := p.l.Tokenize(input)
 	if err != nil {
 		return nil, err
 	}
 
-	chord := &chord{}
+	chord := &Chord{}
 	chord.name = input
 
 	for tokenIndex, token := range tokens {
@@ -65,7 +65,7 @@ func (p parser) parse(input string) (*chord, error) {
 	return chord, nil
 }
 
-func (p parser) parseAdd(token internal.Token, chord *chord, tokenIndex int, tokens []internal.Token, degrees map[int]int) error {
+func (p parser) parseAdd(token internal.Token, chord *Chord, tokenIndex int, tokens []internal.Token, degrees map[int]int) error {
 	tokenValue, err := strconv.Atoi(token.Value)
 	if err != nil {
 		return errors.Join(errIsNotInt, err)
@@ -104,7 +104,7 @@ func (p parser) parseAdd(token internal.Token, chord *chord, tokenIndex int, tok
 	return nil
 }
 
-func (p parser) parseBass(token internal.Token, chord *chord) error {
+func (p parser) parseBass(token internal.Token, chord *Chord) error {
 	bassNote := NewNote(token.Value)
 	chord.setBase(bassNote)
 	distance := defaultChromaticScale.findDistance(chord.root, bassNote)
@@ -122,7 +122,7 @@ func (p parser) parseBass(token internal.Token, chord *chord) error {
 	return nil
 }
 
-func (p parser) parseSus(token internal.Token, chord *chord) error {
+func (p parser) parseSus(token internal.Token, chord *Chord) error {
 	var tokenValue int
 
 	var err error
@@ -172,7 +172,7 @@ func (p parser) parseSus(token internal.Token, chord *chord) error {
 	return nil
 }
 
-func (p parser) parseAlt(chord *chord, token internal.Token, degrees map[int]int, mDegrees map[int]int, modifyFunc func(i int)) error {
+func (p parser) parseAlt(chord *Chord, token internal.Token, degrees map[int]int, mDegrees map[int]int, modifyFunc func(i int)) error {
 	if token.Value == "" {
 		return nil
 	}
@@ -210,7 +210,7 @@ func (p parser) parseAlt(chord *chord, token internal.Token, degrees map[int]int
 	return nil
 }
 
-func (p parser) parseMaj(chord *chord, token internal.Token, i int, tokens []internal.Token) error {
+func (p parser) parseMaj(chord *Chord, token internal.Token, i int, tokens []internal.Token) error {
 	if chord.cType[len(chord.cType)-1] != internal.Major {
 		chord.addType(internal.Major)
 	}
@@ -252,7 +252,7 @@ func (p parser) parseMaj(chord *chord, token internal.Token, i int, tokens []int
 	return nil
 }
 
-func (p parser) parseNumber(token internal.Token, chord *chord, i int, tokens []internal.Token, numbers, nthMapping map[int]string) error {
+func (p parser) parseNumber(token internal.Token, chord *Chord, i int, tokens []internal.Token, numbers, nthMapping map[int]string) error {
 	tokenValue, err := strconv.Atoi(token.Value)
 	if err != nil {
 		return errIsNotInt
@@ -316,7 +316,7 @@ func (p parser) parseNumber(token internal.Token, chord *chord, i int, tokens []
 	return nil
 }
 
-func (p parser) initMinorChord(chord *chord, token internal.Token, isLastToken bool) error {
+func (p parser) initMinorChord(chord *Chord, token internal.Token, isLastToken bool) error {
 	chord.setChordBasicType(internal.Minor)
 
 	if len(chord.cType) > 0 {
@@ -372,7 +372,7 @@ func (p parser) initMinorChord(chord *chord, token internal.Token, isLastToken b
 
 }
 
-func (p parser) initMajorChord(chord *chord, token internal.Token) error {
+func (p parser) initMajorChord(chord *Chord, token internal.Token) error {
 	chord.root = NewNote(token.Value)
 
 	// assume that this is major chord
@@ -382,7 +382,7 @@ func (p parser) initMajorChord(chord *chord, token internal.Token) error {
 	return chord.addIntervals(internal.IUnison, internal.IM3, internal.IP5)
 }
 
-func (p parser) initAugChord(chord *chord, token internal.Token) error {
+func (p parser) initAugChord(chord *Chord, token internal.Token) error {
 	chord.setChordBasicType(internal.Augmented)
 
 	if len(chord.cType) > 0 {
@@ -422,7 +422,7 @@ func (p parser) initAugChord(chord *chord, token internal.Token) error {
 	return nil
 }
 
-func (p parser) initDimChord(chord *chord, token internal.Token) error {
+func (p parser) initDimChord(chord *Chord, token internal.Token) error {
 	chord.setChordBasicType(internal.Diminished)
 
 	if len(chord.cType) > 0 {

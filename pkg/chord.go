@@ -9,7 +9,7 @@ import (
 
 var errBassNoteIsEmpty = errors.New("bass note is empty")
 
-type chord struct {
+type Chord struct {
 	name           string
 	chordBasicType string
 	root           Note
@@ -19,20 +19,20 @@ type chord struct {
 	bassNote       Note
 }
 
-func (c *chord) setName(name string) {
+func (c *Chord) setName(name string) {
 	c.name = name
 }
 
-func (c *chord) addType(t string) {
+func (c *Chord) addType(t string) {
 	c.cType = append(c.cType, t)
 }
 
-func (c *chord) addRoot(note Note) {
+func (c *Chord) addRoot(note Note) {
 	c.root = note
 	c.structure = append(c.structure, internal.IUnison)
 }
 
-func (c *chord) add(interval int) error {
+func (c *Chord) add(interval int) error {
 	if len(c.root.Name) == 0 {
 		return errors.New("set the root first")
 	}
@@ -46,7 +46,7 @@ func (c *chord) add(interval int) error {
 	return nil
 }
 
-func (c *chord) addIntervals(interval ...int) error {
+func (c *Chord) addIntervals(interval ...int) error {
 	for _, v := range interval {
 		err := c.add(v)
 		if err != nil {
@@ -58,7 +58,7 @@ func (c *chord) addIntervals(interval ...int) error {
 }
 
 // findOptimalNoteForTheChord is opinionated selection between multiple annotations of the same note. TODO: improve this logic if necessary.
-func (c *chord) findOptimalNoteForTheChord(notes []Note, step int, key string, chordType string, isFlat, isSharp bool) Note {
+func (c *Chord) findOptimalNoteForTheChord(notes []Note, step int, key string, chordType string, isFlat, isSharp bool) Note {
 	if isSharp {
 		n := c.getWithSharps(notes, 1)
 		if len(n.Name) > 0 {
@@ -108,11 +108,11 @@ func (c *chord) findOptimalNoteForTheChord(notes []Note, step int, key string, c
 	return notes[0]
 }
 
-func (c *chord) setChordBasicType(s string) {
+func (c *Chord) setChordBasicType(s string) {
 	c.chordBasicType = s
 }
 
-func (c *chord) flatFirst(interval int) {
+func (c *Chord) flatFirst(interval int) {
 	for i, v := range c.structure {
 		if v == interval {
 			c.structure[i] -= internal.HalfStep
@@ -122,7 +122,7 @@ func (c *chord) flatFirst(interval int) {
 	}
 }
 
-func (c *chord) sharpFirst(interval int) {
+func (c *Chord) sharpFirst(interval int) {
 	for i, v := range c.structure {
 		if v == interval {
 			c.structure[i] += internal.HalfStep
@@ -132,7 +132,7 @@ func (c *chord) sharpFirst(interval int) {
 	}
 }
 
-func (c *chord) finish() error {
+func (c *Chord) finish() error {
 	for intervalIndex, interval := range c.structure {
 		nextPossibleNotes := defaultChromaticScale.next(c.root, interval)
 
@@ -167,11 +167,11 @@ func (c *chord) finish() error {
 	return nil
 }
 
-func (c *chord) setBase(note Note) {
+func (c *Chord) setBase(note Note) {
 	c.bassNote = note
 }
 
-func (c *chord) getWithFlats(notes []Note, n int) Note {
+func (c *Chord) getWithFlats(notes []Note, n int) Note {
 	for _, note := range notes {
 		if strings.Count(note.Name, "b") == n {
 			return note
@@ -181,7 +181,7 @@ func (c *chord) getWithFlats(notes []Note, n int) Note {
 	return Note{}
 }
 
-func (c *chord) getWithSharps(notes []Note, n int) Note {
+func (c *Chord) getWithSharps(notes []Note, n int) Note {
 	for _, note := range notes {
 		if strings.Count(note.Name, "#") == n {
 			return note

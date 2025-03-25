@@ -1,11 +1,11 @@
 package scales
 
-func parseChord(description string) (chord, error) {
+func parseChord(description string) (Chord, error) {
 	p := parser{}
 
 	c, err := p.parse(description)
 	if err != nil {
-		return chord{}, err
+		return Chord{}, err
 	}
 
 	return *c, c.finish()
