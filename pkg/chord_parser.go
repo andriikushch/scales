@@ -1,6 +1,10 @@
 package scales
 
-func parseChord(description string) (Chord, error) {
+type contextNotes interface {
+	GetNotes() []Note
+}
+
+func parseChord(description string, context contextNotes) (Chord, error) {
 	p := parser{}
 
 	c, err := p.parse(description)
@@ -8,5 +12,10 @@ func parseChord(description string) (Chord, error) {
 		return Chord{}, err
 	}
 
-	return *c, c.finish()
+	err = c.finish(context)
+	if err != nil {
+		return Chord{}, err
+	}
+
+	return *c, nil
 }

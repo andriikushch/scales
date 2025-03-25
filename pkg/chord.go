@@ -10,7 +10,7 @@ import (
 var errBassNoteIsEmpty = errors.New("bass note is empty")
 
 type Chord struct {
-	name           string
+	description    string
 	chordBasicType string
 	root           Note
 	notes          []Note
@@ -19,8 +19,16 @@ type Chord struct {
 	bassNote       Note
 }
 
+func (c *Chord) Description() string {
+	return c.description
+}
+
+func (c *Chord) Notes() []Note {
+	return c.notes
+}
+
 func (c *Chord) setName(name string) {
-	c.name = name
+	c.description = name
 }
 
 func (c *Chord) addType(t string) {
@@ -58,7 +66,7 @@ func (c *Chord) addIntervals(interval ...int) error {
 }
 
 // findOptimalNoteForTheChord is opinionated selection between multiple annotations of the same note. TODO: improve this logic if necessary.
-func (c *Chord) findOptimalNoteForTheChord(notes []Note, step int, key string, chordType string, isFlat, isSharp bool) Note {
+func (c *Chord) findOptimalNoteForTheChord(notes []Note, step int, key string, chordType string, isFlat, isSharp bool, context contextNotes) Note {
 	if isSharp {
 		n := c.getWithSharps(notes, 1)
 		if len(n.Name) > 0 {
@@ -74,15 +82,20 @@ func (c *Chord) findOptimalNoteForTheChord(notes []Note, step int, key string, c
 	}
 
 	var scaleNotes []Note
-	// try to understand if it is a minor or major chord, it is not
-	if chordType == internal.Minor {
-		// it is minor, let's build the scale and see if any of the notes annotations are in the scale
-		sc, _ := NewNaturalMinorScale(key)
-		scaleNotes = sc.GetNotes()
+
+	if context == nil {
+		// try to understand if it is a minor or major chord, it is not
+		if chordType == internal.Minor {
+			// it is minor, let's build the scale and see if any of the notes annotations are in the scale
+			sc, _ := NewNaturalMinorScale(key)
+			scaleNotes = sc.GetNotes()
+		} else {
+			// maybe it is major, let's build the scale and see if any of the notes annotations are in the scale
+			sc, _ := NewMajorScale(key)
+			scaleNotes = sc.GetNotes()
+		}
 	} else {
-		// maybe it is major, let's build the scale and see if any of the notes annotations are in the scale
-		sc, _ := NewMajorScale(key)
-		scaleNotes = sc.GetNotes()
+		scaleNotes = context.GetNotes()
 	}
 
 	for _, note := range notes {
@@ -132,7 +145,7 @@ func (c *Chord) sharpFirst(interval int) {
 	}
 }
 
-func (c *Chord) finish() error {
+func (c *Chord) finish(context contextNotes) error {
 	for intervalIndex, interval := range c.structure {
 		nextPossibleNotes := defaultChromaticScale.next(c.root, interval)
 
@@ -143,7 +156,7 @@ func (c *Chord) finish() error {
 			isSharp = c.cType[intervalIndex] == internal.Sharp
 		}
 
-		nextNote := c.findOptimalNoteForTheChord(nextPossibleNotes, interval, c.root.Name, c.chordBasicType, isFlat, isSharp)
+		nextNote := c.findOptimalNoteForTheChord(nextPossibleNotes, interval, c.root.Name, c.chordBasicType, isFlat, isSharp, context)
 		c.notes = append(c.notes, nextNote)
 	}
 

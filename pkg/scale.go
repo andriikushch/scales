@@ -2,6 +2,7 @@ package scales
 
 import (
 	"fmt"
+	"log"
 	"slices"
 	"strings"
 )
@@ -15,8 +16,17 @@ func (s *Scale) GetNotes() []Note {
 	return s.notes
 }
 
-func (s *Scale) GetChords() []string {
-	return s.chords
+func (s *Scale) GetChords() []Chord {
+	res := make([]Chord, len(s.chords))
+	var err error
+	for i, chord := range s.chords {
+		res[i], err = parseChord(chord, s)
+		if err != nil {
+			log.Fatal(chord)
+		}
+	}
+
+	return res
 }
 
 func (s *Scale) String() string {

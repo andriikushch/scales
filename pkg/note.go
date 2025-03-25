@@ -22,6 +22,10 @@ func (n Note) Equal(other Note) bool {
 	return notePosition == otherNotePosition
 }
 
+func (n Note) String() string {
+	return n.Name
+}
+
 func NewNote(name string) Note {
 	return Note{
 		Name: name,

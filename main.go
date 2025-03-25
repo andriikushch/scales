@@ -120,7 +120,11 @@ func main() {
 	}
 
 	if sc, ok := s.(*scales.Scale); ok {
-		fmt.Printf("✔️ Chords: %s\n", sc.GetChords())
+		chords := ""
+		for _, ch := range sc.GetChords() {
+			chords += fmt.Sprintf("%s %s, ", ch.Description(), ch.Notes())
+		}
+		fmt.Printf("✔️ Chords: %s\n", strings.TrimSuffix(chords, ", "))
 	}
 
 	return

@@ -24,7 +24,7 @@ func (p parser) parse(input string) (*Chord, error) {
 	}
 
 	chord := &Chord{}
-	chord.name = input
+	chord.description = input
 
 	for tokenIndex, token := range tokens {
 
@@ -432,6 +432,10 @@ func (p parser) initDimChord(chord *Chord, token internal.Token) error {
 	// convert first M3 tp m3
 	chord.flatFirst(internal.IM3)
 	chord.flatFirst(internal.IP5)
+
+	if token.Value == "" {
+		return nil
+	}
 
 	tokenValue, err := strconv.Atoi(token.Value)
 	if err != nil {
