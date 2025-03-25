@@ -10,38 +10,38 @@ import (
 var errBassNoteIsEmpty = errors.New("bass note is empty")
 
 type chord struct {
-	Name           string
-	ChordBasicType string
-	Root           Note
-	Notes          []Note
-	Structure      []int
-	Type           []string
-	BassNote       Note
+	name           string
+	chordBasicType string
+	root           Note
+	notes          []Note
+	structure      []int
+	cType          []string
+	bassNote       Note
 }
 
 func (c *chord) setName(name string) {
-	c.Name = name
+	c.name = name
 }
 
 func (c *chord) addType(t string) {
-	c.Type = append(c.Type, t)
+	c.cType = append(c.cType, t)
 }
 
 func (c *chord) addRoot(note Note) {
-	c.Root = note
-	c.Structure = append(c.Structure, internal.IUnison)
+	c.root = note
+	c.structure = append(c.structure, internal.IUnison)
 }
 
 func (c *chord) add(interval int) error {
-	if len(c.Root.Name) == 0 {
+	if len(c.root.Name) == 0 {
 		return errors.New("set the root first")
 	}
 
-	if len(c.ChordBasicType) == 0 {
+	if len(c.chordBasicType) == 0 {
 		return errors.New("set the chord type first")
 	}
 
-	c.Structure = append(c.Structure, interval)
+	c.structure = append(c.structure, interval)
 
 	return nil
 }
@@ -109,13 +109,13 @@ func (c *chord) findOptimalNoteForTheChord(notes []Note, step int, key string, c
 }
 
 func (c *chord) setChordBasicType(s string) {
-	c.ChordBasicType = s
+	c.chordBasicType = s
 }
 
 func (c *chord) flatFirst(interval int) {
-	for i, v := range c.Structure {
+	for i, v := range c.structure {
 		if v == interval {
-			c.Structure[i] -= internal.HalfStep
+			c.structure[i] -= internal.HalfStep
 
 			break
 		}
@@ -123,9 +123,9 @@ func (c *chord) flatFirst(interval int) {
 }
 
 func (c *chord) sharpFirst(interval int) {
-	for i, v := range c.Structure {
+	for i, v := range c.structure {
 		if v == interval {
-			c.Structure[i] += internal.HalfStep
+			c.structure[i] += internal.HalfStep
 
 			break
 		}
@@ -133,31 +133,31 @@ func (c *chord) sharpFirst(interval int) {
 }
 
 func (c *chord) finish() error {
-	for intervalIndex, interval := range c.Structure {
-		nextPossibleNotes := defaultChromaticScale.next(c.Root, interval)
+	for intervalIndex, interval := range c.structure {
+		nextPossibleNotes := defaultChromaticScale.next(c.root, interval)
 
 		// not reliable, trying to guess sign from the previous Type value
 		var isFlat, isSharp bool
-		if intervalIndex < len(c.Type)-1 {
-			isFlat = c.Type[intervalIndex] == internal.Flat
-			isSharp = c.Type[intervalIndex] == internal.Sharp
+		if intervalIndex < len(c.cType)-1 {
+			isFlat = c.cType[intervalIndex] == internal.Flat
+			isSharp = c.cType[intervalIndex] == internal.Sharp
 		}
 
-		nextNote := c.findOptimalNoteForTheChord(nextPossibleNotes, interval, c.Root.Name, c.ChordBasicType, isFlat, isSharp)
-		c.Notes = append(c.Notes, nextNote)
+		nextNote := c.findOptimalNoteForTheChord(nextPossibleNotes, interval, c.root.Name, c.chordBasicType, isFlat, isSharp)
+		c.notes = append(c.notes, nextNote)
 	}
 
-	if c.BassNote.Name != "" {
-		if baseNoteIndex := slices.Index(c.Notes, c.BassNote); baseNoteIndex != -1 {
-			baseNoteInterval := c.Structure[baseNoteIndex]
-			bassNote := c.Notes[baseNoteIndex]
+	if c.bassNote.Name != "" {
+		if baseNoteIndex := slices.Index(c.notes, c.bassNote); baseNoteIndex != -1 {
+			baseNoteInterval := c.structure[baseNoteIndex]
+			bassNote := c.notes[baseNoteIndex]
 
 			// remove elements
-			c.Structure = append(c.Structure[:baseNoteIndex], c.Structure[baseNoteIndex+1:]...)
-			c.Notes = append(c.Notes[:baseNoteIndex], c.Notes[baseNoteIndex+1:]...)
+			c.structure = append(c.structure[:baseNoteIndex], c.structure[baseNoteIndex+1:]...)
+			c.notes = append(c.notes[:baseNoteIndex], c.notes[baseNoteIndex+1:]...)
 
-			c.Structure = append([]int{baseNoteInterval}, c.Structure...)
-			c.Notes = append([]Note{bassNote}, c.Notes...)
+			c.structure = append([]int{baseNoteInterval}, c.structure...)
+			c.notes = append([]Note{bassNote}, c.notes...)
 		} else {
 			// todo: is it valid case? Bass note is not a part of the chord.
 			return errBassNoteIsEmpty
@@ -168,7 +168,7 @@ func (c *chord) finish() error {
 }
 
 func (c *chord) setBase(note Note) {
-	c.BassNote = note
+	c.bassNote = note
 }
 
 func (c *chord) getWithFlats(notes []Note, n int) Note {

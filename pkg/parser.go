@@ -24,7 +24,7 @@ func (p parser) parse(input string) (*chord, error) {
 	}
 
 	chord := &chord{}
-	chord.Name = input
+	chord.name = input
 
 	for tokenIndex, token := range tokens {
 
@@ -81,13 +81,13 @@ func (p parser) parseAdd(token internal.Token, chord *chord, tokenIndex int, tok
 		return errMissingDegreeMapping
 	}
 
-	if len(chord.Type) == 1 && chord.Type[0] == internal.Major {
-		chord.Type[0] = internal.Added
+	if len(chord.cType) == 1 && chord.cType[0] == internal.Major {
+		chord.cType[0] = internal.Added
 	} else {
 		chord.addType(internal.Added)
 	}
 
-	if len(chord.Type) == 1 && tokenIndex+1 < len(tokens) {
+	if len(chord.cType) == 1 && tokenIndex+1 < len(tokens) {
 		if val, ok := internal.Numbers[tokenValue]; ok {
 			chord.addType(val)
 		} else {
@@ -107,9 +107,9 @@ func (p parser) parseAdd(token internal.Token, chord *chord, tokenIndex int, tok
 func (p parser) parseBass(token internal.Token, chord *chord) error {
 	bassNote := NewNote(token.Value)
 	chord.setBase(bassNote)
-	distance := defaultChromaticScale.findDistance(chord.Root, bassNote)
+	distance := defaultChromaticScale.findDistance(chord.root, bassNote)
 
-	if slices.Index(chord.Structure, distance) == -1 {
+	if slices.Index(chord.structure, distance) == -1 {
 		err := chord.add(distance)
 		if err != nil {
 			return err
@@ -138,8 +138,8 @@ func (p parser) parseSus(token internal.Token, chord *chord) error {
 
 	chord.setChordBasicType(internal.Suspended)
 
-	if len(chord.Type) == 1 {
-		chord.Type[0] = internal.Suspended
+	if len(chord.cType) == 1 {
+		chord.cType[0] = internal.Suspended
 	} else {
 		chord.addType(internal.Suspended)
 	}
@@ -149,18 +149,18 @@ func (p parser) parseSus(token internal.Token, chord *chord) error {
 
 	switch tokenValue {
 	case sus2:
-		switch chord.Structure[1] {
+		switch chord.structure[1] {
 		case internal.IM3, internal.Im3:
-			chord.Structure[1] = internal.IM2
+			chord.structure[1] = internal.IM2
 			chord.addType(internal.Second)
 		default:
 			return errUnexpectedInterval
 		}
 
 	case sus4:
-		switch chord.Structure[1] {
+		switch chord.structure[1] {
 		case internal.IM3, internal.Im3:
-			chord.Structure[1] = internal.IP4
+			chord.structure[1] = internal.IP4
 			chord.addType(internal.Fourth)
 		default:
 			return errUnexpectedInterval
@@ -187,7 +187,7 @@ func (p parser) parseAlt(chord *chord, token internal.Token, degrees map[int]int
 		return errMissingDegreeMapping
 	}
 
-	index := slices.Index(chord.Structure, toModify)
+	index := slices.Index(chord.structure, toModify)
 	if index == -1 {
 		if val, ok := mDegrees[tokenValue]; ok {
 			err = chord.add(val)
@@ -211,7 +211,7 @@ func (p parser) parseAlt(chord *chord, token internal.Token, degrees map[int]int
 }
 
 func (p parser) parseMaj(chord *chord, token internal.Token, i int, tokens []internal.Token) error {
-	if chord.Type[len(chord.Type)-1] != internal.Major {
+	if chord.cType[len(chord.cType)-1] != internal.Major {
 		chord.addType(internal.Major)
 	}
 
@@ -224,7 +224,7 @@ func (p parser) parseMaj(chord *chord, token internal.Token, i int, tokens []int
 		return err
 	}
 
-	if len(chord.Type) == 1 && i+1 < len(tokens) {
+	if len(chord.cType) == 1 && i+1 < len(tokens) {
 		if val, ok := internal.Numbers[tokenValue]; ok {
 			chord.addType(val)
 		} else {
@@ -258,19 +258,19 @@ func (p parser) parseNumber(token internal.Token, chord *chord, i int, tokens []
 		return errIsNotInt
 	}
 
-	if len(chord.Type) == 1 && chord.Type[0] == internal.Major && tokenValue >= 7 {
-		chord.Type[0] = internal.Dominant
+	if len(chord.cType) == 1 && chord.cType[0] == internal.Major && tokenValue >= 7 {
+		chord.cType[0] = internal.Dominant
 	}
 
-	if len(chord.Type) == 1 && chord.Type[0] == internal.Major && tokenValue <= 7 {
-		chord.Type = []string{}
+	if len(chord.cType) == 1 && chord.cType[0] == internal.Major && tokenValue <= 7 {
+		chord.cType = []string{}
 	}
 
 	var chordType string
 
 	var mappingExists bool
 
-	if len(chord.Type) == 1 && i+1 < len(tokens) && tokens[i+1].Type != internal.SUS {
+	if len(chord.cType) == 1 && i+1 < len(tokens) && tokens[i+1].Type != internal.SUS {
 		chordType, mappingExists = numbers[tokenValue]
 	} else {
 		chordType, mappingExists = nthMapping[tokenValue]
@@ -286,7 +286,7 @@ func (p parser) parseNumber(token internal.Token, chord *chord, i int, tokens []
 		for degree := 7; degree <= tokenValue; degree += 2 {
 			switch degree {
 			case 7:
-				if chord.Type[0] == internal.Dominant {
+				if chord.cType[0] == internal.Dominant {
 					err = chord.add(internal.Im7)
 				}
 			default:
@@ -319,8 +319,8 @@ func (p parser) parseNumber(token internal.Token, chord *chord, i int, tokens []
 func (p parser) initMinorChord(chord *chord, token internal.Token, isLastToken bool) error {
 	chord.setChordBasicType(internal.Minor)
 
-	if len(chord.Type) > 0 {
-		chord.Type[0] = internal.Minor
+	if len(chord.cType) > 0 {
+		chord.cType[0] = internal.Minor
 	}
 
 	// convert first M3 tp m3
@@ -373,7 +373,7 @@ func (p parser) initMinorChord(chord *chord, token internal.Token, isLastToken b
 }
 
 func (p parser) initMajorChord(chord *chord, token internal.Token) error {
-	chord.Root = NewNote(token.Value)
+	chord.root = NewNote(token.Value)
 
 	// assume that this is major chord
 	chord.setChordBasicType(internal.Major)
@@ -385,8 +385,8 @@ func (p parser) initMajorChord(chord *chord, token internal.Token) error {
 func (p parser) initAugChord(chord *chord, token internal.Token) error {
 	chord.setChordBasicType(internal.Augmented)
 
-	if len(chord.Type) > 0 {
-		chord.Type[0] = internal.Augmented
+	if len(chord.cType) > 0 {
+		chord.cType[0] = internal.Augmented
 	}
 
 	// add half step to the 5th
@@ -425,8 +425,8 @@ func (p parser) initAugChord(chord *chord, token internal.Token) error {
 func (p parser) initDimChord(chord *chord, token internal.Token) error {
 	chord.setChordBasicType(internal.Diminished)
 
-	if len(chord.Type) > 0 {
-		chord.Type[0] = internal.Diminished
+	if len(chord.cType) > 0 {
+		chord.cType[0] = internal.Diminished
 	}
 
 	// convert first M3 tp m3
