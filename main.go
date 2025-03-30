@@ -10,12 +10,39 @@ import (
 	scales "github.com/andriikushch/scales/pkg"
 )
 
+// Scale types
+const (
+	ScaleMajor      = "major"
+	ScaleMinor      = "minor"
+	ScalePentatonic = "pentatonic"
+)
+
+// Instrument types
+const (
+	InstrumentBassGuitar = "bassGuitar"
+	InstrumentGuitar     = "guitar"
+	InstrumentUkulele    = "ukulele"
+)
+
+// Minor scale types
+const (
+	MinorTypeNatural  = "natural"
+	MinorTypeHarmonic = "harmonic"
+	MinorTypeMelodic  = "melodic"
+)
+
+// Pentatonic scale types
+const (
+	PentatonicTypeMajor = "major"
+	PentatonicTypeMinor = "minor"
+)
+
 // Supported scales and instruments
 var (
-	validScales      = []string{"major", "minor", "pentatonic"}
-	validInstruments = []string{"bassGuitar", "guitar", "ukulele"}
-	minorScales      = []string{"natural", "harmonic", "melodic"}
-	pentatonicScales = []string{"major", "minor"}
+	validScales      = []string{ScaleMajor, ScaleMinor, ScalePentatonic}
+	validInstruments = []string{InstrumentBassGuitar, InstrumentGuitar, InstrumentUkulele}
+	minorScales      = []string{MinorTypeNatural, MinorTypeHarmonic, MinorTypeMelodic}
+	pentatonicScales = []string{PentatonicTypeMajor, PentatonicTypeMinor}
 )
 
 type scale interface {
@@ -25,13 +52,13 @@ type scale interface {
 
 func main() {
 	// Define command-line flags
-	scaleFlag := flag.String("scale", "major", "Specify the scale (major, minor, pentatonic)")
+	scaleFlag := flag.String("scale", ScaleMajor, "Specify the scale (major, minor, pentatonic)")
 	keyFlag := flag.String("key", "C", "Specify the key (e.g., C, D#, F#)")
-	instrumentFlag := flag.String("instrument", "guitar", "Select the instrument for visualization (guitar)")
+	instrumentFlag := flag.String("instrument", InstrumentGuitar, "Select the instrument for visualization (guitar)")
 
 	// Additional flags for minor and pentatonic types
-	minorTypeFlag := flag.String("minorType", "natural", "Specify the minor scale type (natural, harmonic, melodic)")
-	pentatonicTypeFlag := flag.String("pentatonicType", "minor", "Specify the pentatonic scale type (major, minor, blues)")
+	minorTypeFlag := flag.String("minorType", MinorTypeNatural, "Specify the minor scale type (natural, harmonic, melodic)")
+	pentatonicTypeFlag := flag.String("pentatonicType", PentatonicTypeMinor, "Specify the pentatonic scale type (major, minor, blues)")
 
 	flag.Parse() // Parse command-line flags
 
@@ -48,7 +75,7 @@ func main() {
 	}
 
 	// Additional validation for minor scale types
-	if *scaleFlag == "minor" {
+	if *scaleFlag == ScaleMinor {
 		if !contains(minorScales, *minorTypeFlag) {
 			fmt.Printf("❌ Invalid minor scale type: %s. Supported: %s\n", *minorTypeFlag, strings.Join(minorScales, ", "))
 			return
@@ -57,7 +84,7 @@ func main() {
 	}
 
 	// Additional validation for pentatonic scale types
-	if *scaleFlag == "pentatonic" {
+	if *scaleFlag == ScalePentatonic {
 		if !contains(pentatonicScales, *pentatonicTypeFlag) {
 			fmt.Printf("❌ Invalid pentatonic scale type: %s. Supported: %s\n", *pentatonicTypeFlag, strings.Join(pentatonicScales, ", "))
 			return
@@ -69,22 +96,22 @@ func main() {
 	var err error
 
 	switch *scaleFlag {
-	case "major":
+	case ScaleMajor:
 		s, err = scales.NewMajorScale(*keyFlag)
-	case "minor":
+	case ScaleMinor:
 		switch *minorTypeFlag {
-		case "natural":
+		case MinorTypeNatural:
 			s, err = scales.NewNaturalMinorScale(*keyFlag)
-		case "harmonic":
+		case MinorTypeHarmonic:
 			s, err = scales.NewHarmonicMinorScale(*keyFlag)
-		case "melodic":
+		case MinorTypeMelodic:
 			s, err = scales.NewMelodicMinorScale(*keyFlag)
 		}
-	case "pentatonic":
+	case ScalePentatonic:
 		switch *pentatonicTypeFlag {
-		case "major":
+		case PentatonicTypeMajor:
 			s, err = scales.NewMajorPentatonicScale(*keyFlag)
-		case "minor":
+		case PentatonicTypeMinor:
 			s, err = scales.NewMinorPentatonicScale(*keyFlag)
 		}
 	}
@@ -104,13 +131,13 @@ func main() {
 	fmt.Printf("✔️ Instrument: %s\n", *instrumentFlag)
 
 	switch *instrumentFlag {
-	case "guitar":
+	case InstrumentGuitar:
 		guitar := scales.NewGuitarWithStandardTuning()
 		err = guitar.Draw(s.GetNotes(), os.Stdout)
-	case "bassGuitar":
+	case InstrumentBassGuitar:
 		guitar := scales.NewBassGuitarWithStandardTuning()
 		err = guitar.Draw(s.GetNotes(), os.Stdout)
-	case "ukulele":
+	case InstrumentUkulele:
 		ukulele := scales.NewUkuleleWithStandardTuning()
 		err = ukulele.Draw(s.GetNotes(), os.Stdout)
 	}
