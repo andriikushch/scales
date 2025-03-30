@@ -65,7 +65,7 @@ func (g *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) error 
 			}
 
 		}
-		_, _ = fmt.Fprintln(w)
+		_, _ = fmt.Fprint(w, "\r\n")
 
 		if i == len(g.tuning)-1 {
 			g.printFretMarkers(scale, w)
@@ -79,7 +79,7 @@ func (g *stringInstrumentWithFrets) printFretMarkers(scale *Scale, w io.Writer) 
 	for i := range scale.GetNotes() {
 		_, _ = fmt.Fprintf(w, "%s%s_%02d__", colors.BGYellow, colors.Black, i)
 	}
-	_, _ = fmt.Fprintln(w, colors.End)
+	_, _ = fmt.Fprint(w, colors.End+"\r\n")
 }
 
 func NewGuitarWithStandardTuning() *Guitar {

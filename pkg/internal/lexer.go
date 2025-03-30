@@ -115,6 +115,29 @@ func (l *Lexer) readChars() (tokenType, string, error) {
 			return "", "", ErrNoRootToken
 		}
 
+		if len(l.input) > 1 {
+			alt := ""
+			for i := 1; i < len(l.input) && string(l.input[i]) == b; i++ {
+				alt += b
+			}
+
+			if len(alt) > 0 {
+				return ROOT, roots[index] + alt, nil
+			}
+
+		}
+
+		if len(l.input) > 1 {
+			alt := ""
+			for i := 1; i < len(l.input) && string(l.input[i]) == sharpSign; i++ {
+				alt += sharpSign
+			}
+
+			if len(alt) > 0 {
+				return ROOT, roots[index] + alt, nil
+			}
+		}
+
 		return ROOT, roots[index], nil
 
 	}

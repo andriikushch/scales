@@ -38,10 +38,14 @@ func (p parser) parse(input string) (*Chord, error) {
 		case internal.MAJ:
 			err = p.parseMaj(chord, token, tokenIndex, tokens)
 		case internal.FLAT:
-			chord.addType(internal.Flat)
+			if token.Value != "" {
+				chord.addType(internal.Flat)
+			}
 			err = p.parseAlt(chord, token, internal.Degrees, internal.FlatDegrees, chord.flatFirst)
 		case internal.SHARP:
-			chord.addType(internal.Sharp)
+			if token.Value != "" {
+				chord.addType(internal.Sharp)
+			}
 			err = p.parseAlt(chord, token, internal.Degrees, internal.SharpDegrees, chord.sharpFirst)
 		case internal.SUS:
 			err = p.parseSus(token, chord)

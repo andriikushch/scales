@@ -1299,6 +1299,45 @@ func TestParseChord(t *testing.T) {
 				cType:     []string{internal.Diminished, internal.Eleventh},
 			},
 		},
+		{
+			name: "G#m",
+			args: args{
+				description: "G#m",
+			},
+			want: Chord{
+				description:    "G#m",
+				chordBasicType: internal.Minor,
+				root:           NewNote("G#"),
+				notes: []Note{
+					NewNote(internal.GSharp),
+					NewNote(internal.B),
+					NewNote(internal.DSharp),
+				},
+				structure: []int{internal.IUnison, internal.Im3, internal.IP5},
+				cType:     []string{internal.Minor},
+			},
+		},
+		{
+			name: "C#dim11",
+			args: args{
+				description: "C#dim11",
+			},
+			want: Chord{
+				description:    "C#dim11",
+				chordBasicType: internal.Diminished,
+				root:           NewNote("C#"),
+				notes: []Note{
+					NewNote(internal.CSharp),
+					NewNote(internal.E),
+					NewNote(internal.G),
+					NewNote(internal.ASharp),
+					NewNote(internal.DSharp),
+					NewNote(internal.FSharp),
+				},
+				structure: []int{internal.IUnison, internal.Im3, internal.ID5, internal.IM6, internal.IM9, internal.IP11},
+				cType:     []string{internal.Diminished, internal.Eleventh},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
