@@ -1,9 +1,10 @@
 package scales
 
 import (
-	"github.com/andriikushch/scales/pkg/internal"
 	"reflect"
 	"testing"
+
+	"github.com/andriikushch/scales/pkg/internal"
 )
 
 func TestParseChord(t *testing.T) {
@@ -1267,7 +1268,7 @@ func TestParseChord(t *testing.T) {
 				chordBasicType: internal.Diminished,
 				root:           NewNote("C"),
 				notes: []Note{
-					//C, E♭, G♭, B♭♭, D
+					// C, E♭, G♭, B♭♭, D
 					NewNote(internal.C),
 					NewNote(internal.EFlat),
 					NewNote(internal.GFlat),

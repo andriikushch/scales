@@ -7,12 +7,14 @@ type Ukulele struct {
 }
 
 func NewUkuleleWithStandardTuning() *Ukulele {
-	return &Ukulele{&stringInstrumentWithFrets{
-		tuning: []Note{
-			NewNote(internal.A),
-			NewNote(internal.E),
-			NewNote(internal.C),
-			NewNote(internal.G),
-		}},
+	return &Ukulele{
+		&stringInstrumentWithFrets{
+			tuning: []Note{
+				NewNote(internal.A),
+				NewNote(internal.E),
+				NewNote(internal.C),
+				NewNote(internal.G),
+			},
+		},
 	}
 }

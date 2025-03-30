@@ -2,9 +2,10 @@ package scales
 
 import (
 	"errors"
-	"github.com/andriikushch/scales/pkg/internal"
 	"slices"
 	"strconv"
+
+	"github.com/andriikushch/scales/pkg/internal"
 )
 
 type parser struct {
@@ -373,7 +374,6 @@ func (p parser) initMinorChord(chord *Chord, token internal.Token, isLastToken b
 
 	chord.addType(typeString)
 	return nil
-
 }
 
 func (p parser) initMajorChord(chord *Chord, token internal.Token) error {

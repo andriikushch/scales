@@ -83,15 +83,17 @@ func (g *stringInstrumentWithFrets) printFretMarkers(scale *Scale, w io.Writer) 
 }
 
 func NewGuitarWithStandardTuning() *Guitar {
-	return &Guitar{&stringInstrumentWithFrets{
-		tuning: []Note{
-			NewNote(internal.E),
-			NewNote(internal.B),
-			NewNote(internal.G),
-			NewNote(internal.D),
-			NewNote(internal.A),
-			NewNote(internal.E),
-		}},
+	return &Guitar{
+		&stringInstrumentWithFrets{
+			tuning: []Note{
+				NewNote(internal.E),
+				NewNote(internal.B),
+				NewNote(internal.G),
+				NewNote(internal.D),
+				NewNote(internal.A),
+				NewNote(internal.E),
+			},
+		},
 	}
 }
 

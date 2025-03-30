@@ -2,9 +2,10 @@ package scales
 
 import (
 	"errors"
-	"github.com/andriikushch/scales/pkg/internal"
 	"slices"
 	"strings"
+
+	"github.com/andriikushch/scales/pkg/internal"
 )
 
 var errBassNoteIsEmpty = errors.New("bass note is empty")
