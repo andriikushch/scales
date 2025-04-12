@@ -77,7 +77,11 @@ func (g *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) error 
 
 func (g *stringInstrumentWithFrets) printFretMarkers(scale *Scale, w io.Writer) {
 	for i := range scale.GetNotes() {
-		_, _ = fmt.Fprintf(w, "%s%s_%02d__", colors.BGYellow, colors.Black, i)
+		if i == 5 || i == 7 || i == 12 || i == 17 || i == 19 || i == 24 {
+			_, _ = fmt.Fprintf(w, "%s%s_%02d__", colors.BGBlack, colors.White, i)
+		} else {
+			_, _ = fmt.Fprintf(w, "%s%s_%02d__", colors.BGYellow, colors.Black, i)
+		}
 	}
 	_, _ = fmt.Fprint(w, colors.End+"\r\n")
 }
