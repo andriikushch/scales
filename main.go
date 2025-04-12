@@ -340,20 +340,24 @@ func main() {
 			fmt.Fprint(os.Stdout, "\r\n")
 			os.Stdout.Sync()
 
+			// Always draw the scale first
+			switch *instrumentFlag {
+			case instrumentGuitar:
+				guitar := scales.NewGuitarWithStandardTuning()
+				err = guitar.Draw(s.GetNotes(), os.Stdout)
+			case instrumentBassGuitar:
+				guitar := scales.NewBassGuitarWithStandardTuning()
+				err = guitar.Draw(s.GetNotes(), os.Stdout)
+			case instrumentUkulele:
+				ukulele := scales.NewUkuleleWithStandardTuning()
+				err = ukulele.Draw(s.GetNotes(), os.Stdout)
+			}
+			fmt.Fprint(os.Stdout, "\r\n")
+			os.Stdout.Sync()
+
 			// Draw the current view
 			switch currentView {
 			case viewScale:
-				switch *instrumentFlag {
-				case instrumentGuitar:
-					guitar := scales.NewGuitarWithStandardTuning()
-					err = guitar.Draw(s.GetNotes(), os.Stdout)
-				case instrumentBassGuitar:
-					guitar := scales.NewBassGuitarWithStandardTuning()
-					err = guitar.Draw(s.GetNotes(), os.Stdout)
-				case instrumentUkulele:
-					ukulele := scales.NewUkuleleWithStandardTuning()
-					err = ukulele.Draw(s.GetNotes(), os.Stdout)
-				}
 				if sc, ok := s.(*scales.Scale); ok && *scaleFlag != scalePentatonic {
 					ts.displayChords(sc.GetChords(), -1)
 				}
@@ -368,6 +372,7 @@ func main() {
 						ts.displayChords(chords, currentChordIndex)
 						fmt.Fprintf(os.Stdout, "Current Chord: %s %s\r\n", chord.Description(), chord.Notes())
 						fmt.Fprint(os.Stdout, "\r\n")
+						// Draw the current chord
 						switch *instrumentFlag {
 						case instrumentGuitar:
 							guitar := scales.NewGuitarWithStandardTuning()
