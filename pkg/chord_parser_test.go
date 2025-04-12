@@ -1346,14 +1346,14 @@ func TestParseChord(t *testing.T) {
 			},
 			want: Chord{
 				description:    "Ebaug",
-				chordBasicType: internal.Diminished,
-				root:           NewNote("C#"),
+				chordBasicType: internal.Augmented,
+				root:           NewNote("Eb"),
 				notes: []Note{
 					NewNote(internal.EFlat),
 					NewNote(internal.G),
 					NewNote(internal.B),
 				},
-				structure: []int{internal.IUnison, internal.IM3, internal.ID5, internal.IA5},
+				structure: []int{internal.IUnison, internal.IM3, internal.IA5},
 				cType:     []string{internal.Augmented},
 			},
 		},
