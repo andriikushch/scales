@@ -115,6 +115,8 @@ func (ts *terminalState) displayHelp(currentView string, scaleType string) {
 	fmt.Fprint(os.Stdout, "i   : Change instrument\r\n")
 	if scaleType == scalePentatonic {
 		fmt.Fprint(os.Stdout, "t   : Toggle pentatonic type (major/minor)\r\n")
+	} else if scaleType == scaleMinor {
+		fmt.Fprint(os.Stdout, "t   : Toggle minor type (natural/harmonic/melodic)\r\n")
 	}
 	fmt.Fprint(os.Stdout, "q   : Quit\r\n")
 	fmt.Fprint(os.Stdout, "\r\n")
@@ -185,7 +187,7 @@ func main() {
 
 	// Additional flags for minor and pentatonic types
 	minorTypeFlag := flag.String("minorType", minorTypeNatural, "Specify the minor scale type (natural, harmonic, melodic)")
-	pentatonicTypeFlag := flag.String("pentatonicType", pentatonicTypeMinor, "Specify the pentatonic scale type (major, minor, blues)")
+	pentatonicTypeFlag := flag.String("pentatonicType", pentatonicTypeMinor, "Specify the pentatonic scale type (major, minor)")
 
 	flag.Parse() // Parse command-line flags
 
@@ -329,6 +331,8 @@ func main() {
 			fmt.Fprintf(os.Stdout, "✔️ Key: %s\r\n", keys[currentKeyIndex])
 			if *scaleFlag == scalePentatonic {
 				fmt.Fprintf(os.Stdout, "✔️ Scale: %s (%s) : %s\r\n", *scaleFlag, *pentatonicTypeFlag, s.String())
+			} else if *scaleFlag == scaleMinor {
+				fmt.Fprintf(os.Stdout, "✔️ Scale: %s (%s) : %s\r\n", *scaleFlag, *minorTypeFlag, s.String())
 			} else {
 				fmt.Fprintf(os.Stdout, "✔️ Scale: %s : %s\r\n", *scaleFlag, s.String())
 			}
@@ -477,6 +481,16 @@ func main() {
 						} else {
 							*pentatonicTypeFlag = pentatonicTypeMajor
 						}
+					} else if *scaleFlag == scaleMinor {
+						// Cycle through minor scale types
+						currentIndex := 0
+						for i, s := range minorScales {
+							if s == *minorTypeFlag {
+								currentIndex = i
+								break
+							}
+						}
+						*minorTypeFlag = minorScales[(currentIndex+1)%len(minorScales)]
 					}
 				}
 

@@ -396,6 +396,10 @@ func (p parser) initAugChord(chord *Chord, token internal.Token) error {
 	// add half step to the 5th
 	chord.sharpFirst(internal.IP5)
 
+	if token.Value == "" {
+		return nil
+	}
+
 	tokenValue, err := strconv.Atoi(token.Value)
 	if err != nil {
 		return errIsNotInt
