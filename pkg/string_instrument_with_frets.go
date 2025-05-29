@@ -2,10 +2,11 @@ package scales
 
 import (
 	"fmt"
-	"github.com/andriikushch/scales/pkg/internal"
-	"github.com/andriikushch/scales/pkg/internal/colors"
 	"io"
 	"slices"
+
+	"github.com/andriikushch/scales/pkg/internal"
+	"github.com/andriikushch/scales/pkg/internal/colors"
 )
 
 func (g *stringInstrumentWithFrets) drawOrNot(n Note, scale []Note) (bool, Note, int) {
