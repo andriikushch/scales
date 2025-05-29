@@ -7,7 +7,6 @@ import (
 )
 
 // Open position chords
-
 var (
 	guitarOpenCMaj       = []int{0, 1, 0, 2, 3, MutedNote}
 	guitarChordShapeCMaj = newChordShape("guitar", []int{internal.IUnison, internal.IM3, internal.IP5}, guitarOpenCMaj, 4)

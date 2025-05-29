@@ -84,10 +84,13 @@ func (g *stringInstrumentWithFrets) drawChord(cs chordShape, c Chord, w io.Write
 	leftFret := rootNotePositionOnTheString - cs.Schema[cs.RootNotePosition]
 	rightFret := leftFret + slices.Max(cs.Schema)
 
+	if leftFret < 0 {
+		return fmt.Errorf("left fret is negative")
+	}
+
 	g.printFretMarkers(leftFret, rightFret, allNotesOnTheString, w)
 
 	for str, note := range g.tuning {
-		stringAlreadyUsed := false
 		scale, err := newScale(note.Name, structure, []string{})
 		if err != nil {
 			return err
@@ -107,14 +110,11 @@ func (g *stringInstrumentWithFrets) drawChord(cs chordShape, c Chord, w io.Write
 				color = colors.GetColor(-1)
 			}
 
-			if stringAlreadyUsed {
+			if cs.Schema[str]+leftFret != fret {
 				color = colors.GetColor(-1)
 			}
 
-			draw = draw && (cs.Schema[str]+leftFret == fret) && !stringAlreadyUsed
-			if draw {
-				stringAlreadyUsed = true
-			}
+			draw = draw && (cs.Schema[str]+leftFret == fret)
 			if fret == 0 {
 				if draw {
 					_, _ = fmt.Fprintf(w, "%s%-3s%s||", color, noteFromTheScale.Name, colors.End)

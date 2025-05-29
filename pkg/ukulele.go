@@ -1,9 +1,22 @@
 package scales
 
-import "github.com/andriikushch/scales/pkg/internal"
+import (
+	"github.com/andriikushch/scales/pkg/internal"
+	"strconv"
+	"strings"
+)
 
 type Ukulele struct {
 	*stringInstrumentWithFrets
+}
+
+func (u *Ukulele) getChordShapes(chord Chord) []chordShape {
+	structure := make([]string, len(chord.structure))
+	for k, v := range chord.structure {
+		structure[k] = strconv.Itoa(v)
+	}
+
+	return ukuleleChordShapes[strings.Join(structure, "-")]
 }
 
 func NewUkuleleWithStandardTuning() *Ukulele {
