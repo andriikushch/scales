@@ -1,18 +1,18 @@
-package internal
+package scales
 
 import "math"
 
-const mutedNote = -math.MaxInt
+const MutedNote = -math.MaxInt
 
-type ChordShape struct {
+type chordShape struct {
 	Instrument       string
-	ChordID          string
+	ChordID          []int
 	Schema           []int
 	RootNotePosition int
 }
 
-func NewChordShape(instrument string, chordID string, schema []int, rootNotePosition int) ChordShape {
-	return ChordShape{
+func newChordShape(instrument string, chordID []int, schema []int, rootNotePosition int) chordShape {
+	return chordShape{
 		Instrument:       instrument,
 		ChordID:          chordID,
 		Schema:           schema,

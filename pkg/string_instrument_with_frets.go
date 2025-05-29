@@ -62,7 +62,7 @@ func (g *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) error 
 	return nil
 }
 
-func (g *stringInstrumentWithFrets) DrawChord(cs internal.ChordShape, c Chord, w io.Writer) error {
+func (g *stringInstrumentWithFrets) drawChord(cs chordShape, c Chord, w io.Writer) error {
 	rootString := cs.RootNotePosition
 
 	var structure []int
@@ -81,7 +81,7 @@ func (g *stringInstrumentWithFrets) DrawChord(cs internal.ChordShape, c Chord, w
 	}
 
 	leftFret := rootNotePositionOnTheString - cs.Schema[cs.RootNotePosition]
-	rightFret := rootNotePositionOnTheString + slices.Max(cs.Schema)
+	rightFret := leftFret + slices.Max(cs.Schema)
 
 	g.printFretMarkers(leftFret, rightFret, allNotesOnTheString, w)
 
@@ -101,7 +101,7 @@ func (g *stringInstrumentWithFrets) DrawChord(cs internal.ChordShape, c Chord, w
 
 			nName := ""
 			color := colors.GetColor(colorIndex)
-			if cs.Schema[str] == internal.MutedNote {
+			if cs.Schema[str] == MutedNote {
 				nName = "-"
 				color = colors.GetColor(-1)
 			}
