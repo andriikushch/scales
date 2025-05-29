@@ -32,7 +32,7 @@ func (g *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) error 
 		}
 
 		if i == 0 {
-			g.printFretMarkers(0, -1, scale, w)
+			g.printFretMarkers(0, 24, scale, w)
 		}
 
 		for i, note := range scale.GetNotes() {
@@ -56,7 +56,7 @@ func (g *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) error 
 		_, _ = fmt.Fprint(w, "\r\n")
 
 		if i == len(g.tuning)-1 {
-			g.printFretMarkers(0, -1, scale, w)
+			g.printFretMarkers(0, 24, scale, w)
 		}
 	}
 
