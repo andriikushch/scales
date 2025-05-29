@@ -1,9 +1,10 @@
 package scales
 
 import (
-	"github.com/andriikushch/scales/pkg/internal"
 	"strconv"
 	"strings"
+
+	"github.com/andriikushch/scales/pkg/internal"
 )
 
 type Ukulele struct {
