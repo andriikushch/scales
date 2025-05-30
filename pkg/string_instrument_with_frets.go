@@ -9,7 +9,11 @@ import (
 	"github.com/andriikushch/scales/pkg/internal/colors"
 )
 
-func (g *stringInstrumentWithFrets) drawOrNot(n Note, scale []Note) (bool, Note, int) {
+type stringInstrumentWithFrets struct {
+	tuning []Note
+}
+
+func (inst *stringInstrumentWithFrets) drawOrNot(n Note, scale []Note) (bool, Note, int) {
 	index := slices.IndexFunc(scale, n.Equal)
 
 	if index == -1 {
@@ -19,24 +23,24 @@ func (g *stringInstrumentWithFrets) drawOrNot(n Note, scale []Note) (bool, Note,
 	return true, scale[index], index
 }
 
-func (g *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) error {
+func (inst *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) error {
 	var structure []int
 	for range 25 {
 		structure = append(structure, internal.HalfStep)
 	}
 
-	for i, note := range g.tuning {
+	for i, note := range inst.tuning {
 		scale, err := newScale(note.Name, structure, []string{})
 		if err != nil {
 			return err
 		}
 
 		if i == 0 {
-			g.printFretMarkers(0, 24, scale, w)
+			inst.printFretMarkers(0, 24, scale, w)
 		}
 
 		for i, note := range scale.GetNotes() {
-			draw, noteFromTheScale, colorIndex := g.drawOrNot(note, notesToDraw)
+			draw, noteFromTheScale, colorIndex := inst.drawOrNot(note, notesToDraw)
 
 			if i == 0 {
 				if draw {
@@ -55,15 +59,15 @@ func (g *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) error 
 		}
 		_, _ = fmt.Fprint(w, "\r\n")
 
-		if i == len(g.tuning)-1 {
-			g.printFretMarkers(0, 24, scale, w)
+		if i == len(inst.tuning)-1 {
+			inst.printFretMarkers(0, 24, scale, w)
 		}
 	}
 
 	return nil
 }
 
-func (g *stringInstrumentWithFrets) drawChord(cs chordShape, c Chord, w io.Writer) error {
+func (inst *stringInstrumentWithFrets) drawChord(cs chordShape, c Chord, w io.Writer) error {
 	rootString := cs.RootNotePosition
 
 	var structure []int
@@ -71,7 +75,7 @@ func (g *stringInstrumentWithFrets) drawChord(cs chordShape, c Chord, w io.Write
 		structure = append(structure, internal.HalfStep)
 	}
 
-	allNotesOnTheString, err := newScale(g.tuning[rootString].Name, structure, []string{})
+	allNotesOnTheString, err := newScale(inst.tuning[rootString].Name, structure, []string{})
 	if err != nil {
 		return err
 	}
@@ -85,12 +89,14 @@ func (g *stringInstrumentWithFrets) drawChord(cs chordShape, c Chord, w io.Write
 	rightFret := leftFret + slices.Max(cs.Schema)
 
 	if leftFret < 0 {
-		return fmt.Errorf("left fret is negative")
+		rootNotePositionOnTheString += 12
+		leftFret += 12
+		rightFret += 12
 	}
 
-	g.printFretMarkers(leftFret, rightFret, allNotesOnTheString, w)
+	inst.printFretMarkers(leftFret, rightFret, allNotesOnTheString, w)
 
-	for str, note := range g.tuning {
+	for str, note := range inst.tuning {
 		scale, err := newScale(note.Name, structure, []string{})
 		if err != nil {
 			return err
@@ -101,7 +107,7 @@ func (g *stringInstrumentWithFrets) drawChord(cs chordShape, c Chord, w io.Write
 				continue
 			}
 
-			draw, noteFromTheScale, colorIndex := g.drawOrNot(note, c.Notes())
+			draw, noteFromTheScale, colorIndex := inst.drawOrNot(note, c.Notes())
 
 			nName := ""
 			color := colors.GetColor(colorIndex)
@@ -134,12 +140,12 @@ func (g *stringInstrumentWithFrets) drawChord(cs chordShape, c Chord, w io.Write
 		_, _ = fmt.Fprint(w, "\r\n")
 	}
 
-	g.printFretMarkers(leftFret, rightFret, allNotesOnTheString, w)
+	inst.printFretMarkers(leftFret, rightFret, allNotesOnTheString, w)
 
 	return nil
 }
 
-func (g *stringInstrumentWithFrets) printFretMarkers(startingPosition int, endPosition int, scale *Scale, w io.Writer) {
+func (inst *stringInstrumentWithFrets) printFretMarkers(startingPosition int, endPosition int, scale *Scale, w io.Writer) {
 	for i := startingPosition; i < len(scale.GetNotes()) && i <= endPosition; i++ {
 		if i == 5 || i == 7 || i == 12 || i == 17 || i == 19 || i == 24 {
 			_, _ = fmt.Fprintf(w, "%s%s_%02d__", colors.BGBlack, colors.White, i)

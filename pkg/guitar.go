@@ -20,14 +20,6 @@ func (g *Guitar) getChordShapes(chord Chord) []chordShape {
 	return guitarChordShapes[strings.Join(structure, "-")]
 }
 
-type BassGuitar struct {
-	*stringInstrumentWithFrets
-}
-
-type stringInstrumentWithFrets struct {
-	tuning []Note
-}
-
 func NewGuitarWithStandardTuning() *Guitar {
 	return &Guitar{
 		&stringInstrumentWithFrets{
