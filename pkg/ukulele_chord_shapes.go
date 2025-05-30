@@ -33,7 +33,7 @@ var (
 )
 
 var (
-	openUkuleleDMaj       = []int{2, 2, 2, 0}
+	openUkuleleDMaj       = []int{0, 2, 2, 2}
 	ukuleleChordShapeDMaj = newChordShape("ukulele", []int{internal.IUnison, internal.IM3, internal.IP5}, openUkuleleDMaj, 2)
 )
 
