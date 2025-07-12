@@ -100,11 +100,7 @@ func TestTokenize(t *testing.T) {
 			want: []Token{
 				{
 					Type:  ROOT,
-					Value: "A",
-				},
-				{
-					Type:  SHARP,
-					Value: "",
+					Value: "A#",
 				},
 				{
 					Type: MINOR,
@@ -119,11 +115,7 @@ func TestTokenize(t *testing.T) {
 			want: []Token{
 				{
 					Type:  ROOT,
-					Value: "A",
-				},
-				{
-					Type:  SHARP,
-					Value: "",
+					Value: "A#",
 				},
 				{
 					Type: MINOR,
@@ -186,11 +178,7 @@ func TestTokenize(t *testing.T) {
 			want: []Token{
 				{
 					Type:  ROOT,
-					Value: "C",
-				},
-				{
-					Type:  SHARP,
-					Value: "",
+					Value: "C#",
 				},
 			},
 		},
@@ -202,11 +190,7 @@ func TestTokenize(t *testing.T) {
 			want: []Token{
 				{
 					Type:  ROOT,
-					Value: "C",
-				},
-				{
-					Type:  FLAT,
-					Value: "",
+					Value: "Cb",
 				},
 			},
 		},
@@ -409,13 +393,7 @@ func TestTokenize(t *testing.T) {
 			want: []Token{
 				{
 					Type:  ROOT,
-					Value: "F",
-				},
-				{
-					Type: SHARP,
-				},
-				{
-					Type: SHARP,
+					Value: "F##",
 				},
 				{
 					Type:  DIM,

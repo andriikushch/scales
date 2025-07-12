@@ -1331,7 +1331,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.CSharp),
 					NewNote(internal.E),
 					NewNote(internal.G),
-					NewNote(internal.ASharp),
+					NewNote(internal.BFlat),
 					NewNote(internal.DSharp),
 					NewNote(internal.FSharp),
 				},

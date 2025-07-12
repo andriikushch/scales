@@ -90,11 +90,15 @@ func (c *Chord) findOptimalNoteForTheChord(notes []Note, step int, key string, c
 
 	if context == nil {
 		// try to understand if it is a minor or major chord, it is not
-		if chordType == internal.Minor {
+		switch chordType {
+		case internal.Minor:
 			// it is minor, let's build the scale and see if any of the notes annotations are in the scale
 			sc, _ := NewNaturalMinorScale(key)
 			scaleNotes = sc.GetNotes()
-		} else {
+		case internal.Diminished:
+			sc, _ := NewWholeHalfDiminishedScale(key)
+			scaleNotes = sc.GetNotes()
+		default:
 			// maybe it is major, let's build the scale and see if any of the notes annotations are in the scale
 			sc, _ := NewMajorScale(key)
 			scaleNotes = sc.GetNotes()

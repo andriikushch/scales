@@ -198,7 +198,7 @@ func ExampleNewNaturalMinorScale() {
 	}
 
 	fmt.Println(scale.GetNotes())
-	// Output: [{A} {B} {C} {D} {E} {F} {G}]
+	// Output: [A B C D E F G]
 }
 
 func Test_NewHarmonicMinorScale(t *testing.T) {
@@ -388,7 +388,7 @@ func ExampleNewHarmonicMinorScale() {
 	}
 
 	fmt.Println(scale.GetNotes())
-	// Output: [{A} {B} {C} {D} {E} {F} {G#}]
+	// Output: [A B C D E F G#]
 }
 
 func Test_NewMelodicMinorScale(t *testing.T) {
@@ -561,7 +561,11 @@ func Test_MinorScaleGetChords(t *testing.T) {
 	scale, err := scales.NewNaturalMinorScale("A")
 	require.NoError(t, err)
 
-	require.Equal(t, scale.GetChords(), []string{"Am", "Bdim", "Cmaj", "Dm", "Em", "Fmaj", "Gmaj"})
+	var results []string
+	for _, c := range scale.GetChords() {
+		results = append(results, c.Description())
+	}
+	require.Equal(t, []string{"Am", "Bdim", "Cmaj", "Dm", "Em", "Fmaj", "Gmaj"}, results)
 }
 
 func Test_MelodicMinorScale(t *testing.T) {
@@ -570,7 +574,12 @@ func Test_MelodicMinorScale(t *testing.T) {
 	scale, err := scales.NewMelodicMinorScale("A")
 	require.NoError(t, err)
 
-	require.Equal(t, scale.GetChords(), []string{"Am", "Bmin", "Caug", "Dmaj", "Emaj", "F#dim", "G#dim"})
+	var results []string
+	for _, c := range scale.GetChords() {
+		results = append(results, c.Description())
+	}
+
+	require.Equal(t, []string{"Am", "Bmin", "Caug", "Dmaj", "Emaj", "F#dim", "G#dim"}, results)
 }
 
 func Test_HarmonicMinorScale(t *testing.T) {
@@ -579,7 +588,12 @@ func Test_HarmonicMinorScale(t *testing.T) {
 	scale, err := scales.NewHarmonicMinorScale("A")
 	require.NoError(t, err)
 
-	require.Equal(t, scale.GetChords(), []string{"Am", "Bdim", "Caug", "Dm", "Emaj", "Fmaj", "G#dim"})
+	var results []string
+	for _, c := range scale.GetChords() {
+		results = append(results, c.Description())
+	}
+
+	require.Equal(t, []string{"Am", "Bdim", "Caug", "Dm", "Emaj", "Fmaj", "G#dim"}, results)
 }
 
 // NewMelodicMinorScale demonstrates the use of NewMelodicMinorScale function.
@@ -592,5 +606,5 @@ func ExampleNewMelodicMinorScale() {
 	}
 
 	fmt.Println(scale.GetNotes())
-	// Output: [{A} {B} {C} {D} {E} {F#} {G#}]
+	// Output: [A B C D E F# G#]
 }

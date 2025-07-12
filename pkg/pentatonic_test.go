@@ -174,7 +174,7 @@ func ExampleNewMajorPentatonicScale() {
 	}
 
 	fmt.Println(scale.GetNotes())
-	// Output: [{A} {B} {C#} {E} {F#}]
+	// Output: [A B C# E F#]
 }
 
 func Test_NewMinorPentatonicScale(t *testing.T) {
@@ -340,5 +340,5 @@ func ExampleNewMinorPentatonicScale() {
 	}
 
 	fmt.Println(scale.GetNotes())
-	// Output: [{A} {C} {D} {E} {G}]
+	// Output: [A C D E G]
 }
