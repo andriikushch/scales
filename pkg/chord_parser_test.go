@@ -1362,7 +1362,7 @@ func TestParseChord(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
-			got, err := parseChord(tt.args.description, nil)
+			got, err := NewChord(tt.args.description)
 			if err != nil {
 				t.Errorf("parseChord() error = %v", err)
 			}

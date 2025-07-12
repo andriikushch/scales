@@ -20,6 +20,10 @@ type Chord struct {
 	bassNote       Note
 }
 
+func NewChord(chord string) (Chord, error) {
+	return parseChord(chord, nil)
+}
+
 func (c *Chord) Description() string {
 	return c.description
 }
