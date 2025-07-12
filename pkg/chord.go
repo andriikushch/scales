@@ -16,7 +16,7 @@ type Chord struct {
 	root           Note
 	notes          []Note
 	structure      []int
-	cType          []string
+	quality        []string
 	bassNote       Note
 }
 
@@ -33,7 +33,7 @@ func (c *Chord) setName(name string) {
 }
 
 func (c *Chord) addType(t string) {
-	c.cType = append(c.cType, t)
+	c.quality = append(c.quality, t)
 }
 
 func (c *Chord) addRoot(note Note) {
@@ -152,9 +152,9 @@ func (c *Chord) finish(context contextNotes) error {
 
 		// not reliable, trying to guess sign from the previous Type value
 		var isFlat, isSharp bool
-		if intervalIndex < len(c.cType)-1 {
-			isFlat = c.cType[intervalIndex] == internal.Flat
-			isSharp = c.cType[intervalIndex] == internal.Sharp
+		if intervalIndex < len(c.quality)-1 {
+			isFlat = c.quality[intervalIndex] == internal.Flat
+			isSharp = c.quality[intervalIndex] == internal.Sharp
 		}
 
 		nextNote := c.findOptimalNoteForTheChord(nextPossibleNotes, interval, c.root.Name, c.chordBasicType, isFlat, isSharp, context)

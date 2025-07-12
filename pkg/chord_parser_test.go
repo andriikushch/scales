@@ -34,7 +34,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.E),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.IP5},
-				cType:     []string{internal.Minor},
+				quality:   []string{internal.Minor},
 			},
 		},
 		{
@@ -53,7 +53,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.E),
 				},
 				structure: []int{internal.Im3, internal.IUnison, internal.IP5},
-				cType:     []string{internal.Minor, internal.Over, "C"},
+				quality:   []string{internal.Minor, internal.Over, "C"},
 			},
 		},
 		{
@@ -72,7 +72,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.G),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.IP5, internal.Im7},
-				cType:     []string{internal.Minor, internal.Seventh},
+				quality:   []string{internal.Minor, internal.Seventh},
 			},
 		},
 		{
@@ -90,7 +90,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.G),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5},
-				cType:     []string{internal.Major},
+				quality:   []string{internal.Major},
 			},
 		},
 		{
@@ -108,7 +108,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.G),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5},
-				cType:     []string{internal.Major},
+				quality:   []string{internal.Major},
 			},
 		},
 		{
@@ -127,7 +127,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.B),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.IM7},
-				cType:     []string{internal.Major, internal.Seventh},
+				quality:   []string{internal.Major, internal.Seventh},
 			},
 		},
 		{
@@ -146,7 +146,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.BFlat),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.Im7},
-				cType:     []string{internal.Dominant, internal.Seventh},
+				quality:   []string{internal.Dominant, internal.Seventh},
 			},
 		},
 		{
@@ -165,7 +165,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.BFlat),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.IP5, internal.Im7},
-				cType:     []string{internal.Minor, internal.Seventh},
+				quality:   []string{internal.Minor, internal.Seventh},
 			},
 		},
 		{
@@ -184,7 +184,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.BFlat),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.ID5, internal.Im7},
-				cType:     []string{internal.Minor, internal.Seven, internal.Flat, internal.Five},
+				quality:   []string{internal.Minor, internal.Seven, internal.Flat, internal.Five},
 			},
 		},
 		{
@@ -203,7 +203,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.A),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.ID5, internal.IM6},
-				cType:     []string{internal.Diminished, internal.Seventh},
+				quality:   []string{internal.Diminished, internal.Seventh},
 			},
 		},
 		{
@@ -221,7 +221,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.GFlat),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.ID5},
-				cType:     []string{internal.Diminished},
+				quality:   []string{internal.Diminished},
 			},
 		},
 		{
@@ -240,7 +240,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.BFlat),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IA5, internal.Im7},
-				cType:     []string{internal.Augmented, internal.Seventh},
+				quality:   []string{internal.Augmented, internal.Seventh},
 			},
 		},
 		{
@@ -260,7 +260,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IA5, internal.Im7, internal.IM9},
-				cType:     []string{internal.Augmented, internal.Ninth},
+				quality:   []string{internal.Augmented, internal.Ninth},
 			},
 		},
 		{
@@ -281,7 +281,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.F),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IA5, internal.Im7, internal.IM9, internal.IP11},
-				cType:     []string{internal.Augmented, internal.Eleventh},
+				quality:   []string{internal.Augmented, internal.Eleventh},
 			},
 		},
 		{
@@ -300,7 +300,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.A),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IA5, internal.IM6},
-				cType:     []string{internal.Augmented, internal.Sixth},
+				quality:   []string{internal.Augmented, internal.Sixth},
 			},
 		},
 		{
@@ -319,7 +319,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.BFlat),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.ID5, internal.Im7},
-				cType:     []string{internal.Dominant, internal.Seven, internal.Flat, internal.Five},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Flat, internal.Five},
 			},
 		},
 		{
@@ -338,7 +338,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.B),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.IP5, internal.IM7},
-				cType:     []string{internal.Minor, internal.Major, internal.Seventh},
+				quality:   []string{internal.Minor, internal.Major, internal.Seventh},
 			},
 		},
 		{
@@ -358,7 +358,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.IM7, internal.IM9},
-				cType:     []string{internal.Major, internal.Ninth},
+				quality:   []string{internal.Major, internal.Ninth},
 			},
 		},
 		{
@@ -378,7 +378,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.Im7, internal.IM9},
-				cType:     []string{internal.Dominant, internal.Ninth},
+				quality:   []string{internal.Dominant, internal.Ninth},
 			},
 		},
 		{
@@ -398,7 +398,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.IP5, internal.Im7, internal.IM9},
-				cType:     []string{internal.Minor, internal.Ninth},
+				quality:   []string{internal.Minor, internal.Ninth},
 			},
 		},
 		{
@@ -419,7 +419,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.F),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.Im7, internal.IM9, internal.IP11},
-				cType:     []string{internal.Dominant, internal.Eleventh},
+				quality:   []string{internal.Dominant, internal.Eleventh},
 			},
 		},
 		{
@@ -440,7 +440,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.F),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.IP5, internal.Im7, internal.IM9, internal.IP11},
-				cType:     []string{internal.Minor, internal.Eleventh},
+				quality:   []string{internal.Minor, internal.Eleventh},
 			},
 		},
 		{
@@ -462,7 +462,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.A),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.IM7, internal.IM9, internal.IP11, internal.IM13},
-				cType:     []string{internal.Major, internal.Thirteenth},
+				quality:   []string{internal.Major, internal.Thirteenth},
 			},
 		},
 		{
@@ -484,7 +484,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.A),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.Im7, internal.IM9, internal.IP11, internal.IM13},
-				cType:     []string{internal.Dominant, internal.Thirteenth},
+				quality:   []string{internal.Dominant, internal.Thirteenth},
 			},
 		},
 		{
@@ -506,7 +506,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.A),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.IP5, internal.Im7, internal.IM9, internal.IP11, internal.IM13},
-				cType:     []string{internal.Minor, internal.Thirteenth},
+				quality:   []string{internal.Minor, internal.Thirteenth},
 			},
 		},
 		{
@@ -525,7 +525,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.BFlat),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.ID5, internal.Im7},
-				cType:     []string{internal.Dominant, internal.Seven, internal.Flat, internal.Five},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Flat, internal.Five},
 			},
 		},
 		{
@@ -545,7 +545,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.DFlat),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.Im7, internal.Im9},
-				cType:     []string{internal.Dominant, internal.Seven, internal.Flat, internal.Nine},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Flat, internal.Nine},
 			},
 		},
 		{
@@ -565,7 +565,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.DSharp),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.Im7, internal.Im10},
-				cType:     []string{internal.Dominant, internal.Seven, internal.Sharp, internal.Nine},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Sharp, internal.Nine},
 			},
 		},
 		{
@@ -585,7 +585,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.DFlat),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.ID5, internal.Im7, internal.Im9},
-				cType:     []string{internal.Dominant, internal.Seven, internal.Flat, internal.Five, internal.Flat, internal.Nine},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Flat, internal.Five, internal.Flat, internal.Nine},
 			},
 		},
 		{
@@ -605,7 +605,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.DFlat),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.ID5, internal.Im7, internal.Im9},
-				cType:     []string{internal.Dominant, internal.Seven, internal.Flat, internal.Five, internal.Flat, internal.Nine},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Flat, internal.Five, internal.Flat, internal.Nine},
 			},
 		},
 		{
@@ -625,7 +625,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.DSharp),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IA5, internal.Im7, internal.Im10},
-				cType:     []string{internal.Dominant, internal.Seven, internal.Sharp, internal.Five, internal.Sharp, internal.Nine},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Sharp, internal.Five, internal.Sharp, internal.Nine},
 			},
 		},
 		{
@@ -645,7 +645,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.DSharp),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IA5, internal.Im7, internal.Im10},
-				cType:     []string{internal.Dominant, internal.Seven, internal.Sharp, internal.Five, internal.Sharp, internal.Nine},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Sharp, internal.Five, internal.Sharp, internal.Nine},
 			},
 		},
 		{
@@ -665,7 +665,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.DSharp),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.ID5, internal.Im7, internal.Im10},
-				cType:     []string{internal.Dominant, internal.Seven, internal.Flat, internal.Five, internal.Sharp, internal.Nine},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Flat, internal.Five, internal.Sharp, internal.Nine},
 			},
 		},
 		{
@@ -685,7 +685,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.DSharp),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.ID5, internal.Im7, internal.Im10},
-				cType:     []string{internal.Dominant, internal.Seven, internal.Flat, internal.Five, internal.Sharp, internal.Nine},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Flat, internal.Five, internal.Sharp, internal.Nine},
 			},
 		},
 		{
@@ -705,7 +705,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.DFlat),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IA5, internal.Im7, internal.Im9},
-				cType:     []string{internal.Dominant, internal.Seven, internal.Sharp, internal.Five, internal.Flat, internal.Nine},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Sharp, internal.Five, internal.Flat, internal.Nine},
 			},
 		},
 		{
@@ -725,7 +725,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.FSharp),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.Im7, internal.IA11},
-				cType:     []string{internal.Dominant, internal.Seven, internal.Sharp, internal.Eleven},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Sharp, internal.Eleven},
 			},
 		},
 		{
@@ -745,7 +745,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.ID5, internal.Im7, internal.IM9},
-				cType:     []string{internal.Dominant, internal.Nine, internal.Flat, internal.Five},
+				quality:   []string{internal.Dominant, internal.Nine, internal.Flat, internal.Five},
 			},
 		},
 		{
@@ -765,7 +765,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IA5, internal.Im7, internal.IM9},
-				cType:     []string{internal.Dominant, internal.Nine, internal.Sharp, internal.Five},
+				quality:   []string{internal.Dominant, internal.Nine, internal.Sharp, internal.Five},
 			},
 		},
 		{
@@ -786,7 +786,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.FSharp),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.Im7, internal.IM9, internal.IA11},
-				cType:     []string{internal.Dominant, internal.Nine, internal.Sharp, internal.Eleven},
+				quality:   []string{internal.Dominant, internal.Nine, internal.Sharp, internal.Eleven},
 			},
 		},
 		{
@@ -808,7 +808,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.A),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.Im7, internal.Im9, internal.IP11, internal.IM13},
-				cType:     []string{internal.Dominant, internal.Thirteen, internal.Flat, internal.Nine},
+				quality:   []string{internal.Dominant, internal.Thirteen, internal.Flat, internal.Nine},
 			},
 		},
 		{
@@ -830,7 +830,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.A),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.Im7, internal.IA9, internal.IP11, internal.IM13},
-				cType:     []string{internal.Dominant, internal.Thirteen, internal.Sharp, internal.Nine},
+				quality:   []string{internal.Dominant, internal.Thirteen, internal.Sharp, internal.Nine},
 			},
 		},
 		{
@@ -852,7 +852,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.A),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.Im7, internal.IM9, internal.IA11, internal.IM13},
-				cType:     []string{internal.Dominant, internal.Thirteen, internal.Sharp, internal.Eleven},
+				quality:   []string{internal.Dominant, internal.Thirteen, internal.Sharp, internal.Eleven},
 			},
 		},
 		{
@@ -871,7 +871,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.BFlat),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.ID5, internal.Im7},
-				cType:     []string{internal.Minor, internal.Seven, internal.Flat, internal.Five},
+				quality:   []string{internal.Minor, internal.Seven, internal.Flat, internal.Five},
 			},
 		},
 		{
@@ -890,7 +890,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.BFlat),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.IA5, internal.Im7},
-				cType:     []string{internal.Minor, internal.Seven, internal.Sharp, internal.Five},
+				quality:   []string{internal.Minor, internal.Seven, internal.Sharp, internal.Five},
 			},
 		},
 		{
@@ -909,7 +909,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.B),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.ID5, internal.IM7},
-				cType:     []string{internal.Major, internal.Seven, internal.Flat, internal.Five},
+				quality:   []string{internal.Major, internal.Seven, internal.Flat, internal.Five},
 			},
 		},
 		{
@@ -928,7 +928,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.B),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IA5, internal.IM7},
-				cType:     []string{internal.Major, internal.Seven, internal.Sharp, internal.Five},
+				quality:   []string{internal.Major, internal.Seven, internal.Sharp, internal.Five},
 			},
 		},
 		{
@@ -948,7 +948,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.FSharp),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.IM7, internal.IA11},
-				cType:     []string{internal.Major, internal.Seven, internal.Sharp, internal.Eleven},
+				quality:   []string{internal.Major, internal.Seven, internal.Sharp, internal.Eleven},
 			},
 		},
 		{
@@ -969,7 +969,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.FSharp),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.IM7, internal.IM9, internal.IA11},
-				cType:     []string{internal.Major, internal.Nine, internal.Sharp, internal.Eleven},
+				quality:   []string{internal.Major, internal.Nine, internal.Sharp, internal.Eleven},
 			},
 		},
 		{
@@ -988,7 +988,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.A),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.IM6},
-				cType:     []string{internal.Sixth},
+				quality:   []string{internal.Sixth},
 			},
 		},
 		{
@@ -1008,7 +1008,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.IM6, internal.IM9},
-				cType:     []string{internal.Sixth, internal.Added, internal.Ninth},
+				quality:   []string{internal.Sixth, internal.Added, internal.Ninth},
 			},
 		},
 		{
@@ -1028,7 +1028,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.IM6, internal.IM9},
-				cType:     []string{internal.Sixth, internal.Added, internal.Ninth},
+				quality:   []string{internal.Sixth, internal.Added, internal.Ninth},
 			},
 		},
 		{
@@ -1048,7 +1048,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.IM6, internal.IM9},
-				cType:     []string{internal.Sixth, internal.Added, internal.Ninth},
+				quality:   []string{internal.Sixth, internal.Added, internal.Ninth},
 			},
 		},
 		{
@@ -1067,7 +1067,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.E),
 				},
 				structure: []int{internal.IP5, internal.IUnison, internal.IM3},
-				cType:     []string{internal.Major, internal.Over, "G"},
+				quality:   []string{internal.Major, internal.Over, "G"},
 			},
 		},
 		{
@@ -1087,7 +1087,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.G),
 				},
 				structure: []int{internal.IA5, internal.IUnison, internal.IM3, internal.IP5},
-				cType:     []string{internal.Major, internal.Over, "G#"},
+				quality:   []string{internal.Major, internal.Over, "G#"},
 			},
 		},
 		{
@@ -1105,7 +1105,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.G),
 				},
 				structure: []int{internal.IUnison, internal.IM2, internal.IP5},
-				cType:     []string{internal.Suspended, internal.Second},
+				quality:   []string{internal.Suspended, internal.Second},
 			},
 		},
 		{
@@ -1123,7 +1123,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.G),
 				},
 				structure: []int{internal.IUnison, internal.IP4, internal.IP5},
-				cType:     []string{internal.Suspended, internal.Fourth},
+				quality:   []string{internal.Suspended, internal.Fourth},
 			},
 		},
 		{
@@ -1141,7 +1141,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.G),
 				},
 				structure: []int{internal.IUnison, internal.IP4, internal.IP5},
-				cType:     []string{internal.Suspended, internal.Fourth},
+				quality:   []string{internal.Suspended, internal.Fourth},
 			},
 		},
 		{
@@ -1160,7 +1160,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.BFlat),
 				},
 				structure: []int{internal.IUnison, internal.IP4, internal.IP5, internal.Im7},
-				cType:     []string{internal.Dominant, internal.Seventh, internal.Suspended, internal.Fourth},
+				quality:   []string{internal.Dominant, internal.Seventh, internal.Suspended, internal.Fourth},
 			},
 		},
 		{
@@ -1179,7 +1179,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.BFlat),
 				},
 				structure: []int{internal.IUnison, internal.IP4, internal.IP5, internal.Im7},
-				cType:     []string{internal.Dominant, internal.Seventh, internal.Suspended, internal.Fourth},
+				quality:   []string{internal.Dominant, internal.Seventh, internal.Suspended, internal.Fourth},
 			},
 		},
 		{
@@ -1198,7 +1198,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.IM9},
-				cType:     []string{internal.Added, internal.Ninth},
+				quality:   []string{internal.Added, internal.Ninth},
 			},
 		},
 		{
@@ -1217,7 +1217,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.IM9},
-				cType:     []string{internal.Added, internal.Ninth},
+				quality:   []string{internal.Added, internal.Ninth},
 			},
 		},
 		{
@@ -1236,7 +1236,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.IP5, internal.IM9},
-				cType:     []string{internal.Minor, internal.Added, internal.Ninth},
+				quality:   []string{internal.Minor, internal.Added, internal.Ninth},
 			},
 		},
 		{
@@ -1255,7 +1255,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.A),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.ID5, internal.IM6},
-				cType:     []string{internal.Diminished, internal.Sixth},
+				quality:   []string{internal.Diminished, internal.Sixth},
 			},
 		},
 		{
@@ -1276,7 +1276,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.D),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.ID5, internal.IM6, internal.IM9},
-				cType:     []string{internal.Diminished, internal.Ninth},
+				quality:   []string{internal.Diminished, internal.Ninth},
 			},
 		},
 		{
@@ -1297,7 +1297,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.F),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.ID5, internal.IM6, internal.IM9, internal.IP11},
-				cType:     []string{internal.Diminished, internal.Eleventh},
+				quality:   []string{internal.Diminished, internal.Eleventh},
 			},
 		},
 		{
@@ -1315,7 +1315,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.DSharp),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.IP5},
-				cType:     []string{internal.Minor},
+				quality:   []string{internal.Minor},
 			},
 		},
 		{
@@ -1336,7 +1336,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.FSharp),
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.ID5, internal.IM6, internal.IM9, internal.IP11},
-				cType:     []string{internal.Diminished, internal.Eleventh},
+				quality:   []string{internal.Diminished, internal.Eleventh},
 			},
 		},
 		{
@@ -1354,7 +1354,7 @@ func TestParseChord(t *testing.T) {
 					NewNote(internal.B),
 				},
 				structure: []int{internal.IUnison, internal.IM3, internal.IA5},
-				cType:     []string{internal.Augmented},
+				quality:   []string{internal.Augmented},
 			},
 		},
 	}
