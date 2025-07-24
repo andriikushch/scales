@@ -16,6 +16,7 @@ const (
 	InstrumentBassGuitar = "bassGuitar"
 	InstrumentGuitar     = "guitar"
 	InstrumentUkulele    = "ukulele"
+	InstrumentMandolin   = "mandolin"
 )
 
 // Minor scale types
@@ -66,7 +67,7 @@ func New() *State {
 	return &State{
 		CurrentView:      ViewScale,
 		ValidScales:      []string{ScaleMajor, ScaleMinor, ScalePentatonic},
-		ValidInstruments: []string{InstrumentBassGuitar, InstrumentGuitar, InstrumentUkulele},
+		ValidInstruments: []string{InstrumentBassGuitar, InstrumentGuitar, InstrumentUkulele, InstrumentMandolin},
 		MinorScales:      []string{MinorTypeNatural, MinorTypeHarmonic, MinorTypeMelodic},
 		PentatonicScales: []string{PentatonicTypeMajor, PentatonicTypeMinor},
 		Keys:             []string{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"},

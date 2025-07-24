@@ -93,6 +93,9 @@ func main() {
 			case app.InstrumentUkulele:
 				ukulele := scales.NewUkuleleWithStandardTuning()
 				err = ukulele.Draw(state.GetNotes(), os.Stdout)
+			case app.InstrumentMandolin:
+				mandolin := scales.NewMandolinWithStandardTuning()
+				err = mandolin.Draw(state.GetNotes(), os.Stdout)
 			}
 			ts.Print("\r\n")
 
@@ -120,6 +123,9 @@ func main() {
 						case app.InstrumentUkulele:
 							ukulele := scales.NewUkuleleWithStandardTuning()
 							err = ukulele.Draw(chord.Notes(), os.Stdout)
+						case app.InstrumentMandolin:
+							mandolin := scales.NewMandolinWithStandardTuning()
+							err = mandolin.Draw(chord.Notes(), os.Stdout)
 						}
 					}
 				} else {
