@@ -11,13 +11,17 @@ type Guitar struct {
 	*stringInstrumentWithFrets
 }
 
-func (g *Guitar) getChordShapes(chord Chord) []chordShape {
+func (g *Guitar) GetStringsAmount() int {
+	return len(g.stringInstrumentWithFrets.tuning)
+}
+
+func (g *Guitar) getChordShapes(chord Chord) []ChordShape {
 	structure := make([]string, len(chord.structure))
 	for k, v := range chord.structure {
 		structure[k] = strconv.Itoa(v)
 	}
 
-	return guitarChordShapes[strings.Join(structure, "-")]
+	return GuitarChordShapes[strings.Join(structure, "-")]
 }
 
 func NewGuitarWithStandardTuning() *Guitar {

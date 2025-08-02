@@ -11,13 +11,17 @@ type Mandolin struct {
 	*stringInstrumentWithFrets
 }
 
-func (u *Mandolin) getChordShapes(chord Chord) []chordShape {
+func (m *Mandolin) GetStringsAmount() int {
+	return len(m.stringInstrumentWithFrets.tuning)
+}
+
+func (m *Mandolin) getChordShapes(chord Chord) []ChordShape {
 	structure := make([]string, len(chord.structure))
 	for k, v := range chord.structure {
 		structure[k] = strconv.Itoa(v)
 	}
 
-	return mandolinChordShapes[strings.Join(structure, "-")]
+	return MandolinChordShapes[strings.Join(structure, "-")]
 }
 
 func NewMandolinWithStandardTuning() *Ukulele {

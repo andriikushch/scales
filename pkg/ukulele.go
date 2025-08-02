@@ -11,13 +11,17 @@ type Ukulele struct {
 	*stringInstrumentWithFrets
 }
 
-func (u *Ukulele) getChordShapes(chord Chord) []chordShape {
+func (u *Ukulele) GetStringsAmount() int {
+	return len(u.stringInstrumentWithFrets.tuning)
+}
+
+func (u *Ukulele) getChordShapes(chord Chord) []ChordShape {
 	structure := make([]string, len(chord.structure))
 	for k, v := range chord.structure {
 		structure[k] = strconv.Itoa(v)
 	}
 
-	return ukuleleChordShapes[strings.Join(structure, "-")]
+	return UkuleleChordShapes[strings.Join(structure, "-")]
 }
 
 func NewUkuleleWithStandardTuning() *Ukulele {
