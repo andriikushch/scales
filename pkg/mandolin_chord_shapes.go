@@ -1,3 +1,3 @@
 package scales
 
-var mandolinChordShapes = map[string][]chordShape{}
+var MandolinChordShapes = map[string][]ChordShape{}

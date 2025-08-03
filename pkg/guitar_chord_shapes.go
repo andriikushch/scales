@@ -47,7 +47,7 @@ var (
 	guitarChordShapeGMaj = newChordShape("guitar", []int{internal.IUnison, internal.IM3, internal.IP5}, guitarOpenGMaj, 5)
 )
 
-var guitarChordShapes = map[string][]chordShape{
+var GuitarChordShapes = map[string][]ChordShape{
 	fmt.Sprintf("%d-%d-%d", internal.IUnison, internal.Im3, internal.IP5): {
 		guitarChordShapeAMin,
 		guitarChordShapeDMin,

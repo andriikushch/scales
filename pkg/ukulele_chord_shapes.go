@@ -52,7 +52,7 @@ var (
 	ukuleleChordShapeFMaj = newChordShape("ukulele", []int{internal.IUnison, internal.IM3, internal.IP5}, openUkuleleFMaj, 1)
 )
 
-var ukuleleChordShapes = map[string][]chordShape{
+var UkuleleChordShapes = map[string][]ChordShape{
 	fmt.Sprintf("%d-%d-%d", internal.IUnison, internal.IM3, internal.IP5): {
 		ukuleleChordShapeCMaj,
 		ukuleleChordShapeAMaj,
