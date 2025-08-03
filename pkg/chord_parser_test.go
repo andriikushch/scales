@@ -1367,7 +1367,6 @@ func TestParseChord(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-
 			t.Parallel()
 
 			got, err := NewChord(tt.args.description)
@@ -1381,7 +1380,7 @@ func TestParseChord(t *testing.T) {
 				extraBassNote, err := regexp.MatchString(`/[a-zA-Z]`, qualityLine)
 				require.NoError(t, err)
 				if !extraBassNote {
-					f, err := os.OpenFile("../build/output.txt", os.O_WRONLY|os.O_SYNC|os.O_CREATE|os.O_APPEND, 0777)
+					f, err := os.OpenFile("../build/output.txt", os.O_WRONLY|os.O_SYNC|os.O_CREATE|os.O_APPEND, 0o777)
 					require.NoError(t, err)
 
 					structureAsLine := ""

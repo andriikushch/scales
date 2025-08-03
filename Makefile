@@ -9,6 +9,7 @@ generate-supported-chord-qualities:
 	rm -f build/output.txt
 	go run ./internal/tool/main.go build/uniq.txt pkg/guitar_chord_shapes.go pkg/ukulele_chord_shapes.go pkg/bass_guitar_chord_shapes.go pkg/mandolin_chord_shapes.go
 	rm -f build/uniq.txt
+	gofumpt -w .
 
 fmt:
 	gofumpt -w .

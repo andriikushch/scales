@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	scales "github.com/andriikushch/scales/pkg"
 	"go/ast"
 	"go/parser"
 	"go/printer"
@@ -12,6 +11,8 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+
+	scales "github.com/andriikushch/scales/pkg"
 )
 
 type StringInstrument interface {
@@ -128,7 +129,7 @@ func checkIfVariableExists(filePath, variableName string) (bool, error) {
 }
 
 func appendToFile(filePath, content string) error {
-	f, err := os.OpenFile(filePath, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+	f, err := os.OpenFile(filePath, os.O_APPEND|os.O_WRONLY|os.O_CREATE|os.O_SYNC, 0o644)
 	if err != nil {
 		return err
 	}
@@ -152,7 +153,7 @@ func updateChordShapeSliceAST(filePath, sliceName string) error {
 	}
 
 	var shapeVars []string
-	var sliceDeclIdx = -1
+	sliceDeclIdx := -1
 
 	// Inspect top-level declarations
 	for i, decl := range node.Decls {

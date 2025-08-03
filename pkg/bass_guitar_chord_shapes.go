@@ -2,6 +2,7 @@ package scales
 
 import (
 	"fmt"
+
 	"github.com/andriikushch/scales/pkg/internal"
 )
 
@@ -17,6 +18,7 @@ var BassGuitarChordShapes = map[string][]ChordShape{
 		bassGuitar__2_ChordShape,
 	},
 }
+
 var (
 	bassGuitar__0_Schema     = []int{0, 2, 3, MutedNote}
 	bassGuitar__0_ChordShape = newChordShape("bassGuitar", []int{internal.IUnison, internal.IM3, internal.IP5}, bassGuitar__0_Schema, 2)
@@ -88,11 +90,6 @@ var (
 )
 
 var (
-	bassGuitar_dim6_0_Schema     = []int{} // TODO
-	bassGuitar_dim6_0_ChordShape = newChordShape("bassGuitar", []int{0, 3, 6, 9}, bassGuitar_dim6_0_Schema, -1)
-)
-
-var (
 	bassGuitar_6_0_Schema     = []int{} // TODO
 	bassGuitar_6_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 7, 9}, bassGuitar_6_0_Schema, -1)
 )
@@ -146,4 +143,23 @@ var (
 	bassGuitar_m7b5_0_Schema     = []int{} // TODO
 	bassGuitar_m7b5_0_ChordShape = newChordShape("bassGuitar", []int{0, 3, 6, 10}, bassGuitar_m7b5_0_Schema, -1)
 )
-var allBassGuitarChordShapes []ChordShape = []ChordShape{bassGuitar_6_0_ChordShape, bassGuitar_7_0_ChordShape, bassGuitar_7b5_0_ChordShape, bassGuitar_7sus_0_ChordShape, bassGuitar__0_ChordShape, bassGuitar__1_ChordShape, bassGuitar__2_ChordShape, bassGuitar_add9_0_ChordShape, bassGuitar_aug6_0_ChordShape, bassGuitar_aug7_0_ChordShape, bassGuitar_aug_0_ChordShape, bassGuitar_dim6_0_ChordShape, bassGuitar_dim_0_ChordShape, bassGuitar_m7_0_ChordShape, bassGuitar_m7_5_0_ChordShape, bassGuitar_m7b5_0_ChordShape, bassGuitar_m_0_ChordShape, bassGuitar_m_1_ChordShape, bassGuitar_m_2_ChordShape, bassGuitar_m_add9_0_ChordShape, bassGuitar_m_maj7_0_ChordShape, bassGuitar_maj7_0_ChordShape, bassGuitar_maj7_5_0_ChordShape, bassGuitar_maj7b5_0_ChordShape, bassGuitar_sus2_0_ChordShape, bassGuitar_sus_0_ChordShape}
+
+var allBassGuitarChordShapes []ChordShape = []ChordShape{
+	bassGuitar_6_0_ChordShape, bassGuitar_7_0_ChordShape, bassGuitar_7b5_0_ChordShape,
+
+	// TODO
+	bassGuitar_7sus_0_ChordShape, bassGuitar__0_ChordShape, bassGuitar__1_ChordShape, bassGuitar__2_ChordShape, bassGuitar_add9_0_ChordShape, bassGuitar_aug6_0_ChordShape,
+
+	// TODO
+	bassGuitar_aug7_0_ChordShape, bassGuitar_aug_0_ChordShape, bassGuitar_dim6_0_ChordShape, bassGuitar_dim7_0_ChordShape, bassGuitar_dim_0_ChordShape, bassGuitar_m7_0_ChordShape, bassGuitar_m7_5_0_ChordShape, bassGuitar_m7b5_0_ChordShape, bassGuitar_m_0_ChordShape, bassGuitar_m_1_ChordShape, bassGuitar_m_2_ChordShape, bassGuitar_m_add9_0_ChordShape, bassGuitar_m_maj7_0_ChordShape, bassGuitar_maj7_0_ChordShape, bassGuitar_maj7_5_0_ChordShape, bassGuitar_maj7b5_0_ChordShape, bassGuitar_sus2_0_ChordShape, bassGuitar_sus_0_ChordShape,
+}
+
+var (
+	bassGuitar_dim6_0_Schema     = []int{}
+	bassGuitar_dim6_0_ChordShape = newChordShape("bassGuitar", []int{0, 3, 6, 8}, bassGuitar_dim6_0_Schema, -1)
+)
+
+var (
+	bassGuitar_dim7_0_Schema     = []int{}
+	bassGuitar_dim7_0_ChordShape = newChordShape("bassGuitar", []int{0, 3, 6, 9}, bassGuitar_dim7_0_Schema, -1)
+)
