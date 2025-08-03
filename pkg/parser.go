@@ -452,7 +452,7 @@ func (p parser) initDimChord(chord *Chord, token internal.Token) error {
 
 	switch tokenValue {
 	case 6:
-		err = chord.add(internal.IM6)
+		err = chord.add(internal.Im6)
 	case 7:
 		err = chord.add(internal.ID7)
 	case 9:
