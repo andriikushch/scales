@@ -8,56 +8,56 @@ import (
 
 // Open position chords
 var (
-	guitarOpenCMaj       = []int{0, 1, 0, 2, 3, MutedNote}
-	guitarChordShapeCMaj = newChordShape("guitar", []int{internal.IUnison, internal.IM3, internal.IP5}, guitarOpenCMaj, 4)
+	guitarOpenC_Maj_0_Schema           = []int{0, 1, 0, 2, 3, MutedNote}
+	guitarChordShapeC_Maj_0_ChordShape = newChordShape("guitar", []int{internal.IUnison, internal.IM3, internal.IP5}, guitarOpenC_Maj_0_Schema, 4)
 )
 
 var (
-	guitarOpenAMaj       = []int{0, 2, 2, 2, 0, MutedNote}
-	guitarChordShapeAMaj = newChordShape("guitar", []int{internal.IUnison, internal.IM3, internal.IP5}, guitarOpenAMaj, 4)
+	guitarOpenA_Maj_1_Schema           = []int{0, 2, 2, 2, 0, MutedNote}
+	guitarChordShapeA_Maj_1_ChordShape = newChordShape("guitar", []int{internal.IUnison, internal.IM3, internal.IP5}, guitarOpenA_Maj_1_Schema, 4)
 )
 
 var (
-	guitarOpenAMin       = []int{0, 1, 2, 2, 0, MutedNote}
-	guitarChordShapeAMin = newChordShape("guitar", []int{internal.IUnison, internal.Im3, internal.IP5}, guitarOpenAMin, 4)
+	guitarOpenA_Min_0_Schema           = []int{0, 1, 2, 2, 0, MutedNote}
+	guitarChordShapeA_Min_0_ChordShape = newChordShape("guitar", []int{internal.IUnison, internal.Im3, internal.IP5}, guitarOpenA_Min_0_Schema, 4)
 )
 
 var (
-	guitarOpenDMaj       = []int{2, 3, 2, 0, MutedNote, MutedNote}
-	guitarChordShapeDMaj = newChordShape("guitar", []int{internal.IUnison, internal.IM3, internal.IP5}, guitarOpenDMaj, 3)
+	guitarOpenD_Maj_2_Schema           = []int{2, 3, 2, 0, MutedNote, MutedNote}
+	guitarChordShapeD_Maj_2_ChordShape = newChordShape("guitar", []int{internal.IUnison, internal.IM3, internal.IP5}, guitarOpenD_Maj_2_Schema, 3)
 )
 
 var (
-	guitarOpenDMin       = []int{1, 3, 2, 0, MutedNote, MutedNote}
-	guitarChordShapeDMin = newChordShape("guitar", []int{internal.IUnison, internal.Im3, internal.IP5}, guitarOpenDMin, 3)
+	guitarOpenD_Min_1_Schema           = []int{1, 3, 2, 0, MutedNote, MutedNote}
+	guitarChordShapeD_Min_1_ChordShape = newChordShape("guitar", []int{internal.IUnison, internal.Im3, internal.IP5}, guitarOpenD_Min_1_Schema, 3)
 )
 
 var (
-	guitarOpenEMaj       = []int{0, 0, 1, 2, 2, 0}
-	guitarChordShapeEMaj = newChordShape("guitar", []int{internal.IUnison, internal.IM3, internal.IP5}, guitarOpenEMaj, 5)
+	guitarOpenE_Maj_3_Schema           = []int{0, 0, 1, 2, 2, 0}
+	guitarChordShapeE_Maj_3_ChordShape = newChordShape("guitar", []int{internal.IUnison, internal.IM3, internal.IP5}, guitarOpenE_Maj_3_Schema, 5)
 )
 
 var (
-	guitarOpenEMin       = []int{0, 0, 0, 2, 2, 0}
-	guitarChordShapeEMin = newChordShape("guitar", []int{internal.IUnison, internal.Im3, internal.IP5}, guitarOpenEMin, 5)
+	guitarOpenE_Min_2_Schema           = []int{0, 0, 0, 2, 2, 0}
+	guitarChordShapeE_Min_2_ChordShape = newChordShape("guitar", []int{internal.IUnison, internal.Im3, internal.IP5}, guitarOpenE_Min_2_Schema, 5)
 )
 
 var (
-	guitarOpenGMaj       = []int{3, 0, 0, 0, 2, 3}
-	guitarChordShapeGMaj = newChordShape("guitar", []int{internal.IUnison, internal.IM3, internal.IP5}, guitarOpenGMaj, 5)
+	guitarOpenG_Maj_4_Schema           = []int{3, 0, 0, 0, 2, 3}
+	guitarChordShapeG_Maj_4_ChordShape = newChordShape("guitar", []int{internal.IUnison, internal.IM3, internal.IP5}, guitarOpenG_Maj_4_Schema, 5)
 )
 
 var GuitarChordShapes = map[string][]ChordShape{
 	fmt.Sprintf("%d-%d-%d", internal.IUnison, internal.Im3, internal.IP5): {
-		guitarChordShapeAMin,
-		guitarChordShapeDMin,
-		guitarChordShapeEMin,
+		guitarChordShapeA_Min_0_ChordShape,
+		guitarChordShapeD_Min_1_ChordShape,
+		guitarChordShapeE_Min_2_ChordShape,
 	},
 	fmt.Sprintf("%d-%d-%d", internal.IUnison, internal.IM3, internal.IP5): {
-		guitarChordShapeCMaj,
-		guitarChordShapeAMaj,
-		guitarChordShapeDMaj,
-		guitarChordShapeEMaj,
-		guitarChordShapeGMaj,
+		guitarChordShapeC_Maj_0_ChordShape,
+		guitarChordShapeA_Maj_1_ChordShape,
+		guitarChordShapeD_Maj_2_ChordShape,
+		guitarChordShapeE_Maj_3_ChordShape,
+		guitarChordShapeG_Maj_4_ChordShape,
 	},
 }
