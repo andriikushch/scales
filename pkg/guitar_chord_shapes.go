@@ -4,7 +4,11 @@ import (
 	"github.com/andriikushch/scales/pkg/internal"
 )
 
-var GuitarChordShapes = initShapes(allGuitarChordShapes)
+var GuitarChordShapes map[string][]ChordShape
+
+func init() {
+	GuitarChordShapes = initShapes(allGuitarChordShapes)
+}
 
 // Open position chords
 var (
@@ -78,10 +82,19 @@ var (
 )
 
 var (
-	guitar_7_0_Schema     = []int{} // TODO
-	guitar_7_0_ChordShape = newChordShape("guitar", []int{0, 4, 7, 10}, guitar_7_0_Schema, -1)
+	guitar_7_0_Schema     = []int{MutedNote, 0, 1, 0, MutedNote, 0}
+	guitar_7_0_ChordShape = newChordShape("guitar", []int{0, 4, 7, 10}, guitar_7_0_Schema, 5)
 )
 
+var (
+	guitar_7_1_Schema     = []int{MutedNote, 0, 2, 1, MutedNote, 2}
+	guitar_7_1_ChordShape = newChordShape("guitar", []int{0, 4, 7, 10}, guitar_7_1_Schema, 1)
+)
+
+var (
+	guitar_7_2_Schema     = []int{MutedNote, 2, 0, 2, 0, MutedNote}
+	guitar_7_2_ChordShape = newChordShape("guitar", []int{0, 4, 7, 10}, guitar_7_2_Schema, 4)
+)
 var (
 	guitar_7_5_9_0_Schema     = []int{} // TODO
 	guitar_7_5_9_0_ChordShape = newChordShape("guitar", []int{0, 4, 8, 10, 15}, guitar_7_5_9_0_Schema, -1)
@@ -271,4 +284,4 @@ var (
 	guitar_aug11_0_Schema     = []int{} // TODO
 	guitar_aug11_0_ChordShape = newChordShape("guitar", []int{0, 4, 8, 10, 14, 17}, guitar_aug11_0_Schema, -1)
 )
-var allGuitarChordShapes []ChordShape = []ChordShape{guitar_11_0_ChordShape, guitar_6_0_ChordShape, guitar_6_add9_0_ChordShape, guitar_7_0_ChordShape, guitar_7_11_0_ChordShape, guitar_7_5_9_0_ChordShape, guitar_7_5_b9_0_ChordShape, guitar_7_9_0_ChordShape, guitar_7b5_0_ChordShape, guitar_7b5_9_0_ChordShape, guitar_7b5_b9_0_ChordShape, guitar_7b9_0_ChordShape, guitar_7sus_0_ChordShape, guitar_9_0_ChordShape, guitar_9_11_0_ChordShape, guitar_9_5_0_ChordShape, guitar_9b5_0_ChordShape, guitar__0_ChordShape, guitar__1_ChordShape, guitar__2_ChordShape, guitar__3_ChordShape, guitar__4_ChordShape, guitar_add9_0_ChordShape, guitar_aug11_0_ChordShape, guitar_aug6_0_ChordShape, guitar_aug7_0_ChordShape, guitar_aug_0_ChordShape, guitar_dim11_0_ChordShape, guitar_dim6_0_ChordShape, guitar_dim9_0_ChordShape, guitar_dim_0_ChordShape, guitar_m11_0_ChordShape, guitar_m7_0_ChordShape, guitar_m7_5_0_ChordShape, guitar_m7b5_0_ChordShape, guitar_m9_0_ChordShape, guitar_m_0_ChordShape, guitar_m_1_ChordShape, guitar_m_2_ChordShape, guitar_m_add9_0_ChordShape, guitar_m_maj7_0_ChordShape, guitar_m_maj7_1_ChordShape, guitar_m_maj7_2_ChordShape, guitar_maj7_0_ChordShape, guitar_maj7_11_0_ChordShape, guitar_maj7_1_ChordShape, guitar_maj7_2_ChordShape, guitar_maj7_5_0_ChordShape, guitar_maj7b5_0_ChordShape, guitar_maj9_0_ChordShape, guitar_maj9_11_0_ChordShape, guitar_sus2_0_ChordShape, guitar_sus_0_ChordShape}
+var allGuitarChordShapes []ChordShape = []ChordShape{guitar_11_0_ChordShape, guitar_6_0_ChordShape, guitar_6_add9_0_ChordShape, guitar_7_0_ChordShape, guitar_7_11_0_ChordShape, guitar_7_1_ChordShape, guitar_7_2_ChordShape, guitar_7_5_9_0_ChordShape, guitar_7_5_b9_0_ChordShape, guitar_7_9_0_ChordShape, guitar_7b5_0_ChordShape, guitar_7b5_9_0_ChordShape, guitar_7b5_b9_0_ChordShape, guitar_7b9_0_ChordShape, guitar_7sus_0_ChordShape, guitar_9_0_ChordShape, guitar_9_11_0_ChordShape, guitar_9_5_0_ChordShape, guitar_9b5_0_ChordShape, guitar__0_ChordShape, guitar__1_ChordShape, guitar__2_ChordShape, guitar__3_ChordShape, guitar__4_ChordShape, guitar_add9_0_ChordShape, guitar_aug11_0_ChordShape, guitar_aug6_0_ChordShape, guitar_aug7_0_ChordShape, guitar_aug_0_ChordShape, guitar_dim11_0_ChordShape, guitar_dim6_0_ChordShape, guitar_dim9_0_ChordShape, guitar_dim_0_ChordShape, guitar_m11_0_ChordShape, guitar_m7_0_ChordShape, guitar_m7_5_0_ChordShape, guitar_m7b5_0_ChordShape, guitar_m9_0_ChordShape, guitar_m_0_ChordShape, guitar_m_1_ChordShape, guitar_m_2_ChordShape, guitar_m_add9_0_ChordShape, guitar_m_maj7_0_ChordShape, guitar_m_maj7_1_ChordShape, guitar_m_maj7_2_ChordShape, guitar_maj7_0_ChordShape, guitar_maj7_11_0_ChordShape, guitar_maj7_1_ChordShape, guitar_maj7_2_ChordShape, guitar_maj7_5_0_ChordShape, guitar_maj7b5_0_ChordShape, guitar_maj9_0_ChordShape, guitar_maj9_11_0_ChordShape, guitar_sus2_0_ChordShape, guitar_sus_0_ChordShape}

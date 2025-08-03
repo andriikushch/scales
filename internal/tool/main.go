@@ -67,7 +67,7 @@ func main() {
 				continue
 			}
 			if shapes, ok := instr.ChordShapes[structure]; ok {
-				for j := range notations {
+				for j := range shapes {
 					shapes[j].PossibleNotations = notations
 				}
 			} else {
