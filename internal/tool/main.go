@@ -4,8 +4,13 @@ import (
 	"bufio"
 	"fmt"
 	scales "github.com/andriikushch/scales/pkg"
+	"go/ast"
+	"go/parser"
+	"go/printer"
+	"go/token"
 	"os"
 	"regexp"
+	"sort"
 	"strings"
 )
 
@@ -87,6 +92,13 @@ func main() {
 				}
 			}
 		}
+
+		// After processing all chords, append the AllChordShapes slice
+		sliceName := fmt.Sprintf("all%sChordShapes", strings.Title(instr.Name))
+		err := updateChordShapeSliceAST(instr.ChordShapesFilePath, sliceName)
+		if err != nil {
+			fmt.Printf("Failed to update %s: %v\n", instr.ChordShapesFilePath, err)
+		}
 	}
 }
 
@@ -123,4 +135,92 @@ func appendToFile(filePath, content string) error {
 	defer f.Close()
 	_, err = f.WriteString("\n" + content + "\n")
 	return err
+}
+
+// updateChordShapeSliceAST finds all *_ChordShape variable declarations and creates/updates a single AllXxxChordShapes slice
+func updateChordShapeSliceAST(filePath, sliceName string) error {
+	fset := token.NewFileSet()
+	src, err := os.ReadFile(filePath)
+	if err != nil {
+		return err
+	}
+
+	// Parse source file
+	node, err := parser.ParseFile(fset, filePath, src, parser.ParseComments)
+	if err != nil {
+		return err
+	}
+
+	var shapeVars []string
+	var sliceDeclIdx = -1
+
+	// Inspect top-level declarations
+	for i, decl := range node.Decls {
+		genDecl, ok := decl.(*ast.GenDecl)
+		if !ok || genDecl.Tok != token.VAR {
+			continue
+		}
+		for _, spec := range genDecl.Specs {
+			valueSpec := spec.(*ast.ValueSpec)
+			for _, name := range valueSpec.Names {
+				if name.Name == sliceName {
+					sliceDeclIdx = i // Found existing slice definition
+				}
+				if strings.HasSuffix(name.Name, "ChordShape") {
+					shapeVars = append(shapeVars, name.Name)
+				}
+			}
+		}
+	}
+
+	sort.Strings(shapeVars) // Optional: keep the list sorted
+
+	// Build the new slice declaration
+	sliceExpr := &ast.GenDecl{
+		Tok: token.VAR,
+		Specs: []ast.Spec{
+			&ast.ValueSpec{
+				Names: []*ast.Ident{ast.NewIdent(sliceName)},
+				Type: &ast.ArrayType{
+					Elt: ast.NewIdent("ChordShape"),
+				},
+				Values: []ast.Expr{
+					&ast.CompositeLit{
+						Type: &ast.ArrayType{Elt: ast.NewIdent("ChordShape")},
+						Elts: buildIdentList(shapeVars),
+					},
+				},
+			},
+		},
+	}
+
+	// Replace or append the slice declaration
+	if sliceDeclIdx != -1 {
+		node.Decls[sliceDeclIdx] = sliceExpr
+	} else {
+		node.Decls = append(node.Decls, sliceExpr)
+	}
+
+	// Write the modified AST back to the file
+	outFile, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	defer outFile.Close()
+
+	err = printer.Fprint(outFile, fset, node)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// buildIdentList builds a comma-separated list of identifiers (e.g. guitar_CMaj_0ChordShape)
+func buildIdentList(names []string) []ast.Expr {
+	var list []ast.Expr
+	for _, name := range names {
+		list = append(list, ast.NewIdent(name))
+	}
+	return list
 }

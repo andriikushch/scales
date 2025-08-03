@@ -46,3 +46,103 @@ var (
 	bassGuitar_m_2_Schema     = []int{0, 1, 3, MutedNote}
 	bassGuitar_m_2_ChordShape = newChordShape("bassGuitar", []int{internal.IUnison, internal.Im3, internal.IP5}, bassGuitar_m_2_Schema, 2)
 )
+
+var (
+	bassGuitar_maj7_0_Schema     = []int{} // TODO
+	bassGuitar_maj7_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 7, 11}, bassGuitar_maj7_0_Schema, -1)
+)
+
+var (
+	bassGuitar_aug7_0_Schema     = []int{} // TODO
+	bassGuitar_aug7_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 8, 10}, bassGuitar_aug7_0_Schema, -1)
+)
+
+var (
+	bassGuitar_m_maj7_0_Schema     = []int{} // TODO
+	bassGuitar_m_maj7_0_ChordShape = newChordShape("bassGuitar", []int{0, 3, 7, 11}, bassGuitar_m_maj7_0_Schema, -1)
+)
+
+var (
+	bassGuitar_aug6_0_Schema     = []int{} // TODO
+	bassGuitar_aug6_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 8, 9}, bassGuitar_aug6_0_Schema, -1)
+)
+
+var (
+	bassGuitar_sus_0_Schema     = []int{} // TODO
+	bassGuitar_sus_0_ChordShape = newChordShape("bassGuitar", []int{0, 5, 7}, bassGuitar_sus_0_Schema, -1)
+)
+
+var (
+	bassGuitar_dim_0_Schema     = []int{} // TODO
+	bassGuitar_dim_0_ChordShape = newChordShape("bassGuitar", []int{0, 3, 6}, bassGuitar_dim_0_Schema, -1)
+)
+
+var (
+	bassGuitar_7_0_Schema     = []int{} // TODO
+	bassGuitar_7_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 7, 10}, bassGuitar_7_0_Schema, -1)
+)
+
+var (
+	bassGuitar_sus2_0_Schema     = []int{} // TODO
+	bassGuitar_sus2_0_ChordShape = newChordShape("bassGuitar", []int{0, 2, 7}, bassGuitar_sus2_0_Schema, -1)
+)
+
+var (
+	bassGuitar_dim6_0_Schema     = []int{} // TODO
+	bassGuitar_dim6_0_ChordShape = newChordShape("bassGuitar", []int{0, 3, 6, 9}, bassGuitar_dim6_0_Schema, -1)
+)
+
+var (
+	bassGuitar_6_0_Schema     = []int{} // TODO
+	bassGuitar_6_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 7, 9}, bassGuitar_6_0_Schema, -1)
+)
+
+var (
+	bassGuitar_maj7_5_0_Schema     = []int{} // TODO
+	bassGuitar_maj7_5_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 8, 11}, bassGuitar_maj7_5_0_Schema, -1)
+)
+
+var (
+	bassGuitar_7sus_0_Schema     = []int{} // TODO
+	bassGuitar_7sus_0_ChordShape = newChordShape("bassGuitar", []int{0, 5, 7, 10}, bassGuitar_7sus_0_Schema, -1)
+)
+
+var (
+	bassGuitar_m_add9_0_Schema     = []int{} // TODO
+	bassGuitar_m_add9_0_ChordShape = newChordShape("bassGuitar", []int{0, 3, 7, 14}, bassGuitar_m_add9_0_Schema, -1)
+)
+
+var (
+	bassGuitar_aug_0_Schema     = []int{} // TODO
+	bassGuitar_aug_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 8}, bassGuitar_aug_0_Schema, -1)
+)
+
+var (
+	bassGuitar_m7_0_Schema     = []int{} // TODO
+	bassGuitar_m7_0_ChordShape = newChordShape("bassGuitar", []int{0, 3, 7, 10}, bassGuitar_m7_0_Schema, -1)
+)
+
+var (
+	bassGuitar_m7_5_0_Schema     = []int{} // TODO
+	bassGuitar_m7_5_0_ChordShape = newChordShape("bassGuitar", []int{0, 3, 8, 10}, bassGuitar_m7_5_0_Schema, -1)
+)
+
+var (
+	bassGuitar_7b5_0_Schema     = []int{} // TODO
+	bassGuitar_7b5_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 6, 10}, bassGuitar_7b5_0_Schema, -1)
+)
+
+var (
+	bassGuitar_maj7b5_0_Schema     = []int{} // TODO
+	bassGuitar_maj7b5_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 6, 11}, bassGuitar_maj7b5_0_Schema, -1)
+)
+
+var (
+	bassGuitar_add9_0_Schema     = []int{} // TODO
+	bassGuitar_add9_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 7, 14}, bassGuitar_add9_0_Schema, -1)
+)
+
+var (
+	bassGuitar_m7b5_0_Schema     = []int{} // TODO
+	bassGuitar_m7b5_0_ChordShape = newChordShape("bassGuitar", []int{0, 3, 6, 10}, bassGuitar_m7b5_0_Schema, -1)
+)
