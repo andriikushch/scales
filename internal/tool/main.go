@@ -21,13 +21,11 @@ type Instrument struct {
 }
 
 func main() {
-
 	if len(os.Args) < 6 {
 		panic("missing some parameters")
 	}
 
 	fileWithUniqQualities := os.Args[1]
-
 	fileWithGuitarChordShapes := os.Args[2]
 	fileWithUkuleleChordShapes := os.Args[3]
 	fileWithBassGuitarChordShapes := os.Args[4]
@@ -37,95 +35,92 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
 	defer f.Close()
 
 	scanner := bufio.NewScanner(f)
-
 	parsableChords := map[string][]string{}
 
 	for scanner.Scan() {
 		line := scanner.Text()
 		sl := strings.Split(line, ";")
-
-		_, ok := parsableChords[sl[0]]
-		if ok {
-			parsableChords[sl[0]] = append(parsableChords[sl[0]], sl[1])
-		} else {
-			parsableChords[sl[0]] = []string{sl[1]}
-		}
+		key, val := sl[0], sl[1]
+		parsableChords[key] = append(parsableChords[key], val)
 	}
 
 	instruments := []Instrument{
-		{
-			Name:                "guitar",
-			Instance:            scales.NewGuitarWithStandardTuning(),
-			ChordShapes:         scales.GuitarChordShapes,
-			ChordShapesFilePath: fileWithGuitarChordShapes,
-		},
-		{
-			Name:                "ukulele",
-			Instance:            scales.NewUkuleleWithStandardTuning(),
-			ChordShapes:         scales.UkuleleChordShapes,
-			ChordShapesFilePath: fileWithUkuleleChordShapes,
-		},
-		{
-			Name:                "bass guitar",
-			Instance:            scales.NewBassGuitarWithStandardTuning(),
-			ChordShapes:         scales.BassGuitarChordShapes,
-			ChordShapesFilePath: fileWithBassGuitarChordShapes,
-		},
-		{
-			Name:                "mandolin",
-			Instance:            scales.NewMandolinWithStandardTuning(),
-			ChordShapes:         scales.MandolinChordShapes,
-			ChordShapesFilePath: fileWithMandolinChordShapes,
-		},
+		{"guitar", scales.NewGuitarWithStandardTuning(), scales.GuitarChordShapes, fileWithGuitarChordShapes},
+		{"ukulele", scales.NewUkuleleWithStandardTuning(), scales.UkuleleChordShapes, fileWithUkuleleChordShapes},
+		{"bassGuitar", scales.NewBassGuitarWithStandardTuning(), scales.BassGuitarChordShapes, fileWithBassGuitarChordShapes},
+		{"mandolin", scales.NewMandolinWithStandardTuning(), scales.MandolinChordShapes, fileWithMandolinChordShapes},
 	}
 
 	for _, instr := range instruments {
 		fmt.Println(strings.ToLower(instr.Name))
-		for structure, v := range parsableChords {
+		for structure, notations := range parsableChords {
 			if instr.Instance.GetStringsAmount() < strings.Count(structure, "-")+1 {
-				fmt.Printf("Not enough strings on the %s for %v %v\n", instr.Name, structure, v)
+				fmt.Printf("Not enough strings on the %s for %v %v\n", instr.Name, structure, notations)
 				continue
 			}
 			if shapes, ok := instr.ChordShapes[structure]; ok {
-				for j := range v {
-					shapes[j].PossibleNotations = v
+				for j := range notations {
+					shapes[j].PossibleNotations = notations
 				}
 			} else {
-				fmt.Printf("Add %s chord shape for '%v' '%v' \n", instr.Name, structure, v)
-				fmt.Println(createChordShapeCode(instr.Name, ReplaceSpecialCharacters(v[0]), 0, structure))
+				fmt.Printf("Add %s chord shape for '%v' '%v' \n", instr.Name, structure, notations)
+
+				code, variableName := createChordShapeCode(instr.Name, ReplaceSpecialCharacters(notations[0]), 0, structure)
+
+				// Only check for variable name, not whole template
+				exists, err := checkIfVariableExists(instr.ChordShapesFilePath, variableName+"ChordShape")
+				if err != nil {
+					fmt.Printf("Error reading %s: %v\n", instr.ChordShapesFilePath, err)
+					continue
+				}
+
+				if !exists {
+					err := appendToFile(instr.ChordShapesFilePath, code)
+					if err != nil {
+						fmt.Printf("Error writing to %s: %v\n", instr.ChordShapesFilePath, err)
+					} else {
+						fmt.Printf("Added template for %s to %s\n", structure, instr.ChordShapesFilePath)
+					}
+				}
 			}
 		}
 	}
 }
 
-func createChordShapeCode(instrumentName string, chordName string, position int, structure string) (string, string) {
-	// Sanitize names to be identifier-safe
-	capitalizedChord := strings.Title(strings.ReplaceAll(chordName, "-", ""))
-	shapeName := fmt.Sprintf("%s_%s_%d_", instrumentName, capitalizedChord, position)
-
-	// Create the input slice as string
-
-	code := fmt.Sprintf(`
+func createChordShapeCode(instrumentName, sanitizedChordName string, position int, structure string) (code string, varName string) {
+	varName = fmt.Sprintf("%s_%s_%d_", instrumentName, sanitizedChordName, position)
+	frets := strings.ReplaceAll(structure, "-", ",")
+	code = fmt.Sprintf(`
 var (
-	%[1]s_schema = []int{} // TODO
-	%[1]sChordShape = newChordShape("%[2]s", []int{%[3]s}, %[1]s_schema, %[4]d)
+	%[1]sSchema = []int{} // TODO
+	%[1]sChordShape = newChordShape("%[2]s", []int{%[3]s}, %[1]sSchema, %[4]d)
 )
-`, shapeName, instrumentName, strings.ReplaceAll(structure, "-", ","), -1)
-
-	return code, shapeName
+`, varName, instrumentName, frets, -1)
+	return code, varName
 }
 
-// ReplaceSpecialCharacters replaces all non-alphanumeric characters with underscores
 func ReplaceSpecialCharacters(input string) string {
-	// Replace all non-alphanumeric characters with "_"
 	re := regexp.MustCompile(`[^a-zA-Z0-9]+`)
-	result := re.ReplaceAllString(input, "_")
+	return strings.Trim(re.ReplaceAllString(input, "_"), "_")
+}
 
-	// Optional: remove leading/trailing underscores and lowercase the result
-	result = strings.Trim(result, "_")
-	return result
+func checkIfVariableExists(filePath, variableName string) (bool, error) {
+	data, err := os.ReadFile(filePath)
+	if err != nil {
+		return false, err
+	}
+	return strings.Contains(string(data), variableName), nil
+}
+
+func appendToFile(filePath, content string) error {
+	f, err := os.OpenFile(filePath, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	_, err = f.WriteString("\n" + content + "\n")
+	return err
 }
