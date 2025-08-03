@@ -1,8 +1,15 @@
 package scales
 
 import (
+	"fmt"
+	"os"
 	"reflect"
+	"regexp"
+	"strconv"
+	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 
 	"github.com/andriikushch/scales/pkg/internal"
 )
@@ -1360,11 +1367,35 @@ func TestParseChord(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+
 			t.Parallel()
 
 			got, err := NewChord(tt.args.description)
 			if err != nil {
 				t.Errorf("parseChord() error = %v", err)
+			}
+
+			if "true" == os.Getenv("SCALES_TEST_COLLECT_CHORD_QUALITIES") {
+				qualityLine := strings.TrimPrefix(got.description, got.root.String())
+
+				extraBassNote, err := regexp.MatchString(`/[a-zA-Z]`, qualityLine)
+				require.NoError(t, err)
+				if !extraBassNote {
+					f, err := os.OpenFile("../build/output.txt", os.O_WRONLY|os.O_SYNC|os.O_CREATE|os.O_APPEND, 0777)
+					require.NoError(t, err)
+
+					structureAsLine := ""
+					for i, v := range got.structure {
+						if i != 0 {
+							structureAsLine += "-"
+						}
+						structureAsLine += strconv.Itoa(v)
+					}
+
+					_, err = f.WriteString(fmt.Sprintf("%s;%s\n", structureAsLine, qualityLine))
+					require.NoError(t, err)
+					require.NoError(t, f.Close())
+				}
 			}
 
 			if !reflect.DeepEqual(got, tt.want) {

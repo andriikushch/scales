@@ -7,7 +7,7 @@ generate-supported-chord-qualities:
 	SCALES_TEST_COLLECT_CHORD_QUALITIES=true go test -v -race -count 1 -run TestParseChord ./...
 	cat build/output.txt | sort | uniq > build/uniq.txt
 	rm -f build/output.txt
-	go run ./internal/tool/main.go build/uniq.txt
+	go run ./internal/tool/main.go build/uniq.txt pkg/guitar_chord_shapes.go pkg/ukulele_chord_shapes.go pkg/bass_guitar_chord_shapes.go pkg/mandolin_chord_shapes.go
 	rm -f build/uniq.txt
 
 fmt:

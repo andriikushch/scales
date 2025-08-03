@@ -67,7 +67,7 @@ func (inst *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) err
 	return nil
 }
 
-func (inst *stringInstrumentWithFrets) drawChord(cs chordShape, c Chord, w io.Writer) error {
+func (inst *stringInstrumentWithFrets) drawChord(cs ChordShape, c Chord, w io.Writer) error {
 	rootString := cs.RootNotePosition
 
 	var structure []int
