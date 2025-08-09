@@ -345,9 +345,20 @@ func TestC9Sharp5(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func TestC9Sharp11(t *testing.T) {
+	g := NewGuitarWithStandardTuning()
+	chord, err := NewChord("C9#11")
+	require.NoError(t, err)
+	err = g.drawChord(guitar_9_sharp_11_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+
+	err = g.drawChord(guitar_9_sharp_11_1_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+}
+
 func TestXX(t *testing.T) {
 	g := NewGuitarWithStandardTuning()
-	chord, err := NewChord("C9#5")
+	chord, err := NewChord("C9#11")
 	require.NoError(t, err)
 	shapes := g.getChordShapes(chord)
 	for k, v := range shapes {
