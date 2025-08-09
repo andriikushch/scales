@@ -116,6 +116,7 @@ var (
 }
 
 func ReplaceSpecialCharacters(input string) string {
+	input = strings.ReplaceAll(input, "#", "_sharp_")
 	re := regexp.MustCompile(`[^a-zA-Z0-9]+`)
 	return strings.Trim(re.ReplaceAllString(input, "_"), "_")
 }

@@ -68,23 +68,46 @@ var (
 	ukulele__4_ChordShape = newChordShape("ukulele", []int{internal.IUnison, internal.IM3, internal.IP5}, ukulele__4_Schema, 1)
 )
 
+var allUkuleleChordShapes []ChordShape = []ChordShape{
+	ukulele_6_0_ChordShape, ukulele_7_0_ChordShape, ukulele_7b5_0_ChordShape, ukulele_7sus_0_ChordShape, ukulele__0_ChordShape,
+
+	// TODO
+	ukulele__1_ChordShape, ukulele__2_ChordShape, ukulele__3_ChordShape, ukulele__4_ChordShape, ukulele_add9_0_ChordShape, ukulele_aug6_0_ChordShape, ukulele_aug7_0_ChordShape, ukulele_aug_0_ChordShape, ukulele_dim6_0_ChordShape, ukulele_dim7_0_ChordShape,
+
+	// TODO
+	ukulele_dim_0_ChordShape, ukulele_m7_0_ChordShape, ukulele_m7_sharp_5_0_ChordShape, ukulele_m7b5_0_ChordShape, ukulele_m_0_ChordShape, ukulele_m_1_ChordShape, ukulele_m_2_ChordShape,
+
+	// TODO
+	ukulele_m_3_ChordShape, ukulele_m_add9_0_ChordShape, ukulele_m_maj7_0_ChordShape, ukulele_maj7_0_ChordShape, ukulele_maj7_sharp_5_0_ChordShape, ukulele_maj7b5_0_ChordShape, ukulele_sus2_0_ChordShape,
+
+	// TODO
+	ukulele_sus_0_ChordShape,
+}
+
+// TODO
+
 var (
-	ukulele_aug_0_Schema     = []int{} // TODO
-	ukulele_aug_0_ChordShape = newChordShape("ukulele", []int{0, 4, 8}, ukulele_aug_0_Schema, -1)
+	ukulele_maj7_sharp_5_0_Schema     = []int{}
+	ukulele_maj7_sharp_5_0_ChordShape = newChordShape("ukulele", []int{0, 4, 8, 11}, ukulele_maj7_sharp_5_0_Schema, -1)
 )
 
 var (
-	ukulele_m7_0_Schema     = []int{} // TODO
-	ukulele_m7_0_ChordShape = newChordShape("ukulele", []int{0, 3, 7, 10}, ukulele_m7_0_Schema, -1)
+	ukulele_m7_sharp_5_0_Schema     = []int{}
+	ukulele_m7_sharp_5_0_ChordShape = newChordShape("ukulele", []int{0, 3, 8, 10}, ukulele_m7_sharp_5_0_Schema, -1)
 )
 
 var (
-	ukulele_m7_5_0_Schema     = []int{} // TODO
-	ukulele_m7_5_0_ChordShape = newChordShape("ukulele", []int{0, 3, 8, 10}, ukulele_m7_5_0_Schema, -1)
+	ukulele_aug6_0_Schema     = []int{}
+	ukulele_aug6_0_ChordShape = newChordShape("ukulele", []int{0, 4, 8, 9}, ukulele_aug6_0_Schema, -1)
 )
 
 var (
-	ukulele_7b5_0_Schema     = []int{} // TODO
+	ukulele_m_add9_0_Schema     = []int{}
+	ukulele_m_add9_0_ChordShape = newChordShape("ukulele", []int{0, 3, 7, 14}, ukulele_m_add9_0_Schema, -1)
+)
+
+var (
+	ukulele_7b5_0_Schema     = []int{}
 	ukulele_7b5_0_ChordShape = newChordShape("ukulele", []int{0, 4, 6, 10}, ukulele_7b5_0_Schema, -1)
 )
 
@@ -94,13 +117,18 @@ var (
 )
 
 var (
-	ukulele_add9_0_Schema     = []int{} // TODO
-	ukulele_add9_0_ChordShape = newChordShape("ukulele", []int{0, 4, 7, 14}, ukulele_add9_0_Schema, -1)
+	ukulele_m_maj7_0_Schema     = []int{} // TODO
+	ukulele_m_maj7_0_ChordShape = newChordShape("ukulele", []int{0, 3, 7, 11}, ukulele_m_maj7_0_Schema, -1)
 )
 
 var (
-	ukulele_m7b5_0_Schema     = []int{} // TODO
-	ukulele_m7b5_0_ChordShape = newChordShape("ukulele", []int{0, 3, 6, 10}, ukulele_m7b5_0_Schema, -1)
+	ukulele_sus_0_Schema     = []int{} // TODO
+	ukulele_sus_0_ChordShape = newChordShape("ukulele", []int{0, 5, 7}, ukulele_sus_0_Schema, -1)
+)
+
+var (
+	ukulele_dim7_0_Schema     = []int{} // TODO
+	ukulele_dim7_0_ChordShape = newChordShape("ukulele", []int{0, 3, 6, 9}, ukulele_dim7_0_Schema, -1)
 )
 
 var (
@@ -114,23 +142,13 @@ var (
 )
 
 var (
-	ukulele_m_maj7_0_Schema     = []int{} // TODO
-	ukulele_m_maj7_0_ChordShape = newChordShape("ukulele", []int{0, 3, 7, 11}, ukulele_m_maj7_0_Schema, -1)
+	ukulele_aug_0_Schema     = []int{} // TODO
+	ukulele_aug_0_ChordShape = newChordShape("ukulele", []int{0, 4, 8}, ukulele_aug_0_Schema, -1)
 )
 
 var (
-	ukulele_aug6_0_Schema     = []int{} // TODO
-	ukulele_aug6_0_ChordShape = newChordShape("ukulele", []int{0, 4, 8, 9}, ukulele_aug6_0_Schema, -1)
-)
-
-var (
-	ukulele_sus_0_Schema     = []int{} // TODO
-	ukulele_sus_0_ChordShape = newChordShape("ukulele", []int{0, 5, 7}, ukulele_sus_0_Schema, -1)
-)
-
-var (
-	ukulele_dim_0_Schema     = []int{} // TODO
-	ukulele_dim_0_ChordShape = newChordShape("ukulele", []int{0, 3, 6}, ukulele_dim_0_Schema, -1)
+	ukulele_m7_0_Schema     = []int{} // TODO
+	ukulele_m7_0_ChordShape = newChordShape("ukulele", []int{0, 3, 7, 10}, ukulele_m7_0_Schema, -1)
 )
 
 var (
@@ -139,8 +157,23 @@ var (
 )
 
 var (
+	ukulele_7sus_0_Schema     = []int{} // TODO
+	ukulele_7sus_0_ChordShape = newChordShape("ukulele", []int{0, 5, 7, 10}, ukulele_7sus_0_Schema, -1)
+)
+
+var (
 	ukulele_sus2_0_Schema     = []int{} // TODO
 	ukulele_sus2_0_ChordShape = newChordShape("ukulele", []int{0, 2, 7}, ukulele_sus2_0_Schema, -1)
+)
+
+var (
+	ukulele_m7b5_0_Schema     = []int{} // TODO
+	ukulele_m7b5_0_ChordShape = newChordShape("ukulele", []int{0, 3, 6, 10}, ukulele_m7b5_0_Schema, -1)
+)
+
+var (
+	ukulele_dim_0_Schema     = []int{} // TODO
+	ukulele_dim_0_ChordShape = newChordShape("ukulele", []int{0, 3, 6}, ukulele_dim_0_Schema, -1)
 )
 
 var (
@@ -149,27 +182,11 @@ var (
 )
 
 var (
-	ukulele_maj7_5_0_Schema     = []int{} // TODO
-	ukulele_maj7_5_0_ChordShape = newChordShape("ukulele", []int{0, 4, 8, 11}, ukulele_maj7_5_0_Schema, -1)
-)
-
-var (
-	ukulele_7sus_0_Schema     = []int{} // TODO
-	ukulele_7sus_0_ChordShape = newChordShape("ukulele", []int{0, 5, 7, 10}, ukulele_7sus_0_Schema, -1)
-)
-
-var (
-	ukulele_m_add9_0_Schema     = []int{} // TODO
-	ukulele_m_add9_0_ChordShape = newChordShape("ukulele", []int{0, 3, 7, 14}, ukulele_m_add9_0_Schema, -1)
-)
-
-var (
-	ukulele_dim6_0_Schema     = []int{}
+	ukulele_dim6_0_Schema     = []int{} // TODO
 	ukulele_dim6_0_ChordShape = newChordShape("ukulele", []int{0, 3, 6, 8}, ukulele_dim6_0_Schema, -1)
 )
 
 var (
-	ukulele_dim7_0_Schema     = []int{}
-	ukulele_dim7_0_ChordShape = newChordShape("ukulele", []int{0, 3, 6, 9}, ukulele_dim7_0_Schema, -1)
+	ukulele_add9_0_Schema     = []int{} // TODO
+	ukulele_add9_0_ChordShape = newChordShape("ukulele", []int{0, 4, 7, 14}, ukulele_add9_0_Schema, -1)
 )
-var allUkuleleChordShapes []ChordShape = []ChordShape{ukulele_6_0_ChordShape, ukulele_7_0_ChordShape, ukulele_7b5_0_ChordShape, ukulele_7sus_0_ChordShape, ukulele__0_ChordShape, ukulele__1_ChordShape, ukulele__2_ChordShape, ukulele__3_ChordShape, ukulele__4_ChordShape, ukulele_add9_0_ChordShape, ukulele_aug6_0_ChordShape, ukulele_aug7_0_ChordShape, ukulele_aug_0_ChordShape, ukulele_dim6_0_ChordShape, ukulele_dim7_0_ChordShape, ukulele_dim_0_ChordShape, ukulele_m7_0_ChordShape, ukulele_m7_5_0_ChordShape, ukulele_m7b5_0_ChordShape, ukulele_m_0_ChordShape, ukulele_m_1_ChordShape, ukulele_m_2_ChordShape, ukulele_m_3_ChordShape, ukulele_m_add9_0_ChordShape, ukulele_m_maj7_0_ChordShape, ukulele_maj7_0_ChordShape, ukulele_maj7_5_0_ChordShape, ukulele_maj7b5_0_ChordShape, ukulele_sus2_0_ChordShape, ukulele_sus_0_ChordShape}
