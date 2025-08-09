@@ -76,17 +76,11 @@ func TestCmMaj7(t *testing.T) {
 	require.NoError(t, err)
 }
 
-func TestCmaj7(t *testing.T) {
+func TestCmaj7Sharp5(t *testing.T) {
 	g := NewGuitarWithStandardTuning()
-	chord, err := NewChord("Cmaj7")
+	chord, err := NewChord("Cmaj7#5")
 	require.NoError(t, err)
 	err = g.drawChord(guitar_maj7_sharp_5_0_ChordShape, chord, os.Stdout)
-	require.NoError(t, err)
-
-	err = g.drawChord(guitar_maj7_sharp_5_1_ChordShape, chord, os.Stdout)
-	require.NoError(t, err)
-
-	err = g.drawChord(guitar_maj7_sharp_5_2_ChordShape, chord, os.Stdout)
 	require.NoError(t, err)
 }
 
@@ -567,9 +561,31 @@ func TestCmaj7Sharp11(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func TestCmaj7(t *testing.T) {
+	g := NewGuitarWithStandardTuning()
+	chord, err := NewChord("Cmaj7")
+	require.NoError(t, err)
+
+	err = g.drawChord(guitar_maj7_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+	err = g.drawChord(guitar_maj7_1_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+	err = g.drawChord(guitar_maj7_2_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+}
+
+func TestCmaj9Sharp11(t *testing.T) {
+	g := NewGuitarWithStandardTuning()
+	chord, err := NewChord("Cmaj9#11")
+	require.NoError(t, err)
+	err = g.drawChord(guitar_maj9_sharp_11_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+}
+
+//
 //func TestPrint(t *testing.T) {
 //	g := NewGuitarWithStandardTuning()
-//	chord, err := NewChord("Caug")
+//	chord, err := NewChord("Cmaj7")
 //	require.NoError(t, err)
 //	shapes := g.getChordShapes(chord)
 //	for k, v := range shapes {
