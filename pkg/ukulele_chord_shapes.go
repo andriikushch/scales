@@ -69,16 +69,16 @@ var (
 )
 
 var allUkuleleChordShapes []ChordShape = []ChordShape{
-	ukulele_6_0_ChordShape, ukulele_7_0_ChordShape, ukulele_7b5_0_ChordShape, ukulele_7sus_0_ChordShape, ukulele__0_ChordShape, ukulele__1_ChordShape, ukulele__2_ChordShape,
+	ukulele_6_0_ChordShape, ukulele_7_0_ChordShape, ukulele_7b5_0_ChordShape, ukulele_7sus_0_ChordShape, ukulele__0_ChordShape, ukulele__1_ChordShape, ukulele__2_ChordShape, ukulele__3_ChordShape,
 
 	// TODO
-	ukulele__3_ChordShape, ukulele__4_ChordShape, ukulele_add9_0_ChordShape, ukulele_aug6_0_ChordShape, ukulele_aug7_0_ChordShape, ukulele_aug_0_ChordShape, ukulele_dim6_0_ChordShape, ukulele_dim7_0_ChordShape, ukulele_dim_0_ChordShape, ukulele_m7_0_ChordShape, ukulele_m7_sharp_5_0_ChordShape, ukulele_m7b5_0_ChordShape,
+	ukulele__4_ChordShape, ukulele_add9_0_ChordShape, ukulele_aug6_0_ChordShape, ukulele_aug7_0_ChordShape, ukulele_aug_0_ChordShape, ukulele_dim6_0_ChordShape, ukulele_dim7_0_ChordShape, ukulele_dim_0_ChordShape, ukulele_m6_0_ChordShape, ukulele_m7_0_ChordShape, ukulele_m7_sharp_5_0_ChordShape, ukulele_m7b5_0_ChordShape, ukulele_m_0_ChordShape,
 
 	// TODO
-	ukulele_m_0_ChordShape, ukulele_m_1_ChordShape, ukulele_m_2_ChordShape, ukulele_m_3_ChordShape, ukulele_m_add9_0_ChordShape, ukulele_m_maj7_0_ChordShape, ukulele_maj7_0_ChordShape, ukulele_maj7_sharp_5_0_ChordShape,
+	ukulele_m_1_ChordShape, ukulele_m_2_ChordShape, ukulele_m_3_ChordShape, ukulele_m_add9_0_ChordShape, ukulele_m_maj7_0_ChordShape, ukulele_maj7_0_ChordShape, ukulele_maj7_sharp_5_0_ChordShape, ukulele_maj7b5_0_ChordShape, ukulele_sus2_0_ChordShape,
 
 	// TODO
-	ukulele_maj7b5_0_ChordShape, ukulele_sus2_0_ChordShape, ukulele_sus_0_ChordShape,
+	ukulele_sus_0_ChordShape,
 }
 
 // TODO
@@ -188,4 +188,9 @@ var (
 var (
 	ukulele_add9_0_Schema     = []int{} // TODO
 	ukulele_add9_0_ChordShape = newChordShape("ukulele", []int{0, 4, 7, 14}, ukulele_add9_0_Schema, -1)
+)
+
+var (
+	ukulele_m6_0_Schema     = []int{} // TODO
+	ukulele_m6_0_ChordShape = newChordShape("ukulele", []int{0, 3, 7, 9}, ukulele_m6_0_Schema, -1)
 )

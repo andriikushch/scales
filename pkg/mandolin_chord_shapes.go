@@ -119,3 +119,8 @@ var (
 	mandolin_dim6_0_Schema     = []int{} // TODO
 	mandolin_dim6_0_ChordShape = newChordShape("mandolin", []int{0, 3, 6, 8}, mandolin_dim6_0_Schema, -1)
 )
+
+var (
+	mandolin_m6_0_Schema     = []int{} // TODO
+	mandolin_m6_0_ChordShape = newChordShape("mandolin", []int{0, 3, 7, 9}, mandolin_m6_0_Schema, -1)
+)

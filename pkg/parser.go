@@ -341,6 +341,8 @@ func (p parser) initMinorChord(chord *Chord, token internal.Token, isLastToken b
 	}
 
 	switch tokenValue {
+	case 6:
+		err = chord.add(internal.IM6)
 	case 7:
 		err = chord.add(internal.Im7)
 	case 9:
