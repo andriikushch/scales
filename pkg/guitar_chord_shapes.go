@@ -427,8 +427,8 @@ var (
 )
 
 var (
-	guitar_aug11_0_Schema     = []int{} // TODO
-	guitar_aug11_0_ChordShape = newChordShape("guitar", []int{0, 4, 8, 10, 14, 17}, guitar_aug11_0_Schema, -1)
+	guitar_aug11_0_Schema     = []int{0, 1, 1, 0, 0, 0}
+	guitar_aug11_0_ChordShape = newChordShape("guitar", []int{0, 4, 8, 10, 14, 17}, guitar_aug11_0_Schema, 5)
 )
 
 var (
