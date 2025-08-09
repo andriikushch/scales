@@ -382,8 +382,13 @@ var (
 )
 
 var (
-	guitar_7_sharp_11_0_Schema     = []int{}
-	guitar_7_sharp_11_0_ChordShape = newChordShape("guitar", []int{0, 4, 7, 10, 18}, guitar_7_sharp_11_0_Schema, -1)
+	guitar_7_sharp_11_0_Schema     = []int{MutedNote, 0, 2, 1, MutedNote, 1}
+	guitar_7_sharp_11_0_ChordShape = newChordShape("guitar", []int{0, 4, 7, 10, 18}, guitar_7_sharp_11_0_Schema, 5)
+)
+
+var (
+	guitar_7_sharp_11_1_Schema     = []int{0, 3, 1, 0, 1, MutedNote}
+	guitar_7_sharp_11_1_ChordShape = newChordShape("guitar", []int{0, 4, 7, 10, 18}, guitar_7_sharp_11_1_Schema, 4)
 )
 
 var (
