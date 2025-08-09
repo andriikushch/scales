@@ -4,6 +4,10 @@ var (
 	MandolinChordShapes map[string][]ChordShape
 )
 
+func init() {
+	MandolinChordShapes = initShapes(allMandolinChordShapes)
+}
+
 var (
 	mandolin_m_maj7_0_Schema     = []int{}
 	mandolin_m_maj7_0_ChordShape = newChordShape("mandolin", []int{0, 3, 7, 11}, mandolin_m_maj7_0_Schema, -1)

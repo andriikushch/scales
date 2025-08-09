@@ -1,25 +1,13 @@
 package scales
 
 import (
-	"fmt"
-
 	"github.com/andriikushch/scales/pkg/internal"
 )
 
-var UkuleleChordShapes = map[string][]ChordShape{
-	fmt.Sprintf("%d-%d-%d", internal.IUnison, internal.IM3, internal.IP5): {
-		ukulele__0_ChordShape,
-		ukulele__1_ChordShape,
-		ukulele__2_ChordShape,
-		ukulele__3_ChordShape,
-		ukulele__4_ChordShape,
-	},
-	fmt.Sprintf("%d-%d-%d", internal.IUnison, internal.Im3, internal.IP5): {
-		ukulele_m_0_ChordShape,
-		ukulele_m_1_ChordShape,
-		ukulele_m_2_ChordShape,
-		ukulele_m_3_ChordShape,
-	},
+var UkuleleChordShapes = map[string][]ChordShape{}
+
+func init() {
+	BassGuitarChordShapes = initShapes(allUkuleleChordShapes)
 }
 
 // Open position ukulele chords (G–C–E–A tuning)

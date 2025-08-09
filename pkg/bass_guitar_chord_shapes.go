@@ -1,22 +1,13 @@
 package scales
 
 import (
-	"fmt"
-
 	"github.com/andriikushch/scales/pkg/internal"
 )
 
-var BassGuitarChordShapes = map[string][]ChordShape{
-	fmt.Sprintf("%d-%d-%d", internal.IUnison, internal.Im3, internal.IP5): {
-		bassGuitar_m_0_ChordShape,
-		bassGuitar_m_1_ChordShape,
-		bassGuitar_m_2_ChordShape,
-	},
-	fmt.Sprintf("%d-%d-%d", internal.IUnison, internal.IM3, internal.IP5): {
-		bassGuitar__0_ChordShape,
-		bassGuitar__1_ChordShape,
-		bassGuitar__2_ChordShape,
-	},
+var BassGuitarChordShapes = map[string][]ChordShape{}
+
+func init() {
+	BassGuitarChordShapes = initShapes(allBassGuitarChordShapes)
 }
 
 var (
