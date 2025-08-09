@@ -267,8 +267,18 @@ var (
 )
 
 var (
-	guitar_aug_0_Schema     = []int{} // TODO
-	guitar_aug_0_ChordShape = newChordShape("guitar", []int{0, 4, 8}, guitar_aug_0_Schema, -1)
+	guitar_aug_0_Schema     = []int{MutedNote, 0, 0, 1, 2, MutedNote}
+	guitar_aug_0_ChordShape = newChordShape("guitar", []int{0, 4, 8}, guitar_aug_0_Schema, 4)
+)
+
+var (
+	guitar_aug_1_Schema     = []int{0, 1, 1, 2, MutedNote, MutedNote}
+	guitar_aug_1_ChordShape = newChordShape("guitar", []int{0, 4, 8}, guitar_aug_1_Schema, 3)
+)
+
+var (
+	guitar_aug_2_Schema     = []int{MutedNote, MutedNote, 0, 1, 2, 3}
+	guitar_aug_2_ChordShape = newChordShape("guitar", []int{0, 4, 8}, guitar_aug_2_Schema, 4)
 )
 
 var (
