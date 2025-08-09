@@ -1,19 +1,8 @@
 package scales
 
-var allMandolinChordShapes []ChordShape = []ChordShape{
-	mandolin_6_0_ChordShape, mandolin_7_0_ChordShape, mandolin_7b5_0_ChordShape, mandolin_7sus_0_ChordShape, mandolin__0_ChordShape, mandolin_add9_0_ChordShape, mandolin_aug6_0_ChordShape,
+var MandolinChordShapes map[string][]ChordShape
 
-	// TODO
-	mandolin_aug7_0_ChordShape, mandolin_aug_0_ChordShape, mandolin_dim6_0_ChordShape, mandolin_dim7_0_ChordShape, mandolin_dim_0_ChordShape, mandolin_m7_0_ChordShape,
-
-	// TODO
-	mandolin_m7_sharp_5_0_ChordShape, mandolin_m7b5_0_ChordShape, mandolin_m_0_ChordShape, mandolin_m_add9_0_ChordShape, mandolin_m_maj7_0_ChordShape, mandolin_maj7_0_ChordShape,
-
-	// TODO
-	mandolin_maj7_sharp_5_0_ChordShape, mandolin_maj7b5_0_ChordShape, mandolin_sus2_0_ChordShape, mandolin_sus_0_ChordShape,
-}
-
-// TODO
+var allMandolinChordShapes []ChordShape = []ChordShape{}
 
 var (
 	mandolin_m_maj7_0_Schema     = []int{}
