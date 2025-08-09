@@ -202,9 +202,53 @@ func TestCmaj9(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func TestC9(t *testing.T) {
+	g := NewGuitarWithStandardTuning()
+	chord, err := NewChord("C9")
+	require.NoError(t, err)
+	err = g.drawChord(guitar_9_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+
+	err = g.drawChord(guitar_9_1_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+}
+
+func TestCm9(t *testing.T) {
+	g := NewGuitarWithStandardTuning()
+	chord, err := NewChord("Cm9")
+	require.NoError(t, err)
+	err = g.drawChord(guitar_m9_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+
+	err = g.drawChord(guitar_m9_1_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+}
+
+func TestC11(t *testing.T) {
+	g := NewGuitarWithStandardTuning()
+	chord, err := NewChord("C11")
+	require.NoError(t, err)
+	err = g.drawChord(guitar_11_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+
+	err = g.drawChord(guitar_11_1_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+}
+
+func TestCm11(t *testing.T) {
+	g := NewGuitarWithStandardTuning()
+	chord, err := NewChord("Cm11")
+	require.NoError(t, err)
+	err = g.drawChord(guitar_m11_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+
+	err = g.drawChord(guitar_m11_1_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+}
+
 func TestXX(t *testing.T) {
 	g := NewGuitarWithStandardTuning()
-	chord, err := NewChord("Cmaj9")
+	chord, err := NewChord("Cm13")
 	require.NoError(t, err)
 	shapes := g.getChordShapes(chord)
 	for k, v := range shapes {
