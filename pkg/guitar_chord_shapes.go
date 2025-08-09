@@ -147,8 +147,13 @@ var (
 )
 
 var (
-	guitar_dim_0_Schema     = []int{} // TODO
-	guitar_dim_0_ChordShape = newChordShape("guitar", []int{0, 3, 6}, guitar_dim_0_Schema, -1)
+	guitar_dim_0_Schema     = []int{1, 0, 1, 3, MutedNote, MutedNote}
+	guitar_dim_0_ChordShape = newChordShape("guitar", []int{0, 3, 6}, guitar_dim_0_Schema, 3)
+)
+
+var (
+	guitar_dim_1_Schema     = []int{0, 2, 3, MutedNote, MutedNote, MutedNote}
+	guitar_dim_1_ChordShape = newChordShape("guitar", []int{0, 3, 6}, guitar_dim_1_Schema, 2)
 )
 
 var (
