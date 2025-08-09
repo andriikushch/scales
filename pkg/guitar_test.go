@@ -444,6 +444,17 @@ func TestC7sus(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func TestCadd9(t *testing.T) {
+	g := NewGuitarWithStandardTuning()
+	chord, err := NewChord("Cadd9")
+	require.NoError(t, err)
+	err = g.drawChord(guitar_add9_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+
+	err = g.drawChord(guitar_add9_1_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+}
+
 func TestXX(t *testing.T) {
 	g := NewGuitarWithStandardTuning()
 	chord, err := NewChord("Cadd9")
