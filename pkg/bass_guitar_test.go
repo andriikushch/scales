@@ -2,6 +2,7 @@ package scales
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"testing"
 
@@ -31,4 +32,18 @@ func TestBassGuitar_DrawChord(t *testing.T) {
 		}
 		fmt.Println()
 	}
+}
+
+func TestBassGuitarAm(t *testing.T) {
+	g := NewBassGuitarWithStandardTuning()
+	chord, err := NewChord("Am")
+	require.NoError(t, err)
+	err = g.drawChord(bassGuitar_m_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+
+	err = g.drawChord(bassGuitar_m_1_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+
+	err = g.drawChord(bassGuitar_m_2_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
 }

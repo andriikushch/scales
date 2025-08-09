@@ -7,7 +7,7 @@ import (
 var BassGuitarChordShapes = map[string][]ChordShape{}
 
 func init() {
-	BassGuitarChordShapes = initShapes(allBassGuitarChordShapes)
+	BassGuitarChordShapes = initShapes(allBassChordShapes)
 }
 
 var (
@@ -149,5 +149,4 @@ var (
 	bassGuitar_m6_0_Schema     = []int{} // TODO
 	bassGuitar_m6_0_ChordShape = newChordShape("bassGuitar", []int{0, 3, 7, 9}, bassGuitar_m6_0_Schema, -1)
 )
-
-var allBassGuitarChordShapes []ChordShape = []ChordShape{}
+var allBassChordShapes []ChordShape = []ChordShape{bassGuitar_6_0_ChordShape, bassGuitar_7_0_ChordShape, bassGuitar_7b5_0_ChordShape, bassGuitar_7sus_0_ChordShape, bassGuitar__0_ChordShape, bassGuitar__1_ChordShape, bassGuitar__2_ChordShape, bassGuitar_add9_0_ChordShape, bassGuitar_aug6_0_ChordShape, bassGuitar_aug7_0_ChordShape, bassGuitar_aug_0_ChordShape, bassGuitar_dim6_0_ChordShape, bassGuitar_dim7_0_ChordShape, bassGuitar_dim_0_ChordShape, bassGuitar_m6_0_ChordShape, bassGuitar_m7_0_ChordShape, bassGuitar_m7_sharp_5_0_ChordShape, bassGuitar_m7b5_0_ChordShape, bassGuitar_m_0_ChordShape, bassGuitar_m_1_ChordShape, bassGuitar_m_2_ChordShape, bassGuitar_m_add9_0_ChordShape, bassGuitar_m_maj7_0_ChordShape, bassGuitar_maj7_0_ChordShape, bassGuitar_maj7_sharp_5_0_ChordShape, bassGuitar_maj7b5_0_ChordShape, bassGuitar_sus2_0_ChordShape, bassGuitar_sus_0_ChordShape}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -26,8 +27,17 @@ type Instrument struct {
 	ChordShapesFilePath string
 }
 
+type ExportedChordShape struct {
+	Schema            []int
+	RootNotePosition  int
+	PossibleNotations []string
+}
+type ExportedInstrumentsChordShapes struct {
+	Instruments map[string]map[string][]ExportedChordShape
+}
+
 func main() {
-	if len(os.Args) < 6 {
+	if len(os.Args) < 7 {
 		panic("missing some parameters")
 	}
 
@@ -36,6 +46,8 @@ func main() {
 	fileWithUkuleleChordShapes := os.Args[3]
 	fileWithBassGuitarChordShapes := os.Args[4]
 	fileWithMandolinChordShapes := os.Args[5]
+
+	output := os.Args[6]
 
 	f, err := os.Open(fileWithUniqQualities)
 	if err != nil {
@@ -56,7 +68,7 @@ func main() {
 	instruments := []Instrument{
 		{"guitar", scales.NewGuitarWithStandardTuning(), scales.GuitarChordShapes, fileWithGuitarChordShapes},
 		{"ukulele", scales.NewUkuleleWithStandardTuning(), scales.UkuleleChordShapes, fileWithUkuleleChordShapes},
-		{"bassGuitar", scales.NewBassGuitarWithStandardTuning(), scales.BassGuitarChordShapes, fileWithBassGuitarChordShapes},
+		{"bass", scales.NewBassGuitarWithStandardTuning(), scales.BassGuitarChordShapes, fileWithBassGuitarChordShapes},
 		{"mandolin", scales.NewMandolinWithStandardTuning(), scales.MandolinChordShapes, fileWithMandolinChordShapes},
 	}
 
@@ -100,6 +112,49 @@ func main() {
 		if err != nil {
 			fmt.Printf("Failed to update %s: %v\n", instr.ChordShapesFilePath, err)
 		}
+	}
+
+	outputResult := ExportedInstrumentsChordShapes{make(map[string]map[string][]ExportedChordShape)}
+	for _, instr := range instruments {
+		if _, ok := outputResult.Instruments[instr.Name]; !ok {
+			outputResult.Instruments[instr.Name] = make(map[string][]ExportedChordShape)
+		}
+		for chordID, chordShapes := range instr.ChordShapes {
+			for _, chordShape := range chordShapes {
+				if len(chordShape.Schema) <= 0 {
+					continue
+				}
+
+				outputResult.Instruments[instr.Name][chordID] = append(
+					outputResult.Instruments[instr.Name][chordID],
+					ExportedChordShape{
+						Schema:            chordShape.Schema,
+						RootNotePosition:  chordShape.RootNotePosition,
+						PossibleNotations: chordShape.PossibleNotations,
+					},
+				)
+			}
+		}
+	}
+
+	b, err := json.MarshalIndent(
+		outputResult,
+		"",
+		"    ",
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	resF, err := os.OpenFile(output, os.O_TRUNC|os.O_WRONLY|os.O_CREATE|os.O_SYNC, 0o644)
+	if err != nil {
+		panic(err)
+	}
+	defer resF.Close()
+
+	_, err = resF.Write(b)
+	if err != nil {
+		panic(err)
 	}
 }
 

@@ -1,8 +1,6 @@
 package scales
 
-import "math"
-
-const MutedNote = -math.MaxInt
+const MutedNote = -100
 
 type ChordShape struct {
 	Instrument        string
