@@ -508,6 +508,15 @@ func TestCdim(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func TestCaug6(t *testing.T) {
+	g := NewGuitarWithStandardTuning()
+	chord, err := NewChord("Caug6")
+	require.NoError(t, err)
+
+	err = g.drawChord(guitar_aug6_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+}
+
 func TestPrint(t *testing.T) {
 	g := NewGuitarWithStandardTuning()
 	chord, err := NewChord("Caug")
