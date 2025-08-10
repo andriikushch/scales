@@ -41,8 +41,8 @@ var (
 )
 
 var (
-	bassGuitar_maj7_sharp_5_0_Schema     = []int{}
-	bassGuitar_maj7_sharp_5_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 8, 11}, bassGuitar_maj7_sharp_5_0_Schema, -1)
+	bassGuitar_maj7_sharp_5_0_Schema     = []int{1, 1, 3, 0}
+	bassGuitar_maj7_sharp_5_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 8, 11}, bassGuitar_maj7_sharp_5_0_Schema, 3)
 )
 
 var (

@@ -47,3 +47,22 @@ func TestBassGuitarAm(t *testing.T) {
 	err = g.drawChord(bassGuitar_m_2_ChordShape, chord, os.Stdout)
 	require.NoError(t, err)
 }
+
+func TestBassGuitarCmaj7Sharp5(t *testing.T) {
+	g := NewBassGuitarWithStandardTuning()
+	chord, err := NewChord("Cmaj7#5")
+	require.NoError(t, err)
+	err = g.drawChord(bassGuitar_maj7_sharp_5_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+
+}
+
+func TestPrint(t *testing.T) {
+	g := NewBassGuitarWithStandardTuning()
+	chord, err := NewChord("Cmaj7#5")
+	require.NoError(t, err)
+	shapes := g.getChordShapes(chord)
+	for k, v := range shapes {
+		fmt.Printf("shape %d: %v\n", k, v)
+	}
+}
