@@ -69,3 +69,14 @@ func TestMandolinC7(t *testing.T) {
 		require.NoError(t, err)
 	}
 }
+
+func TestMandolinCm7(t *testing.T) {
+	g := NewMandolinWithStandardTuning()
+	chord, err := NewChord("Cm7")
+	require.NoError(t, err)
+
+	for _, shape := range g.getChordShapes(chord) {
+		err = g.drawChord(shape, chord, os.Stdout)
+		require.NoError(t, err)
+	}
+}

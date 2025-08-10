@@ -72,8 +72,28 @@ var (
 )
 
 var (
-	mandolin_m7_0_Schema     = []int{} // TODO
-	mandolin_m7_0_ChordShape = newChordShape("mandolin", []int{0, 3, 7, 10}, mandolin_m7_0_Schema, -1)
+	mandolin_m7_0_Schema     = []int{1, 1, 0, 0}
+	mandolin_m7_0_ChordShape = newChordShape("mandolin", []int{0, 3, 7, 10}, mandolin_m7_0_Schema, 3)
+)
+
+var (
+	mandolin_m7_1_Schema     = []int{2, 0, 0, 4}
+	mandolin_m7_1_ChordShape = newChordShape("mandolin", []int{0, 3, 7, 10}, mandolin_m7_1_Schema, 3)
+)
+
+var (
+	mandolin_m7_2_Schema     = []int{2, 2, 0, 2}
+	mandolin_m7_2_ChordShape = newChordShape("mandolin", []int{0, 3, 7, 10}, mandolin_m7_2_Schema, 1)
+)
+
+var (
+	mandolin_m7_3_Schema     = []int{1, 3, 0, 2}
+	mandolin_m7_3_ChordShape = newChordShape("mandolin", []int{0, 3, 7, 10}, mandolin_m7_3_Schema, 2)
+)
+
+var (
+	mandolin_m7_4_Schema     = []int{0, 2, 0, 0}
+	mandolin_m7_4_ChordShape = newChordShape("mandolin", []int{0, 3, 7, 10}, mandolin_m7_4_Schema, 0)
 )
 
 var (
@@ -210,4 +230,4 @@ var (
 	mandolin_m6_0_Schema     = []int{} // TODO
 	mandolin_m6_0_ChordShape = newChordShape("mandolin", []int{0, 3, 7, 9}, mandolin_m6_0_Schema, -1)
 )
-var allMandolinChordShapes []ChordShape = []ChordShape{mandolin_6_0_ChordShape, mandolin_7_0_ChordShape, mandolin_7_1_ChordShape, mandolin_7_2_ChordShape, mandolin_7_3_ChordShape, mandolin_7_4_ChordShape, mandolin_7_5_ChordShape, mandolin_7b5_0_ChordShape, mandolin_7sus_0_ChordShape, mandolin__0_ChordShape, mandolin__1_ChordShape, mandolin__2_ChordShape, mandolin__3_ChordShape, mandolin__4_ChordShape, mandolin__5_ChordShape, mandolin__6_ChordShape, mandolin_add9_0_ChordShape, mandolin_aug6_0_ChordShape, mandolin_aug7_0_ChordShape, mandolin_aug_0_ChordShape, mandolin_dim6_0_ChordShape, mandolin_dim7_0_ChordShape, mandolin_dim_0_ChordShape, mandolin_m6_0_ChordShape, mandolin_m7_0_ChordShape, mandolin_m7_sharp_5_0_ChordShape, mandolin_m7b5_0_ChordShape, mandolin_m_0_ChordShape, mandolin_m_1_ChordShape, mandolin_m_2_ChordShape, mandolin_m_3_ChordShape, mandolin_m_4_ChordShape, mandolin_m_5_ChordShape, mandolin_m_6_ChordShape, mandolin_m_add9_0_ChordShape, mandolin_m_maj7_0_ChordShape, mandolin_maj7_0_ChordShape, mandolin_maj7_sharp_5_0_ChordShape, mandolin_maj7b5_0_ChordShape, mandolin_sus2_0_ChordShape, mandolin_sus_0_ChordShape}
+var allMandolinChordShapes []ChordShape = []ChordShape{mandolin_6_0_ChordShape, mandolin_7_0_ChordShape, mandolin_7_1_ChordShape, mandolin_7_2_ChordShape, mandolin_7_3_ChordShape, mandolin_7_4_ChordShape, mandolin_7_5_ChordShape, mandolin_7b5_0_ChordShape, mandolin_7sus_0_ChordShape, mandolin__0_ChordShape, mandolin__1_ChordShape, mandolin__2_ChordShape, mandolin__3_ChordShape, mandolin__4_ChordShape, mandolin__5_ChordShape, mandolin__6_ChordShape, mandolin_add9_0_ChordShape, mandolin_aug6_0_ChordShape, mandolin_aug7_0_ChordShape, mandolin_aug_0_ChordShape, mandolin_dim6_0_ChordShape, mandolin_dim7_0_ChordShape, mandolin_dim_0_ChordShape, mandolin_m6_0_ChordShape, mandolin_m7_0_ChordShape, mandolin_m7_1_ChordShape, mandolin_m7_2_ChordShape, mandolin_m7_3_ChordShape, mandolin_m7_4_ChordShape, mandolin_m7_sharp_5_0_ChordShape, mandolin_m7b5_0_ChordShape, mandolin_m_0_ChordShape, mandolin_m_1_ChordShape, mandolin_m_2_ChordShape, mandolin_m_3_ChordShape, mandolin_m_4_ChordShape, mandolin_m_5_ChordShape, mandolin_m_6_ChordShape, mandolin_m_add9_0_ChordShape, mandolin_m_maj7_0_ChordShape, mandolin_maj7_0_ChordShape, mandolin_maj7_sharp_5_0_ChordShape, mandolin_maj7b5_0_ChordShape, mandolin_sus2_0_ChordShape, mandolin_sus_0_ChordShape}

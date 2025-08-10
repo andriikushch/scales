@@ -1,6 +1,7 @@
 package scales
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"testing"
@@ -582,13 +583,12 @@ func TestCmaj9Sharp11(t *testing.T) {
 	require.NoError(t, err)
 }
 
-//
-//func TestPrint(t *testing.T) {
-//	g := NewGuitarWithStandardTuning()
-//	chord, err := NewChord("Cmaj7")
-//	require.NoError(t, err)
-//	shapes := g.getChordShapes(chord)
-//	for k, v := range shapes {
-//		fmt.Printf("shape %d: %v\n", k, v)
-//	}
-//}
+func TestPrint(t *testing.T) {
+	g := NewGuitarWithStandardTuning()
+	chord, err := NewChord("Am7")
+	require.NoError(t, err)
+	shapes := g.getChordShapes(chord)
+	for k, v := range shapes {
+		fmt.Printf("shape %d: %v\n", k, v)
+	}
+}
