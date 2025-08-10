@@ -54,7 +54,6 @@ func TestBassGuitarCmaj7Sharp5(t *testing.T) {
 	require.NoError(t, err)
 	err = g.drawChord(bassGuitar_maj7_sharp_5_0_ChordShape, chord, os.Stdout)
 	require.NoError(t, err)
-
 }
 
 func TestBassGuitarAug(t *testing.T) {

@@ -24,8 +24,8 @@ func (m *Mandolin) getChordShapes(chord Chord) []ChordShape {
 	return MandolinChordShapes[strings.Join(structure, "-")]
 }
 
-func NewMandolinWithStandardTuning() *Ukulele {
-	return &Ukulele{
+func NewMandolinWithStandardTuning() *Mandolin {
+	return &Mandolin{
 		&stringInstrumentWithFrets{
 			tuning: []Note{
 				NewNote(internal.E),
