@@ -66,6 +66,24 @@ func TestBassGuitarAug(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func TestBassGuitarCmadd9(t *testing.T) {
+	g := NewBassGuitarWithStandardTuning()
+	chord, err := NewChord("Cm(add9)")
+	require.NoError(t, err)
+
+	err = g.drawChord(bassGuitar_m_add9_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+}
+
+func TestBassGuitarCm7(t *testing.T) {
+	g := NewBassGuitarWithStandardTuning()
+	chord, err := NewChord("Cm7")
+	require.NoError(t, err)
+
+	err = g.drawChord(bassGuitar_m7_0_ChordShape, chord, os.Stdout)
+	require.NoError(t, err)
+}
+
 func TestPrint(t *testing.T) {
 	g := NewBassGuitarWithStandardTuning()
 	chord, err := NewChord("Caug")
