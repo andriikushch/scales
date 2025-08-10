@@ -2,6 +2,7 @@ package scales
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"testing"
 
@@ -55,5 +56,16 @@ func TestMandolin_DrawMajChord(t *testing.T) {
 			fmt.Print(lines[j], "    ")
 		}
 		fmt.Println()
+	}
+}
+
+func TestMandolinC7(t *testing.T) {
+	g := NewMandolinWithStandardTuning()
+	chord, err := NewChord("C7")
+	require.NoError(t, err)
+
+	for _, shape := range g.getChordShapes(chord) {
+		err = g.drawChord(shape, chord, os.Stdout)
+		require.NoError(t, err)
 	}
 }
