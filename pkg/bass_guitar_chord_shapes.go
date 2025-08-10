@@ -46,6 +46,7 @@ var (
 )
 
 var (
+	// todo: is there is a good shape?
 	bassGuitar_aug6_0_Schema     = []int{}
 	bassGuitar_aug6_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 8, 9}, bassGuitar_aug6_0_Schema, -1)
 )
@@ -96,8 +97,8 @@ var (
 )
 
 var (
-	bassGuitar_aug_0_Schema     = []int{} // TODO
-	bassGuitar_aug_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 8}, bassGuitar_aug_0_Schema, -1)
+	bassGuitar_aug_0_Schema     = []int{0, 1, 2, MutedNote}
+	bassGuitar_aug_0_ChordShape = newChordShape("bassGuitar", []int{0, 4, 8}, bassGuitar_aug_0_Schema, 2)
 )
 
 var (
