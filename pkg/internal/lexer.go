@@ -2,9 +2,7 @@ package internal
 
 import (
 	"errors"
-	"regexp"
 	"slices"
-	"strconv"
 	"strings"
 	"unicode"
 )
@@ -31,8 +29,6 @@ var roots = []string{
 	B,
 }
 
-var re = regexp.MustCompile(`[^0-9]`)
-
 type Lexer struct {
 	input      string
 	currentPos int
@@ -45,6 +41,8 @@ func (l *Lexer) Tokenize(input string) ([]Token, error) {
 	}
 
 	l.input = input
+	l.currentPos = 0
+	l.lookupPos = 0
 
 	var result []Token
 
@@ -117,22 +115,12 @@ func (l *Lexer) readChars() (tokenType, string, error) {
 
 		if len(l.input) > 1 {
 			alt := ""
-			for i := 1; i < len(l.input) && string(l.input[i]) == b; i++ {
-				alt += b
+			sign := string(l.input[1])
+			if sign == b || sign == sharpSign {
+				for i := 1; i < len(l.input) && string(l.input[i]) == sign; i++ {
+					alt += sign
+				}
 			}
-
-			if len(alt) > 0 {
-				return ROOT, roots[index] + alt, nil
-			}
-
-		}
-
-		if len(l.input) > 1 {
-			alt := ""
-			for i := 1; i < len(l.input) && string(l.input[i]) == sharpSign; i++ {
-				alt += sharpSign
-			}
-
 			if len(alt) > 0 {
 				return ROOT, roots[index] + alt, nil
 			}
@@ -142,7 +130,7 @@ func (l *Lexer) readChars() (tokenType, string, error) {
 
 	}
 
-	for l.lookupPos < len(l.input) {
+	if l.lookupPos < len(l.input) {
 		l.lookupPos++
 		ch := l.input[l.currentPos:l.lookupPos]
 
@@ -157,7 +145,7 @@ func (l *Lexer) getToken(ch string) (tokenType, string, error) {
 	case m:
 		// check if it is "m" or "maj"
 		if strings.HasPrefix(l.input[l.currentPos:], maj) {
-			l.lookupPos += len(maj)
+			l.lookupPos = l.currentPos + len(maj)
 			// check if maj is followed by numbers
 			l.takeFollowingNumbers()
 
@@ -181,9 +169,7 @@ func (l *Lexer) getToken(ch string) (tokenType, string, error) {
 		// check if flat is followed by numbers
 		l.takeFollowingNumbers()
 
-		_, err := strconv.Atoi(strings.ReplaceAll(l.input[l.currentPos:l.lookupPos], slash, ""))
-		if err == nil {
-			// followed by number
+		if l.lookupPos > l.currentPos+1 {
 			return ADD, l.input[l.currentPos:l.lookupPos], nil
 		}
 
@@ -197,21 +183,21 @@ func (l *Lexer) getToken(ch string) (tokenType, string, error) {
 		}
 
 		if strings.HasPrefix(l.input[l.currentPos:], dim) {
-			l.lookupPos += len(dim)
+			l.lookupPos = l.currentPos + len(dim)
 			l.takeFollowingNumbers()
 
 			return DIM, l.input[l.currentPos:l.lookupPos], nil
 		}
 
 		if strings.HasPrefix(l.input[l.currentPos:], aug) {
-			l.lookupPos += len(aug)
+			l.lookupPos = l.currentPos + len(aug)
 			l.takeFollowingNumbers()
 
 			return AUG, l.input[l.currentPos:l.lookupPos], nil
 		}
 
 		if strings.HasPrefix(l.input[l.currentPos:], add) {
-			l.lookupPos += len(add)
+			l.lookupPos = l.currentPos + len(add)
 			// check if maj is followed by numbers
 			l.takeFollowingNumbers()
 
@@ -219,8 +205,8 @@ func (l *Lexer) getToken(ch string) (tokenType, string, error) {
 		}
 
 		if strings.HasPrefix(l.input[l.currentPos:], sus) {
-			l.lookupPos += len(sus)
-			// check if maj is followed by numbers
+			l.lookupPos = l.currentPos + len(sus)
+			// check if sus is followed by numbers
 			l.takeFollowingNumbers()
 
 			return SUS, l.input[l.currentPos:l.lookupPos], nil
@@ -231,12 +217,6 @@ func (l *Lexer) getToken(ch string) (tokenType, string, error) {
 }
 
 func (l *Lexer) takeFollowingNumbers() {
-	if l.lookupPos > len(l.input) {
-		l.lookupPos--
-
-		return
-	}
-
 	for ; l.lookupPos < len(l.input); l.lookupPos++ {
 		if unicode.IsDigit(rune(l.input[l.lookupPos])) {
 			continue
@@ -247,6 +227,10 @@ func (l *Lexer) takeFollowingNumbers() {
 }
 
 func (l *Lexer) removeNonNumbers(s string) string {
-	// Matches everything except digits
-	return re.ReplaceAllString(s, "")
+	return strings.Map(func(r rune) rune {
+		if unicode.IsDigit(r) {
+			return r
+		}
+		return -1
+	}, s)
 }
