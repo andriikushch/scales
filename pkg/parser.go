@@ -2,6 +2,7 @@ package scales
 
 import (
 	"errors"
+	"fmt"
 	"slices"
 	"strconv"
 
@@ -16,6 +17,7 @@ var (
 	errIsNotInt             = errors.New("is not integer")
 	errMissingDegreeMapping = errors.New("missing degree mapping")
 	errUnexpectedInterval   = errors.New("unexpected interval")
+	errUnknownNote          = errors.New("unknown note")
 )
 
 func (p parser) parse(input string) (*Chord, error) {
@@ -35,7 +37,7 @@ func (p parser) parse(input string) (*Chord, error) {
 		case internal.ROOT:
 			err = p.initMajorChord(chord, token)
 		case internal.NUMBER:
-			err = p.parseNumber(token, chord, tokenIndex, tokens, internal.Numbers, internal.NthMapping)
+			err = p.parseNumber(token, chord, tokenIndex, tokens)
 		case internal.MAJ:
 			err = p.parseMaj(chord, token, tokenIndex, tokens)
 		case internal.FLAT:
@@ -51,15 +53,17 @@ func (p parser) parse(input string) (*Chord, error) {
 		case internal.SUS:
 			err = p.parseSus(token, chord)
 		case internal.DIM:
-			err = p.initDimChord(chord, token)
+			err = p.initDimChord(chord, token, isLastToken)
 		case internal.AUG:
-			err = p.initAugChord(chord, token)
+			err = p.initAugChord(chord, token, isLastToken)
 		case internal.MINOR:
 			err = p.initMinorChord(chord, token, isLastToken)
 		case internal.BASS:
 			err = p.parseBass(token, chord)
 		case internal.ADD:
 			err = p.parseAdd(token, chord, tokenIndex, tokens, internal.Degrees)
+		default:
+			return nil, fmt.Errorf("unsupported token type %q", token.Type)
 		}
 
 		if err != nil {
@@ -68,6 +72,20 @@ func (p parser) parse(input string) (*Chord, error) {
 	}
 
 	return chord, nil
+}
+
+func (p parser) pickQualityString(tokenValue int, useShortForm bool) (string, error) {
+	m := internal.NthMapping
+	if useShortForm {
+		m = internal.Numbers
+	}
+
+	val, ok := m[tokenValue]
+	if !ok {
+		return "", errMissingDegreeMapping
+	}
+
+	return val, nil
 }
 
 func (p parser) parseAdd(token internal.Token, chord *Chord, tokenIndex int, tokens []internal.Token, degrees map[int]int) error {
@@ -92,25 +110,24 @@ func (p parser) parseAdd(token internal.Token, chord *Chord, tokenIndex int, tok
 		chord.addType(internal.Added)
 	}
 
-	if len(chord.quality) == 1 && tokenIndex+1 < len(tokens) {
-		if val, ok := internal.Numbers[tokenValue]; ok {
-			chord.addType(val)
-		} else {
-			return errMissingDegreeMapping
-		}
-	} else {
-		if val, ok := internal.NthMapping[tokenValue]; ok {
-			chord.addType(val)
-		} else {
-			return errMissingDegreeMapping
-		}
+	useShortForm := len(chord.quality) == 1 && tokenIndex+1 < len(tokens)
+
+	typeString, err := p.pickQualityString(tokenValue, useShortForm)
+	if err != nil {
+		return err
 	}
+
+	chord.addType(typeString)
 
 	return nil
 }
 
 func (p parser) parseBass(token internal.Token, chord *Chord) error {
 	bassNote := NewNote(token.Value)
+	if defaultChromaticScale.position(bassNote) == -1 {
+		return fmt.Errorf("%w: %q is not a known note", errUnknownNote, token.Value)
+	}
+
 	chord.setBase(bassNote)
 	distance := defaultChromaticScale.findDistance(chord.root, bassNote)
 
@@ -135,7 +152,7 @@ func (p parser) parseSus(token internal.Token, chord *Chord) error {
 	if token.Value != "" {
 		tokenValue, err = strconv.Atoi(token.Value)
 		if err != nil {
-			return errIsNotInt
+			return errors.Join(errIsNotInt, err)
 		}
 	} else {
 		tokenValue = 4 // default values
@@ -184,7 +201,7 @@ func (p parser) parseAlt(chord *Chord, token internal.Token, degrees map[int]int
 
 	tokenValue, err := strconv.Atoi(token.Value)
 	if err != nil {
-		return errIsNotInt
+		return errors.Join(errIsNotInt, err)
 	}
 
 	toModify, ok := degrees[tokenValue]
@@ -229,19 +246,14 @@ func (p parser) parseMaj(chord *Chord, token internal.Token, i int, tokens []int
 		return err
 	}
 
-	if len(chord.quality) == 1 && i+1 < len(tokens) {
-		if val, ok := internal.Numbers[tokenValue]; ok {
-			chord.addType(val)
-		} else {
-			return errMissingDegreeMapping
-		}
-	} else {
-		if val, ok := internal.NthMapping[tokenValue]; ok {
-			chord.addType(val)
-		} else {
-			return errMissingDegreeMapping
-		}
+	useShortForm := len(chord.quality) == 1 && i+1 < len(tokens)
+
+	typeString, err := p.pickQualityString(tokenValue, useShortForm)
+	if err != nil {
+		return err
 	}
+
+	chord.addType(typeString)
 
 	for i := 7; i <= tokenValue; i += 2 {
 		if val, ok := internal.Degrees[i]; ok {
@@ -257,7 +269,7 @@ func (p parser) parseMaj(chord *Chord, token internal.Token, i int, tokens []int
 	return nil
 }
 
-func (p parser) parseNumber(token internal.Token, chord *Chord, i int, tokens []internal.Token, numbers, nthMapping map[int]string) error {
+func (p parser) parseNumber(token internal.Token, chord *Chord, i int, tokens []internal.Token) error {
 	tokenValue, err := strconv.Atoi(token.Value)
 	if err != nil {
 		return errIsNotInt
@@ -271,18 +283,11 @@ func (p parser) parseNumber(token internal.Token, chord *Chord, i int, tokens []
 		chord.quality = []string{}
 	}
 
-	var chordType string
+	useShortForm := len(chord.quality) == 1 && i+1 < len(tokens) && tokens[i+1].Type != internal.SUS
 
-	var mappingExists bool
-
-	if len(chord.quality) == 1 && i+1 < len(tokens) && tokens[i+1].Type != internal.SUS {
-		chordType, mappingExists = numbers[tokenValue]
-	} else {
-		chordType, mappingExists = nthMapping[tokenValue]
-	}
-
-	if !mappingExists {
-		return errMissingDegreeMapping
+	chordType, err := p.pickQualityString(tokenValue, useShortForm)
+	if err != nil {
+		return err
 	}
 
 	chord.addType(chordType)
@@ -321,15 +326,38 @@ func (p parser) parseNumber(token internal.Token, chord *Chord, i int, tokens []
 	return nil
 }
 
-func (p parser) initMinorChord(chord *Chord, token internal.Token, isLastToken bool) error {
-	chord.setChordBasicType(internal.Minor)
+var minorExtensions = map[int][]int{
+	6:  {internal.IM6},
+	7:  {internal.Im7},
+	9:  {internal.Im7, internal.IM9},
+	11: {internal.Im7, internal.IM9, internal.IP11},
+	13: {internal.Im7, internal.IM9, internal.IP11, internal.IM13},
+}
+
+var augExtensions = map[int][]int{
+	6:  {internal.IM6},
+	7:  {internal.Im7},
+	9:  {internal.Im7, internal.IM9},
+	11: {internal.Im7, internal.IM9, internal.IP11},
+	13: {internal.Im7, internal.IM9, internal.IP11, internal.IM13},
+}
+
+var dimExtensions = map[int][]int{
+	6:  {internal.Im6},
+	7:  {internal.ID7},
+	9:  {internal.ID7, internal.IM9},
+	11: {internal.ID7, internal.IM9, internal.IP11},
+	13: {internal.ID7, internal.IM9, internal.IP11, internal.IM13},
+}
+
+func (p parser) initChordWithExtension(chord *Chord, token internal.Token, isLastToken bool, basicType string, structuralAdjust func(*Chord), extensions map[int][]int) error {
+	chord.setChordBasicType(basicType)
 
 	if len(chord.quality) > 0 {
-		chord.quality[0] = internal.Minor
+		chord.quality[0] = basicType
 	}
 
-	// convert first M3 tp m3
-	chord.flatFirst(internal.IM3)
+	structuralAdjust(chord)
 
 	if token.Value == "" {
 		return nil
@@ -337,45 +365,31 @@ func (p parser) initMinorChord(chord *Chord, token internal.Token, isLastToken b
 
 	tokenValue, err := strconv.Atoi(token.Value)
 	if err != nil {
-		return errIsNotInt
+		return errors.Join(errIsNotInt, err)
 	}
 
-	switch tokenValue {
-	case 6:
-		err = chord.add(internal.IM6)
-	case 7:
-		err = chord.add(internal.Im7)
-	case 9:
-		err = chord.addIntervals(internal.Im7, internal.IM9)
-	case 11:
-		err = chord.addIntervals(internal.Im7, internal.IM9, internal.IP11)
-	case 13:
-		err = chord.addIntervals(internal.Im7, internal.IM9, internal.IP11, internal.IM13)
-	default:
-		err = errUnexpectedInterval
+	intervals, ok := extensions[tokenValue]
+	if !ok {
+		return errUnexpectedInterval
 	}
 
+	if err := chord.addIntervals(intervals...); err != nil {
+		return err
+	}
+
+	typeString, err := p.pickQualityString(tokenValue, !isLastToken)
 	if err != nil {
 		return err
 	}
 
-	var typeString string
-	var ok bool
-
-	if isLastToken {
-		typeString, ok = internal.NthMapping[tokenValue]
-		if !ok {
-			return errMissingDegreeMapping
-		}
-	} else {
-		typeString, ok = internal.Numbers[tokenValue]
-		if !ok {
-			return errMissingDegreeMapping
-		}
-	}
-
 	chord.addType(typeString)
+
 	return nil
+}
+
+func (p parser) initMinorChord(chord *Chord, token internal.Token, isLastToken bool) error {
+	return p.initChordWithExtension(chord, token, isLastToken, internal.Minor,
+		func(c *Chord) { c.flatFirst(internal.IM3) }, minorExtensions)
 }
 
 func (p parser) initMajorChord(chord *Chord, token internal.Token) error {
@@ -388,91 +402,15 @@ func (p parser) initMajorChord(chord *Chord, token internal.Token) error {
 	return chord.addIntervals(internal.IUnison, internal.IM3, internal.IP5)
 }
 
-func (p parser) initAugChord(chord *Chord, token internal.Token) error {
-	chord.setChordBasicType(internal.Augmented)
-
-	if len(chord.quality) > 0 {
-		chord.quality[0] = internal.Augmented
-	}
-
-	// add half step to the 5th
-	chord.sharpFirst(internal.IP5)
-
-	if token.Value == "" {
-		return nil
-	}
-
-	tokenValue, err := strconv.Atoi(token.Value)
-	if err != nil {
-		return errIsNotInt
-	}
-
-	switch tokenValue {
-	case 6:
-		err = chord.add(internal.IM6)
-	case 7:
-		err = chord.add(internal.Im7)
-	case 9:
-		err = chord.addIntervals(internal.Im7, internal.IM9)
-	case 11:
-		err = chord.addIntervals(internal.Im7, internal.IM9, internal.IP11)
-	default:
-		err = errUnexpectedInterval
-	}
-
-	if err != nil {
-		return err
-	}
-	typeString, ok := internal.NthMapping[tokenValue]
-	if !ok {
-		return errMissingDegreeMapping
-	}
-
-	chord.addType(typeString)
-	return nil
+func (p parser) initAugChord(chord *Chord, token internal.Token, isLastToken bool) error {
+	return p.initChordWithExtension(chord, token, isLastToken, internal.Augmented,
+		func(c *Chord) { c.sharpFirst(internal.IP5) }, augExtensions)
 }
 
-func (p parser) initDimChord(chord *Chord, token internal.Token) error {
-	chord.setChordBasicType(internal.Diminished)
-
-	if len(chord.quality) > 0 {
-		chord.quality[0] = internal.Diminished
-	}
-
-	// convert first M3 tp m3
-	chord.flatFirst(internal.IM3)
-	chord.flatFirst(internal.IP5)
-
-	if token.Value == "" {
-		return nil
-	}
-
-	tokenValue, err := strconv.Atoi(token.Value)
-	if err != nil {
-		return errIsNotInt
-	}
-
-	switch tokenValue {
-	case 6:
-		err = chord.add(internal.Im6)
-	case 7:
-		err = chord.add(internal.ID7)
-	case 9:
-		err = chord.addIntervals(internal.ID7, internal.IM9)
-	case 11:
-		err = chord.addIntervals(internal.ID7, internal.IM9, internal.IP11)
-	default:
-		err = errUnexpectedInterval
-	}
-
-	if err != nil {
-		return err
-	}
-	typeString, ok := internal.NthMapping[tokenValue]
-	if !ok {
-		return errMissingDegreeMapping
-	}
-
-	chord.addType(typeString)
-	return nil
+func (p parser) initDimChord(chord *Chord, token internal.Token, isLastToken bool) error {
+	return p.initChordWithExtension(chord, token, isLastToken, internal.Diminished,
+		func(c *Chord) {
+			c.flatFirst(internal.IM3)
+			c.flatFirst(internal.IP5)
+		}, dimExtensions)
 }

@@ -292,6 +292,28 @@ func TestParseChord(t *testing.T) {
 			},
 		},
 		{
+			name: "Caug13",
+			args: args{
+				description: "Caug13",
+			},
+			want: Chord{
+				description:    "Caug13",
+				chordBasicType: internal.Augmented,
+				root:           NewNote("C"),
+				notes: []Note{
+					NewNote(internal.C),
+					NewNote(internal.E),
+					NewNote(internal.GSharp),
+					NewNote(internal.BFlat),
+					NewNote(internal.D),
+					NewNote(internal.F),
+					NewNote(internal.A),
+				},
+				structure: []int{internal.IUnison, internal.IM3, internal.IA5, internal.Im7, internal.IM9, internal.IP11, internal.IM13},
+				quality:   []string{internal.Augmented, internal.Thirteenth},
+			},
+		},
+		{
 			name: "Caug6",
 			args: args{
 				description: "Caug6",
@@ -1324,6 +1346,28 @@ func TestParseChord(t *testing.T) {
 				},
 				structure: []int{internal.IUnison, internal.Im3, internal.ID5, internal.IM6, internal.IM9, internal.IP11},
 				quality:   []string{internal.Diminished, internal.Eleventh},
+			},
+		},
+		{
+			name: "Cdim13",
+			args: args{
+				description: "Cdim13",
+			},
+			want: Chord{
+				description:    "Cdim13",
+				chordBasicType: internal.Diminished,
+				root:           NewNote("C"),
+				notes: []Note{
+					NewNote(internal.C),
+					NewNote(internal.EFlat),
+					NewNote(internal.GFlat),
+					NewNote(internal.A),
+					NewNote(internal.D),
+					NewNote(internal.F),
+					NewNote(internal.A),
+				},
+				structure: []int{internal.IUnison, internal.Im3, internal.ID5, internal.IM6, internal.IM9, internal.IP11, internal.IM13},
+				quality:   []string{internal.Diminished, internal.Thirteenth},
 			},
 		},
 		{
