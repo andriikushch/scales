@@ -597,6 +597,26 @@ func TestParseChord(t *testing.T) {
 			},
 		},
 		{
+			name: "C7b13",
+			args: args{
+				description: "C7b13",
+			},
+			want: Chord{
+				description:    "C7b13",
+				chordBasicType: internal.Major,
+				root:           NewNote("C"),
+				notes: []Note{
+					NewNote(internal.C),
+					NewNote(internal.E),
+					NewNote(internal.G),
+					NewNote(internal.BFlat),
+					NewNote(internal.GSharp),
+				},
+				structure: []int{internal.IUnison, internal.IM3, internal.IP5, internal.Im7, internal.Im13},
+				quality:   []string{internal.Dominant, internal.Seven, internal.Flat, internal.Thirteen},
+			},
+		},
+		{
 			name: "C7#9",
 			args: args{
 				description: "C7#9",

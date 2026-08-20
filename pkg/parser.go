@@ -53,11 +53,11 @@ func (p parser) parse(input string) (*Chord, error) {
 		case internal.SUS:
 			err = p.parseSus(token, chord)
 		case internal.DIM:
-			err = p.initDimChord(chord, token, isLastToken)
+			err = p.initExtendedChord(chord, token, isLastToken, internal.Diminished)
 		case internal.AUG:
-			err = p.initAugChord(chord, token, isLastToken)
+			err = p.initExtendedChord(chord, token, isLastToken, internal.Augmented)
 		case internal.MINOR:
-			err = p.initMinorChord(chord, token, isLastToken)
+			err = p.initExtendedChord(chord, token, isLastToken, internal.Minor)
 		case internal.BASS:
 			err = p.parseBass(token, chord)
 		case internal.ADD:
@@ -94,7 +94,6 @@ func (p parser) parseAdd(token internal.Token, chord *Chord, tokenIndex int, tok
 		return errors.Join(errIsNotInt, err)
 	}
 
-	// add degree
 	if val, ok := degrees[tokenValue]; ok {
 		err = chord.add(val)
 		if err != nil {
@@ -155,7 +154,7 @@ func (p parser) parseSus(token internal.Token, chord *Chord) error {
 			return errors.Join(errIsNotInt, err)
 		}
 	} else {
-		tokenValue = 4 // default values
+		tokenValue = 4
 	}
 
 	chord.setChordBasicType(internal.Suspended)
@@ -233,7 +232,7 @@ func (p parser) parseAlt(chord *Chord, token internal.Token, degrees map[int]int
 }
 
 func (p parser) parseMaj(chord *Chord, token internal.Token, i int, tokens []internal.Token) error {
-	if chord.quality[len(chord.quality)-1] != internal.Major {
+	if len(chord.quality) == 0 || chord.quality[len(chord.quality)-1] != internal.Major {
 		chord.addType(internal.Major)
 	}
 
@@ -312,7 +311,6 @@ func (p parser) parseNumber(token internal.Token, chord *Chord, i int, tokens []
 			}
 		}
 	} else {
-		// add degree
 		if val, ok := internal.Degrees[tokenValue]; ok {
 			err = chord.add(val)
 			if err != nil {
@@ -326,15 +324,7 @@ func (p parser) parseNumber(token internal.Token, chord *Chord, i int, tokens []
 	return nil
 }
 
-var minorExtensions = map[int][]int{
-	6:  {internal.IM6},
-	7:  {internal.Im7},
-	9:  {internal.Im7, internal.IM9},
-	11: {internal.Im7, internal.IM9, internal.IP11},
-	13: {internal.Im7, internal.IM9, internal.IP11, internal.IM13},
-}
-
-var augExtensions = map[int][]int{
+var sharedMinorAugExtensions = map[int][]int{
 	6:  {internal.IM6},
 	7:  {internal.Im7},
 	9:  {internal.Im7, internal.IM9},
@@ -350,14 +340,39 @@ var dimExtensions = map[int][]int{
 	13: {internal.ID7, internal.IM9, internal.IP11, internal.IM13},
 }
 
-func (p parser) initChordWithExtension(chord *Chord, token internal.Token, isLastToken bool, basicType string, structuralAdjust func(*Chord), extensions map[int][]int) error {
+type basicTypeDescriptor struct {
+	adjust     func(c *Chord)
+	extensions map[int][]int
+}
+
+var basicTypeDescriptors = map[string]basicTypeDescriptor{
+	internal.Minor: {
+		adjust:     func(c *Chord) { c.flatFirst(internal.IM3) },
+		extensions: sharedMinorAugExtensions,
+	},
+	internal.Augmented: {
+		adjust:     func(c *Chord) { c.sharpFirst(internal.IP5) },
+		extensions: sharedMinorAugExtensions,
+	},
+	internal.Diminished: {
+		adjust: func(c *Chord) {
+			c.flatFirst(internal.IM3)
+			c.flatFirst(internal.IP5)
+		},
+		extensions: dimExtensions,
+	},
+}
+
+func (p parser) initExtendedChord(chord *Chord, token internal.Token, isLastToken bool, basicType string) error {
+	d := basicTypeDescriptors[basicType]
+
 	chord.setChordBasicType(basicType)
 
 	if len(chord.quality) > 0 {
 		chord.quality[0] = basicType
 	}
 
-	structuralAdjust(chord)
+	d.adjust(chord)
 
 	if token.Value == "" {
 		return nil
@@ -368,7 +383,7 @@ func (p parser) initChordWithExtension(chord *Chord, token internal.Token, isLas
 		return errors.Join(errIsNotInt, err)
 	}
 
-	intervals, ok := extensions[tokenValue]
+	intervals, ok := d.extensions[tokenValue]
 	if !ok {
 		return errUnexpectedInterval
 	}
@@ -387,30 +402,11 @@ func (p parser) initChordWithExtension(chord *Chord, token internal.Token, isLas
 	return nil
 }
 
-func (p parser) initMinorChord(chord *Chord, token internal.Token, isLastToken bool) error {
-	return p.initChordWithExtension(chord, token, isLastToken, internal.Minor,
-		func(c *Chord) { c.flatFirst(internal.IM3) }, minorExtensions)
-}
-
 func (p parser) initMajorChord(chord *Chord, token internal.Token) error {
 	chord.root = NewNote(token.Value)
 
-	// assume that this is major chord
 	chord.setChordBasicType(internal.Major)
 	chord.addType(internal.Major)
 
 	return chord.addIntervals(internal.IUnison, internal.IM3, internal.IP5)
-}
-
-func (p parser) initAugChord(chord *Chord, token internal.Token, isLastToken bool) error {
-	return p.initChordWithExtension(chord, token, isLastToken, internal.Augmented,
-		func(c *Chord) { c.sharpFirst(internal.IP5) }, augExtensions)
-}
-
-func (p parser) initDimChord(chord *Chord, token internal.Token, isLastToken bool) error {
-	return p.initChordWithExtension(chord, token, isLastToken, internal.Diminished,
-		func(c *Chord) {
-			c.flatFirst(internal.IM3)
-			c.flatFirst(internal.IP5)
-		}, dimExtensions)
 }

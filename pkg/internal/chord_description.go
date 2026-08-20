@@ -52,7 +52,7 @@ var FlatDegrees = map[int]int{
 	7:  Im7,
 	9:  Im9,
 	11: ID11,
-	13: ID13,
+	13: Im13,
 }
 
 var Numbers = map[int]string{
