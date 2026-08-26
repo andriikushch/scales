@@ -12,8 +12,8 @@ import (
 // GetScaleInput is the input for the get_scale tool.
 type GetScaleInput struct {
 	Key       string `json:"key" jsonschema:"root note/key, e.g. C, D#, F#, Bb"`
-	ScaleType string `json:"scaleType" jsonschema:"scale type: major, minor, or pentatonic"`
-	Detail    string `json:"detail,omitempty" jsonschema:"for minor: natural, harmonic, or melodic (default natural); for pentatonic: major or minor (default minor); ignored for major"`
+	ScaleType string `json:"scaleType" jsonschema:"scale type: major, minor, pentatonic, or any name from scales.ScaleNames() (e.g. dorian, harmonicMajor, bebopDominant) — see docs/scales.md for the full list"`
+	Detail    string `json:"detail,omitempty" jsonschema:"for minor: natural, harmonic, or melodic (default natural); for pentatonic: major or minor (default minor); ignored otherwise"`
 }
 
 // GetScaleOutput is the output of the get_scale tool.
@@ -75,7 +75,9 @@ func getScale(_ context.Context, _ *mcp.CallToolRequest, in GetScaleInput) (*mcp
 		}
 		notes = pent
 	default:
-		return nil, GetScaleOutput{}, fmt.Errorf("invalid scaleType %q: must be major, minor, or pentatonic", in.ScaleType)
+		var sc *scales.Scale
+		sc, err = scales.NewScaleByName(in.ScaleType, in.Key)
+		notes, chords = sc, sc
 	}
 
 	if err != nil {
