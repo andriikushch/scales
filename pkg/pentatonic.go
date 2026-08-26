@@ -3,6 +3,8 @@ package scales
 import (
 	"slices"
 	"strings"
+
+	"github.com/andriikushch/scales/pkg/internal"
 )
 
 type Pentatonic struct {
@@ -55,4 +57,125 @@ func NewMinorPentatonicScale(key string) (*Pentatonic, error) {
 	return &Pentatonic{
 		notes: naturalMinorScale.notes,
 	}, nil
+}
+
+// NewSuspendedPentatonicScale builds the Suspended Pentatonic scale.
+func NewSuspendedPentatonicScale(key string) (*Scale, error) {
+	structure := []int{
+		internal.Step,
+		internal.Step + internal.HalfStep,
+		internal.Step,
+		internal.Step + internal.HalfStep,
+		internal.Step,
+	}
+
+	return newScaleFromDegrees(key, structure, []int{1, 2, 4, 5, 7})
+}
+
+// NewBluesMinorPentatonicScale builds the Blues Minor Pentatonic scale.
+func NewBluesMinorPentatonicScale(key string) (*Scale, error) {
+	structure := []int{
+		internal.Step + internal.HalfStep,
+		internal.Step,
+		internal.Step + internal.HalfStep,
+		internal.Step,
+		internal.Step,
+	}
+
+	return newScaleFromDegrees(key, structure, []int{1, 3, 4, 6, 7})
+}
+
+// NewBluesMajorPentatonicScale builds the Blues Major Pentatonic scale.
+func NewBluesMajorPentatonicScale(key string) (*Scale, error) {
+	structure := []int{
+		internal.Step,
+		internal.Step + internal.HalfStep,
+		internal.Step,
+		internal.Step,
+		internal.Step + internal.HalfStep,
+	}
+
+	return newScaleFromDegrees(key, structure, []int{1, 2, 4, 5, 6})
+}
+
+// NewIwatoScale builds the Iwato scale.
+func NewIwatoScale(key string) (*Scale, error) {
+	structure := []int{
+		internal.HalfStep,
+		internal.Step + internal.Step,
+		internal.HalfStep,
+		internal.Step + internal.Step,
+		internal.Step,
+	}
+
+	return newScaleFromDegrees(key, structure, []int{1, 2, 4, 5, 7})
+}
+
+// NewMiyakoBushiScale builds the Miyako-bushi scale.
+func NewMiyakoBushiScale(key string) (*Scale, error) {
+	structure := []int{
+		internal.HalfStep,
+		internal.Step + internal.Step,
+		internal.Step,
+		internal.HalfStep,
+		internal.Step + internal.Step,
+	}
+
+	return newScaleFromDegrees(key, structure, []int{1, 2, 4, 5, 6})
+}
+
+// NewKumoiScale builds the Kumoi scale.
+func NewKumoiScale(key string) (*Scale, error) {
+	structure := []int{
+		internal.Step,
+		internal.HalfStep,
+		internal.Step + internal.Step,
+		internal.Step,
+		internal.Step + internal.HalfStep,
+	}
+
+	return newScaleFromDegrees(key, structure, []int{1, 2, 3, 5, 6})
+}
+
+// NewInsenScale builds the Insen scale.
+func NewInsenScale(key string) (*Scale, error) {
+	structure := []int{
+		internal.HalfStep,
+		internal.Step + internal.Step,
+		internal.Step,
+		internal.Step + internal.HalfStep,
+		internal.Step,
+	}
+
+	return newScaleFromDegrees(key, structure, []int{1, 2, 4, 5, 7})
+}
+
+// NewChinesePentatonicScale builds the Chinese pentatonic scale (C E F♯ G B when rooted on C).
+//
+// This is distinct from the "Chinese" alias found in some sources for the major pentatonic
+// scale (see NewMajorPentatonicScale) — the two names collide, but describe different note
+// collections.
+func NewChinesePentatonicScale(key string) (*Scale, error) {
+	structure := []int{
+		internal.Step + internal.Step,
+		internal.Step,
+		internal.HalfStep,
+		internal.Step + internal.Step,
+		internal.HalfStep,
+	}
+
+	return newScaleFromDegrees(key, structure, []int{1, 3, 4, 5, 7})
+}
+
+// NewBalinesePelogScale builds the Balinese Pelog scale (a 12-tone-equal-temperament approximation).
+func NewBalinesePelogScale(key string) (*Scale, error) {
+	structure := []int{
+		internal.HalfStep,
+		internal.Step,
+		internal.Step + internal.Step,
+		internal.HalfStep,
+		internal.Step + internal.Step,
+	}
+
+	return newScaleFromDegrees(key, structure, []int{1, 2, 3, 5, 6})
 }
