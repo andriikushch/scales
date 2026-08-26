@@ -13,3 +13,6 @@ generate-supported-chord-qualities:
 
 fmt:
 	gofumpt -w .
+
+mcp-server:
+	go run ./internal/mcpserver
