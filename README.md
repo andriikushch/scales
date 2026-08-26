@@ -1,3 +1,5 @@
+[![CI](https://github.com/andriikushch/scales/actions/workflows/ci.yml/badge.svg)](https://github.com/andriikushch/scales/actions/workflows/ci.yml)
+
 🎵 Scales
 
 ![img](./img.png)
