@@ -23,44 +23,91 @@ func (inst *stringInstrumentWithFrets) drawOrNot(n Note, scale []Note) (bool, No
 	return true, scale[index], index
 }
 
-func (inst *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) error {
+// FretCell describes a single string/fret position: the note that sounds
+// there, and whether it is one of the notes being highlighted.
+type FretCell struct {
+	Note Note
+	// Match is true if this cell is one of the notes passed to Positions.
+	Match bool
+	// MatchIndex is the index of Note within the notesToDraw slice passed to
+	// Positions (useful for consistent coloring/root detection), or -1 if
+	// Match is false.
+	MatchIndex int
+}
+
+// Positions returns, for each of the instrument's strings, the note and
+// match state at frets 0-24 for notesToDraw.
+func (inst *stringInstrumentWithFrets) Positions(notesToDraw []Note) ([][]FretCell, error) {
 	var structure []int
 	for range 25 {
 		structure = append(structure, internal.HalfStep)
 	}
 
-	for i, note := range inst.tuning {
+	grid := make([][]FretCell, len(inst.tuning))
+
+	for str, note := range inst.tuning {
 		scale, err := newScale(note.Name, structure, []string{})
 		if err != nil {
-			return err
+			return nil, err
 		}
 
-		if i == 0 {
-			inst.printFretMarkers(0, 24, scale, w)
-		}
-
-		for i, note := range scale.GetNotes() {
+		notes := scale.GetNotes()
+		row := make([]FretCell, len(notes))
+		for fret, note := range notes {
 			draw, noteFromTheScale, colorIndex := inst.drawOrNot(note, notesToDraw)
+			if draw {
+				row[fret] = FretCell{Note: noteFromTheScale, Match: true, MatchIndex: colorIndex}
+			} else {
+				row[fret] = FretCell{Note: note, Match: false, MatchIndex: -1}
+			}
+		}
+		grid[str] = row
+	}
 
-			if i == 0 {
-				if draw {
-					_, _ = fmt.Fprintf(w, "%s%-3s%s||", colors.GetColor(colorIndex), noteFromTheScale.Name, colors.End)
-				} else {
-					_, _ = fmt.Fprintf(w, "%s%-3s%s||", colors.GetColor(colorIndex), "", colors.End)
-				}
+	return grid, nil
+}
+
+func (inst *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) error {
+	grid, err := inst.Positions(notesToDraw)
+	if err != nil {
+		return err
+	}
+
+	var structure []int
+	for range 25 {
+		structure = append(structure, internal.HalfStep)
+	}
+
+	// printFretMarkers only cares about how many frets there are (always 25
+	// here), not which string's scale is passed in.
+	markerScale, err := newScale(inst.tuning[0].Name, structure, []string{})
+	if err != nil {
+		return err
+	}
+
+	for str, row := range grid {
+		if str == 0 {
+			inst.printFretMarkers(0, 24, markerScale, w)
+		}
+
+		for fret, cell := range row {
+			colorIndex := -1
+			name := ""
+			if cell.Match {
+				colorIndex = cell.MatchIndex
+				name = cell.Note.Name
+			}
+
+			if fret == 0 {
+				_, _ = fmt.Fprintf(w, "%s%-3s%s||", colors.GetColor(colorIndex), name, colors.End)
 				continue
 			}
-			if draw {
-				_, _ = fmt.Fprintf(w, "%s %-3s%s|", colors.GetColor(colorIndex), noteFromTheScale.Name, colors.End)
-			} else {
-				_, _ = fmt.Fprintf(w, "%s %-3s%s|", colors.GetColor(colorIndex), "", colors.End)
-			}
-
+			_, _ = fmt.Fprintf(w, "%s %-3s%s|", colors.GetColor(colorIndex), name, colors.End)
 		}
 		_, _ = fmt.Fprint(w, "\r\n")
 
-		if i == len(inst.tuning)-1 {
-			inst.printFretMarkers(0, 24, scale, w)
+		if str == len(grid)-1 {
+			inst.printFretMarkers(0, 24, markerScale, w)
 		}
 	}
 
