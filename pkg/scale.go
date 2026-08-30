@@ -2,31 +2,16 @@ package scales
 
 import (
 	"fmt"
-	"log"
 	"slices"
 	"strings"
 )
 
 type Scale struct {
-	notes  []Note
-	chords []string
+	notes []Note
 }
 
 func (s *Scale) GetNotes() []Note {
 	return s.notes
-}
-
-func (s *Scale) GetChords() []Chord {
-	res := make([]Chord, len(s.chords))
-	var err error
-	for i, chord := range s.chords {
-		res[i], err = parseChord(chord, s)
-		if err != nil {
-			log.Fatal(chord)
-		}
-	}
-
-	return res
 }
 
 func (s *Scale) String() string {
@@ -43,7 +28,7 @@ func (s *Scale) String() string {
 	return buf.String()
 }
 
-func newScale(key string, scaleStructure []int, chords []string) (*Scale, error) {
+func newScale(key string, scaleStructure []int) (*Scale, error) {
 	scale := &Scale{}
 
 	chromaticScale := defaultChromaticScale
@@ -82,12 +67,6 @@ func newScale(key string, scaleStructure []int, chords []string) (*Scale, error)
 		scale.notes = append(scale.notes, nextNote)
 
 		currentNote = nextNote
-	}
-
-	if len(chords) > 0 {
-		for i, note := range scale.notes {
-			scale.chords = append(scale.chords, note.Name+chords[i])
-		}
 	}
 
 	return scale, nil

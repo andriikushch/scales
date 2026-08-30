@@ -13,7 +13,7 @@ func main() {
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_scale",
-		Description: "Get the notes (and, for major/minor scales, the scale-degree chords) of a musical scale in a given key.",
+		Description: "Get the notes of a musical scale in a given key.",
 	}, getScale)
 
 	mcp.AddTool(server, &mcp.Tool{

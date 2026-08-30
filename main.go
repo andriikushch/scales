@@ -57,11 +57,11 @@ func main() {
 
 	// Initial screen setup
 	ts.ClearScreen()
-	ts.DisplayHelp(state.CurrentView, state.ScaleType)
+	ts.DisplayHelp(state.ScaleType)
 
 	for {
 		ts.ClearScreen()
-		ts.DisplayHelp(state.CurrentView, state.ScaleType)
+		ts.DisplayHelp(state.ScaleType)
 
 		if state.ShowScaleTypes {
 			ts.DisplayScaleTypes(state.ScaleType, state.ValidScales)
@@ -82,7 +82,7 @@ func main() {
 				state.Instrument,
 			)
 
-			// Always draw the scale first
+			// Draw the scale on the selected instrument
 			switch state.Instrument {
 			case app.InstrumentGuitar:
 				guitar := scales.NewGuitarWithStandardTuning()
@@ -98,40 +98,6 @@ func main() {
 				err = mandolin.Draw(state.GetNotes(), os.Stdout)
 			}
 			ts.Print("\r\n")
-
-			// Draw the current view
-			switch state.CurrentView {
-			case app.ViewScale:
-				if chords := state.GetChords(); chords != nil {
-					ts.DisplayChords(chords, -1)
-				}
-			case app.ViewChords:
-				if state.ScaleType != app.ScalePentatonic {
-					if chords := state.GetChords(); chords != nil {
-						ts.DisplayChords(chords, state.CurrentChordIndex)
-						chord := state.GetCurrentChord()
-						ts.Print("Current Chord: %s %s\r\n", chord.Description(), chord.Notes())
-						ts.Print("\r\n")
-						// Draw the current chord
-						switch state.Instrument {
-						case app.InstrumentGuitar:
-							guitar := scales.NewGuitarWithStandardTuning()
-							err = guitar.Draw(chord.Notes(), os.Stdout)
-						case app.InstrumentBassGuitar:
-							guitar := scales.NewBassGuitarWithStandardTuning()
-							err = guitar.Draw(chord.Notes(), os.Stdout)
-						case app.InstrumentUkulele:
-							ukulele := scales.NewUkuleleWithStandardTuning()
-							err = ukulele.Draw(chord.Notes(), os.Stdout)
-						case app.InstrumentMandolin:
-							mandolin := scales.NewMandolinWithStandardTuning()
-							err = mandolin.Draw(chord.Notes(), os.Stdout)
-						}
-					}
-				} else {
-					ts.Print("⚠️  Pentatonic scales do not have associated chords\r\n")
-				}
-			}
 
 			if err != nil {
 				log.Fatal(err)
@@ -207,12 +173,6 @@ func main() {
 					state.CurrentKeyIndex = (state.CurrentKeyIndex - 1 + len(state.Keys)) % len(state.Keys)
 				case "right":
 					state.CurrentKeyIndex = (state.CurrentKeyIndex + 1) % len(state.Keys)
-				case "up":
-					state.CurrentView = app.ViewScale
-				case "down":
-					if state.ScaleType != app.ScalePentatonic {
-						state.CurrentView = app.ViewChords
-					}
 				}
 
 				switch input.Rune {
@@ -239,15 +199,6 @@ func main() {
 							}
 						}
 						state.ScaleTypeDetail = state.MinorScales[(currentIndex+1)%len(state.MinorScales)]
-					}
-				}
-
-				if state.CurrentView == app.ViewChords && state.ScaleType != app.ScalePentatonic {
-					switch input.Rune {
-					case 'a', 'A':
-						state.CurrentChordIndex = (state.CurrentChordIndex - 1 + 7) % 7
-					case 'd', 'D':
-						state.CurrentChordIndex = (state.CurrentChordIndex + 1) % 7
 					}
 				}
 			}

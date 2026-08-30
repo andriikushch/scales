@@ -13,9 +13,8 @@ func TestMandolin_DrawChord(t *testing.T) {
 	t.Parallel()
 	g := NewMandolinWithStandardTuning()
 
-	amScale, err := NewNaturalMinorScale("A")
+	amChord, err := NewChord("Am")
 	require.NoError(t, err)
-	amChord := amScale.GetChords()[0]
 
 	b := &strings.Builder{}
 
@@ -38,9 +37,8 @@ func TestMandolin_DrawMajChord(t *testing.T) {
 	t.Parallel()
 	g := NewMandolinWithStandardTuning()
 
-	amScale, err := NewNaturalMinorScale("A")
+	cChord, err := NewChord("Cmaj")
 	require.NoError(t, err)
-	cChord := amScale.GetChords()[2]
 
 	b := &strings.Builder{}
 

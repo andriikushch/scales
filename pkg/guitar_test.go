@@ -45,18 +45,16 @@ func TestGuitar_DrawChord(t *testing.T) {
 	t.Parallel()
 	g := NewGuitarWithStandardTuning()
 
-	amScale, err := NewNaturalMinorScale("A")
+	amChord, err := NewChord("Am")
 	require.NoError(t, err)
-	amChord := amScale.GetChords()[0]
 
 	for _, shape := range g.getChordShapes(amChord) {
 		err = g.drawChord(shape, amChord, os.Stdout)
 		require.NoError(t, err)
 	}
 
-	cScale, err := NewMajorScale("C")
+	cChord, err := NewChord("Cmaj")
 	require.NoError(t, err)
-	cChord := cScale.GetChords()[0]
 	for _, shape := range g.getChordShapes(cChord) {
 		err = g.drawChord(shape, cChord, os.Stdout)
 		require.NoError(t, err)
