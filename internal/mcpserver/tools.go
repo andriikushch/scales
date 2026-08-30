@@ -19,9 +19,6 @@ type GetScaleInput struct {
 // GetScaleOutput is the output of the get_scale tool.
 type GetScaleOutput struct {
 	Notes []string `json:"notes"`
-	// Chords are the scale-degree chords (e.g. "Cmaj", "Dm", ...). Omitted for
-	// pentatonic scales, which have none.
-	Chords []string `json:"chords,omitempty"`
 }
 
 type notesProvider interface {
@@ -30,16 +27,15 @@ type notesProvider interface {
 
 func getScale(_ context.Context, _ *mcp.CallToolRequest, in GetScaleInput) (*mcp.CallToolResult, GetScaleOutput, error) {
 	var (
-		notes  notesProvider
-		chords *scales.Scale
-		err    error
+		notes notesProvider
+		err   error
 	)
 
 	switch in.ScaleType {
 	case "major":
 		var sc *scales.Scale
 		sc, err = scales.NewMajorScale(in.Key)
-		notes, chords = sc, sc
+		notes = sc
 	case "minor":
 		detail := in.Detail
 		if detail == "" {
@@ -57,7 +53,7 @@ func getScale(_ context.Context, _ *mcp.CallToolRequest, in GetScaleInput) (*mcp
 		default:
 			return nil, GetScaleOutput{}, fmt.Errorf("invalid detail %q for a minor scale: must be natural, harmonic, or melodic", in.Detail)
 		}
-		notes, chords = sc, sc
+		notes = sc
 	case "pentatonic":
 		detail := in.Detail
 		if detail == "" {
@@ -77,7 +73,7 @@ func getScale(_ context.Context, _ *mcp.CallToolRequest, in GetScaleInput) (*mcp
 	default:
 		var sc *scales.Scale
 		sc, err = scales.NewScaleByName(in.ScaleType, in.Key)
-		notes, chords = sc, sc
+		notes = sc
 	}
 
 	if err != nil {
@@ -87,11 +83,6 @@ func getScale(_ context.Context, _ *mcp.CallToolRequest, in GetScaleInput) (*mcp
 	out := GetScaleOutput{}
 	for _, n := range notes.GetNotes() {
 		out.Notes = append(out.Notes, n.Name)
-	}
-	if chords != nil {
-		for _, c := range chords.GetChords() {
-			out.Chords = append(out.Chords, c.Description())
-		}
 	}
 
 	return nil, out, nil

@@ -13,9 +13,8 @@ func TestBassGuitar_DrawChord(t *testing.T) {
 	t.Parallel()
 	g := NewBassGuitarWithStandardTuning()
 
-	amScale, err := NewNaturalMinorScale("A")
+	amChord, err := NewChord("Am")
 	require.NoError(t, err)
-	amChord := amScale.GetChords()[0]
 
 	b := &strings.Builder{}
 

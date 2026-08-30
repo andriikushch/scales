@@ -46,7 +46,7 @@ func (inst *stringInstrumentWithFrets) Positions(notesToDraw []Note) ([][]FretCe
 	grid := make([][]FretCell, len(inst.tuning))
 
 	for str, note := range inst.tuning {
-		scale, err := newScale(note.Name, structure, []string{})
+		scale, err := newScale(note.Name, structure)
 		if err != nil {
 			return nil, err
 		}
@@ -80,7 +80,7 @@ func (inst *stringInstrumentWithFrets) Draw(notesToDraw []Note, w io.Writer) err
 
 	// printFretMarkers only cares about how many frets there are (always 25
 	// here), not which string's scale is passed in.
-	markerScale, err := newScale(inst.tuning[0].Name, structure, []string{})
+	markerScale, err := newScale(inst.tuning[0].Name, structure)
 	if err != nil {
 		return err
 	}
@@ -122,7 +122,7 @@ func (inst *stringInstrumentWithFrets) drawChord(cs ChordShape, c Chord, w io.Wr
 		structure = append(structure, internal.HalfStep)
 	}
 
-	allNotesOnTheString, err := newScale(inst.tuning[rootString].Name, structure, []string{})
+	allNotesOnTheString, err := newScale(inst.tuning[rootString].Name, structure)
 	if err != nil {
 		return err
 	}
@@ -144,7 +144,7 @@ func (inst *stringInstrumentWithFrets) drawChord(cs ChordShape, c Chord, w io.Wr
 	inst.printFretMarkers(leftFret, rightFret, allNotesOnTheString, w)
 
 	for str, note := range inst.tuning {
-		scale, err := newScale(note.Name, structure, []string{})
+		scale, err := newScale(note.Name, structure)
 		if err != nil {
 			return err
 		}

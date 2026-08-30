@@ -1,17 +1,9 @@
 package terminal
 
-import (
-	scales "github.com/andriikushch/scales/pkg"
-)
-
 // DisplayHelp shows the help menu
-func (ts *State) DisplayHelp(currentView string, scaleType string) {
+func (ts *State) DisplayHelp(scaleType string) {
 	ts.Print("Controls:\r\n")
 	ts.Print("← → : Change key\r\n")
-	ts.Print("↑ ↓ : Switch between scale and chords view\r\n")
-	if currentView == "chords" && scaleType != "pentatonic" {
-		ts.Print("A D : Navigate between chords\r\n")
-	}
 	ts.Print("s   : Change scale type\r\n")
 	ts.Print("i   : Change instrument\r\n")
 	if scaleType == "pentatonic" {
@@ -52,19 +44,6 @@ func (ts *State) DisplayInstruments(current string, validInstruments []string) {
 		ts.Print("%s%-16s│\r\n", prefix, s)
 	}
 	ts.Print("└─────────────────────┘\r\n")
-	ts.Print("\r\n")
-}
-
-// DisplayChords shows the chord list
-func (ts *State) DisplayChords(chords []scales.Chord, currentIndex int) {
-	ts.Print("Available Chords:\r\n")
-	for i, ch := range chords {
-		prefix := "  "
-		if i == currentIndex {
-			prefix = "▶"
-		}
-		ts.Print("%s %s %s\r\n", prefix, ch.Description(), ch.Notes())
-	}
 	ts.Print("\r\n")
 }
 

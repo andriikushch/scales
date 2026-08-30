@@ -21,7 +21,7 @@ type Chord struct {
 }
 
 func NewChord(chord string) (Chord, error) {
-	return parseChord(chord, nil)
+	return parseChord(chord)
 }
 
 func (c *Chord) Description() string {
@@ -71,7 +71,7 @@ func (c *Chord) addIntervals(interval ...int) error {
 }
 
 // findOptimalNoteForTheChord is opinionated selection between multiple annotations of the same note. TODO: improve this logic if necessary.
-func (c *Chord) findOptimalNoteForTheChord(notes []Note, step int, key string, chordType string, isFlat, isSharp bool, context contextNotes) Note {
+func (c *Chord) findOptimalNoteForTheChord(notes []Note, step int, key string, chordType string, isFlat, isSharp bool) Note {
 	if isSharp {
 		n := c.getWithSharps(notes, 1)
 		if len(n.Name) > 0 {
@@ -88,23 +88,19 @@ func (c *Chord) findOptimalNoteForTheChord(notes []Note, step int, key string, c
 
 	var scaleNotes []Note
 
-	if context == nil {
-		// try to understand if it is a minor or major chord, it is not
-		switch chordType {
-		case internal.Minor:
-			// it is minor, let's build the scale and see if any of the notes annotations are in the scale
-			sc, _ := NewNaturalMinorScale(key)
-			scaleNotes = sc.GetNotes()
-		case internal.Diminished:
-			sc, _ := NewWholeHalfDiminishedScale(key)
-			scaleNotes = sc.GetNotes()
-		default:
-			// maybe it is major, let's build the scale and see if any of the notes annotations are in the scale
-			sc, _ := NewMajorScale(key)
-			scaleNotes = sc.GetNotes()
-		}
-	} else {
-		scaleNotes = context.GetNotes()
+	// try to understand if it is a minor or major chord, it is not
+	switch chordType {
+	case internal.Minor:
+		// it is minor, let's build the scale and see if any of the notes annotations are in the scale
+		sc, _ := NewNaturalMinorScale(key)
+		scaleNotes = sc.GetNotes()
+	case internal.Diminished:
+		sc, _ := NewWholeHalfDiminishedScale(key)
+		scaleNotes = sc.GetNotes()
+	default:
+		// maybe it is major, let's build the scale and see if any of the notes annotations are in the scale
+		sc, _ := NewMajorScale(key)
+		scaleNotes = sc.GetNotes()
 	}
 
 	for _, note := range notes {
@@ -154,7 +150,7 @@ func (c *Chord) sharpFirst(interval int) {
 	}
 }
 
-func (c *Chord) finish(context contextNotes) error {
+func (c *Chord) finish() error {
 	for intervalIndex, interval := range c.structure {
 		nextPossibleNotes := defaultChromaticScale.next(c.root, interval)
 
@@ -165,7 +161,7 @@ func (c *Chord) finish(context contextNotes) error {
 			isSharp = c.quality[intervalIndex] == internal.Sharp
 		}
 
-		nextNote := c.findOptimalNoteForTheChord(nextPossibleNotes, interval, c.root.Name, c.chordBasicType, isFlat, isSharp, context)
+		nextNote := c.findOptimalNoteForTheChord(nextPossibleNotes, interval, c.root.Name, c.chordBasicType, isFlat, isSharp)
 		c.notes = append(c.notes, nextNote)
 	}
 

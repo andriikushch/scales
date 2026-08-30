@@ -14,16 +14,5 @@ func NewWholeHalfDiminishedScale(key string) (*Scale, error) {
 		internal.HalfStep,
 	}
 
-	chords := []string{
-		"dim",
-		"mb5",
-		"dim",
-		"mb5",
-		"dim",
-		"mb5",
-		"dim",
-		"mb5",
-	}
-
-	return newScale(key, wholeHalfDiminishedScaleStructure, chords)
+	return newScale(key, wholeHalfDiminishedScaleStructure)
 }

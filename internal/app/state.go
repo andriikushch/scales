@@ -32,12 +32,6 @@ const (
 	PentatonicTypeMinor = "minor"
 )
 
-// View types
-const (
-	ViewScale  = "scale"
-	ViewChords = "chords"
-)
-
 // scale interface represents a musical scale
 type scale interface {
 	GetNotes() []scales.Note
@@ -46,26 +40,23 @@ type scale interface {
 
 // State represents the application state
 type State struct {
-	CurrentKeyIndex   int
-	CurrentView       string
-	CurrentChordIndex int
-	ShowScaleTypes    bool
-	ShowInstruments   bool
-	Scale             scale
-	ScaleType         string
-	ScaleTypeDetail   string
-	Instrument        string
-	ValidScales       []string
-	ValidInstruments  []string
-	MinorScales       []string
-	PentatonicScales  []string
-	Keys              []string
+	CurrentKeyIndex  int
+	ShowScaleTypes   bool
+	ShowInstruments  bool
+	Scale            scale
+	ScaleType        string
+	ScaleTypeDetail  string
+	Instrument       string
+	ValidScales      []string
+	ValidInstruments []string
+	MinorScales      []string
+	PentatonicScales []string
+	Keys             []string
 }
 
 // New creates a new application state
 func New() *State {
 	return &State{
-		CurrentView:      ViewScale,
 		ValidScales:      []string{ScaleMajor, ScaleMinor, ScalePentatonic},
 		ValidInstruments: []string{InstrumentBassGuitar, InstrumentGuitar, InstrumentUkulele, InstrumentMandolin},
 		MinorScales:      []string{MinorTypeNatural, MinorTypeHarmonic, MinorTypeMelodic},
@@ -100,24 +91,7 @@ func (s *State) CreateScale() error {
 	return err
 }
 
-// GetChords returns the chords for the current scale
-func (s *State) GetChords() []scales.Chord {
-	if sc, ok := s.Scale.(*scales.Scale); ok && s.ScaleType != ScalePentatonic {
-		return sc.GetChords()
-	}
-	return nil
-}
-
 // GetNotes returns the notes for the current scale
 func (s *State) GetNotes() []scales.Note {
 	return s.Scale.GetNotes()
-}
-
-// GetCurrentChord returns the current chord
-func (s *State) GetCurrentChord() scales.Chord {
-	chords := s.GetChords()
-	if chords != nil && s.CurrentChordIndex < len(chords) {
-		return chords[s.CurrentChordIndex]
-	}
-	return scales.Chord{}
 }

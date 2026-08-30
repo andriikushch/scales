@@ -196,17 +196,3 @@ func TestNewWholeHalfDiminishedScale(t *testing.T) {
 		})
 	}
 }
-
-func Test_WholeHalfDiminishedScaleChords(t *testing.T) {
-	t.Parallel()
-
-	scale, err := scales.NewWholeHalfDiminishedScale("C")
-	require.NoError(t, err)
-
-	var results []string
-	for _, c := range scale.GetChords() {
-		results = append(results, c.Description())
-	}
-
-	require.Equal(t, []string{"Cdim", "Dmb5", "Ebdim", "Fmb5", "Gbdim", "Abmb5", "Adim", "Bmb5"}, results)
-}
