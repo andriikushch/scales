@@ -14,7 +14,7 @@ func Test_ScaleRegistry(t *testing.T) {
 	t.Parallel()
 
 	names := scales.ScaleNames()
-	require.Len(t, names, 80)
+	require.Len(t, names, 139)
 
 	for _, name := range names {
 		t.Run(name, func(t *testing.T) {
