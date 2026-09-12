@@ -4,13 +4,6 @@ import (
 	scales "github.com/andriikushch/scales/pkg"
 )
 
-// Scale types
-const (
-	ScaleMajor      = "major"
-	ScaleMinor      = "minor"
-	ScalePentatonic = "pentatonic"
-)
-
 // Instrument types
 const (
 	InstrumentBassGuitar = "bassGuitar"
@@ -19,48 +12,24 @@ const (
 	InstrumentMandolin   = "mandolin"
 )
 
-// Minor scale types
-const (
-	MinorTypeNatural  = "natural"
-	MinorTypeHarmonic = "harmonic"
-	MinorTypeMelodic  = "melodic"
-)
-
-// Pentatonic scale types
-const (
-	PentatonicTypeMajor = "major"
-	PentatonicTypeMinor = "minor"
-)
-
-// scale interface represents a musical scale
-type scale interface {
-	GetNotes() []scales.Note
-	String() string
-}
-
 // State represents the application state
 type State struct {
 	CurrentKeyIndex  int
 	ShowScaleTypes   bool
 	ShowInstruments  bool
-	Scale            scale
-	ScaleType        string
-	ScaleTypeDetail  string
+	Scale            *scales.Scale
+	ScaleName        string
 	Instrument       string
-	ValidScales      []string
+	ScaleNames       []string
 	ValidInstruments []string
-	MinorScales      []string
-	PentatonicScales []string
 	Keys             []string
 }
 
 // New creates a new application state
 func New() *State {
 	return &State{
-		ValidScales:      []string{ScaleMajor, ScaleMinor, ScalePentatonic},
+		ScaleNames:       scales.ScaleNames(),
 		ValidInstruments: []string{InstrumentBassGuitar, InstrumentGuitar, InstrumentUkulele, InstrumentMandolin},
-		MinorScales:      []string{MinorTypeNatural, MinorTypeHarmonic, MinorTypeMelodic},
-		PentatonicScales: []string{PentatonicTypeMajor, PentatonicTypeMinor},
 		Keys:             []string{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"},
 	}
 }
@@ -68,26 +37,7 @@ func New() *State {
 // CreateScale creates a new scale based on current settings
 func (s *State) CreateScale() error {
 	var err error
-	switch s.ScaleType {
-	case ScaleMajor:
-		s.Scale, err = scales.NewMajorScale(s.Keys[s.CurrentKeyIndex])
-	case ScaleMinor:
-		switch s.ScaleTypeDetail {
-		case MinorTypeNatural:
-			s.Scale, err = scales.NewNaturalMinorScale(s.Keys[s.CurrentKeyIndex])
-		case MinorTypeHarmonic:
-			s.Scale, err = scales.NewHarmonicMinorScale(s.Keys[s.CurrentKeyIndex])
-		case MinorTypeMelodic:
-			s.Scale, err = scales.NewMelodicMinorScale(s.Keys[s.CurrentKeyIndex])
-		}
-	case ScalePentatonic:
-		switch s.ScaleTypeDetail {
-		case PentatonicTypeMajor:
-			s.Scale, err = scales.NewMajorPentatonicScale(s.Keys[s.CurrentKeyIndex])
-		case PentatonicTypeMinor:
-			s.Scale, err = scales.NewMinorPentatonicScale(s.Keys[s.CurrentKeyIndex])
-		}
-	}
+	s.Scale, err = scales.NewScaleByName(s.ScaleName, s.Keys[s.CurrentKeyIndex])
 	return err
 }
 

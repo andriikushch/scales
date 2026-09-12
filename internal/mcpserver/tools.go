@@ -12,7 +12,7 @@ import (
 // GetScaleInput is the input for the get_scale tool.
 type GetScaleInput struct {
 	Key       string `json:"key" jsonschema:"root note/key, e.g. C, D#, F#, Bb"`
-	ScaleType string `json:"scaleType" jsonschema:"scale type: major, minor, pentatonic, or any name from scales.ScaleNames() (e.g. dorian, harmonicMajor, bebopDominant) — see docs/scales.md for the full list"`
+	ScaleType string `json:"scaleType" jsonschema:"scale type: major, minor, pentatonic, or any name from scales.ScaleNames() (e.g. dorian, harmonicMajor, bebopDominant, or an alias like freygish, jazzMinor, manGong) — see docs/scales.md for the full list, including its 'Other names' alias table"`
 	Detail    string `json:"detail,omitempty" jsonschema:"for minor: natural, harmonic, or melodic (default natural); for pentatonic: major or minor (default minor); ignored otherwise"`
 }
 

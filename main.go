@@ -25,23 +25,15 @@ func main() {
 	defer ts.Cleanup()
 
 	// Define command-line flags
-	scaleFlag := flag.String("scale", app.ScaleMajor, "Specify the scale (major, minor, pentatonic)")
+	scaleFlag := flag.String("scale", "major", "Specify the scale name (any name from scales.ScaleNames(), e.g. major, minorPentatonic, harmonicMinor, freygish)")
 	keyFlag := flag.String("key", "C", "Specify the key (e.g., C, D#, F#)")
 	instrumentFlag := flag.String("instrument", app.InstrumentGuitar, "Select the instrument for visualization (guitar)")
-
-	// Additional flags for minor and pentatonic types
-	minorTypeFlag := flag.String("minorType", app.MinorTypeNatural, "Specify the minor scale type (natural, harmonic, melodic)")
-	pentatonicTypeFlag := flag.String("pentatonicType", app.PentatonicTypeMinor, "Specify the pentatonic scale type (major, minor)")
 
 	flag.Parse()
 
 	// Initialize application state
 	state := app.New()
-	state.ScaleType = *scaleFlag
-	state.ScaleTypeDetail = *minorTypeFlag
-	if *scaleFlag == app.ScalePentatonic {
-		state.ScaleTypeDetail = *pentatonicTypeFlag
-	}
+	state.ScaleName = *scaleFlag
 	state.Instrument = *instrumentFlag
 
 	// Find initial key index
@@ -57,14 +49,14 @@ func main() {
 
 	// Initial screen setup
 	ts.ClearScreen()
-	ts.DisplayHelp(state.ScaleType)
+	ts.DisplayHelp()
 
 	for {
 		ts.ClearScreen()
-		ts.DisplayHelp(state.ScaleType)
+		ts.DisplayHelp()
 
 		if state.ShowScaleTypes {
-			ts.DisplayScaleTypes(state.ScaleType, state.ValidScales)
+			ts.DisplayScaleTypes(state.ScaleName, state.ScaleNames)
 		} else if state.ShowInstruments {
 			ts.DisplayInstruments(state.Instrument, state.ValidInstruments)
 		} else {
@@ -76,8 +68,7 @@ func main() {
 			// Display current settings
 			ts.DisplaySettings(
 				state.Keys[state.CurrentKeyIndex],
-				state.ScaleType,
-				state.ScaleTypeDetail,
+				state.ScaleName,
 				state.Scale.String(),
 				state.Instrument,
 			)
@@ -113,22 +104,22 @@ func main() {
 				switch input.Key {
 				case "up":
 					currentIndex := 0
-					for i, s := range state.ValidScales {
-						if s == state.ScaleType {
+					for i, s := range state.ScaleNames {
+						if s == state.ScaleName {
 							currentIndex = i
 							break
 						}
 					}
-					state.ScaleType = state.ValidScales[(currentIndex-1+len(state.ValidScales))%len(state.ValidScales)]
+					state.ScaleName = state.ScaleNames[(currentIndex-1+len(state.ScaleNames))%len(state.ScaleNames)]
 				case "down":
 					currentIndex := 0
-					for i, s := range state.ValidScales {
-						if s == state.ScaleType {
+					for i, s := range state.ScaleNames {
+						if s == state.ScaleName {
 							currentIndex = i
 							break
 						}
 					}
-					state.ScaleType = state.ValidScales[(currentIndex+1)%len(state.ValidScales)]
+					state.ScaleName = state.ScaleNames[(currentIndex+1)%len(state.ScaleNames)]
 				}
 				switch input.Rune {
 				case '\r', '\n': // Enter key
@@ -182,24 +173,6 @@ func main() {
 					state.ShowScaleTypes = true
 				case 'i':
 					state.ShowInstruments = true
-				case 't':
-					if state.ScaleType == app.ScalePentatonic {
-						if state.ScaleTypeDetail == app.PentatonicTypeMajor {
-							state.ScaleTypeDetail = app.PentatonicTypeMinor
-						} else {
-							state.ScaleTypeDetail = app.PentatonicTypeMajor
-						}
-					} else if state.ScaleType == app.ScaleMinor {
-						// Cycle through minor scale types
-						currentIndex := 0
-						for i, s := range state.MinorScales {
-							if s == state.ScaleTypeDetail {
-								currentIndex = i
-								break
-							}
-						}
-						state.ScaleTypeDetail = state.MinorScales[(currentIndex+1)%len(state.MinorScales)]
-					}
 				}
 			}
 		}
